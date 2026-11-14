@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free AI Prompt &amp; Image Enhancer Studio (2026) — Cloudflare Workers AI &amp; Flux | All AI Tools</title>
+  <meta name="description" content="Enhance raw photo prompts into ultra-detailed, 8K photorealistic prompts and generate real AI images live using Cloudflare Workers AI (Flux.1 Schnell & SDXL). 100% free." />
+  <meta name="keywords" content="cloudflare workers ai image generator, ai prompt enhancer, airbrush photo enhancer free, flux 1 schnell, free ai image generator, prompt builder midjourney, allaitools" />
+  <link rel="canonical" href="https://www.allaitools.online/tools/prompt-enhancer/" />
+
+  <!-- OpenGraph -->
+  <meta property="og:title" content="Free AI Prompt &amp; Image Enhancer Studio | All AI Tools" />
+  <meta property="og:description" content="Enhance prompts and generate photorealistic AI images live with Cloudflare Workers AI and Flux.1." />
+  <meta property="og:url" content="https://www.allaitools.online/tools/prompt-enhancer/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="All AI Tools" />
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%234F46E5%22/><text y=%2268%22 x=%2250%22 font-family=%22system-ui,sans-serif%22 font-weight=%22800%22 font-size=%2254%22 fill=%22white%22 text-anchor=%22middle%22>AI</text></svg>" />
+
+  <style>
+    :root {
+      --bg-dark: #0a0d14;
+      --bg-surface: #111827;
+      --bg-card: #182234;
+      --border: rgba(255, 255, 255, 0.08);
+      --text-main: #f9fafb;
+      --text-muted: #9ca3af;
+      --primary: #6366f1;
+      --primary-hover: #4f46e5;
+      --cf-orange: #f38020;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    body { background-color: var(--bg-dark); color: var(--text-main); min-height: 100vh; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+
+    .navbar { border-bottom: 1px solid var(--border); background: rgba(11, 15, 25, 0.85); backdrop-filter: blur(12px); position: sticky; top: 0; z-index: 100; }
+    .container { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+    .nav-inner { display: flex; justify-content: space-between; align-items: center; height: 68px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.1rem; }
+    .brand-icon { width: 34px; height: 34px; border-radius: 8px; background: linear-gradient(135deg, #6366f1, #8b5cf6); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.95rem; }
+    .nav-links { display: flex; align-items: center; gap: 16px; }
+    .nav-link { color: var(--text-muted); font-size: 0.9rem; transition: color 0.15s; }
+    .nav-link:hover { color: #fff; }
+
+    .header-section { text-align: center; padding: 48px 0 28px; }
+    .badge-bar { display: flex; justify-content: center; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+    .badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(99, 102, 241, 0.12); color: #818cf8; border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 9999px; padding: 4px 14px; font-size: 0.8rem; font-weight: 600; }
+    .badge-cf { background: rgba(243, 128, 32, 0.12); color: #fb923c; border-color: rgba(243, 128, 32, 0.3); }
+    .header-section h1 { font-size: 2.2rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 10px; }
+    .gradient-text { background: linear-gradient(135deg, #fff 30%, #818cf8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .header-section p { color: var(--text-muted); font-size: 1rem; max-width: 620px; margin: 0 auto; }
+
+    .tool-box { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 16px; padding: 32px; margin-bottom: 40px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); }
+    .form-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 22px; }
+    label { font-size: 0.88rem; font-weight: 700; color: #e5e7eb; display: flex; justify-content: space-between; }
+    label span { font-weight: 400; color: var(--text-muted); font-size: 0.8rem; }
+    textarea {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px;
+      color: #fff;
+      font-size: 0.95rem;
+      width: 100%;
+      resize: vertical;
+      min-height: 90px;
+    }
+    textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2); }
+
+    .options-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 22px; }
+    .option-group { display: flex; flex-direction: column; gap: 8px; }
+    select {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 12px;
+      color: #fff;
+      font-size: 0.9rem;
+    }
+    select option { background: #1f2937; color: #fff; }
+
+    .btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px; }
+    .btn-enhance {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border);
+      color: #e5e7eb;
+      border-radius: 10px;
+      padding: 14px 20px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .btn-enhance:hover { background: rgba(255, 255, 255, 0.14); color: #fff; }
+
+    .btn-generate {
+      background: linear-gradient(135deg, #f38020 0%, #fa541c 100%);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 14px 20px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      box-shadow: 0 4px 14px rgba(243, 128, 32, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-generate:hover { opacity: 0.95; transform: translateY(-1px); }
+    .btn-generate:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    .output-box {
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+    .output-label { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: #818cf8; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+    .output-text { font-size: 0.95rem; line-height: 1.6; color: #e0e7ff; margin-bottom: 16px; font-family: monospace; white-space: pre-wrap; word-break: break-word; }
+    .btn-copy {
+      background: rgba(99, 102, 241, 0.15);
+      border: 1px solid rgba(99, 102, 241, 0.35);
+      color: #a5b4fc;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-copy:hover { background: #6366f1; color: #fff; }
+
+    /* Live Image Preview Canvas */
+    .image-preview-card {
+      display: none;
+      background: #0d131f;
+      border: 1px solid rgba(243, 128, 32, 0.3);
+      border-radius: 14px;
+      padding: 20px;
+      text-align: center;
+    }
+    .image-preview-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .provider-pill { background: rgba(243, 128, 32, 0.15); color: #fb923c; border-radius: 6px; padding: 2px 8px; font-size: 0.75rem; font-weight: 700; }
+    .image-frame {
+      position: relative;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 340px;
+    }
+    .image-frame img { max-width: 100%; height: auto; border-radius: 10px; display: block; }
+    .image-loading-overlay {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 60px 20px;
+      color: var(--text-muted);
+    }
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid rgba(255, 255, 255, 0.1);
+      border-top-color: var(--cf-orange);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .image-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+    .btn-download {
+      background: #10b981;
+      color: #fff;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-download:hover { opacity: 0.9; }
+
+    @media (max-width: 640px) {
+      .options-grid { grid-template-columns: 1fr; }
+      .btn-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="/" class="brand">
+        <span class="brand-icon">AI</span>
+        <span>All AI Tools</span>
+      </a>
+      <div class="nav-links">
+        <a href="/" class="nav-link">&larr; Directory</a>
+        <a href="/submit/" class="nav-link">+ Submit Tool</a>
+        <a href="/crm/" class="nav-link" style="color:#818cf8;">&#128274; CRM</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="header-section">
+      <div class="badge-bar">
+        <span class="badge">&#9889; Free AI Prompt Builder</span>
+        <span class="badge badge-cf">&#9729;&#65039; Cloudflare Workers AI Ready</span>
+      </div>
+      <h1>AI Prompt &amp; <span class="gradient-text">Live Image Studio</span></h1>
+      <p>Transform raw basic concepts into rich, 8K prompts with cinematic studio lighting, and generate real AI images live using Cloudflare Workers AI (Flux.1 &amp; SDXL).</p>
+    </div>
+
+    <div class="tool-box">
+      <div class="form-group">
+        <label for="rawPrompt">Your Prompt or Subject <span>(type anything)</span></label>
+        <textarea id="rawPrompt" placeholder="e.g. A majestic cybernetic lion perched on a skyscraper overlooking a futuristic Tokyo in neon rain"></textarea>
+      </div>
+
+      <div class="options-grid">
+        <div class="option-group">
+          <label for="styleSelect">Artistic Aesthetic</label>
+          <select id="styleSelect" onchange="enhancePrompt()">
+            <option value="photorealistic">8K Ultra-Photorealistic</option>
+            <option value="cinematic">Cinematic Movie Still (35mm)</option>
+            <option value="anime">Studio Ghibli / Anime</option>
+            <option value="cyberpunk">Cyberpunk Neon Noir</option>
+            <option value="oilpainting">Classical Renaissance Oil</option>
+            <option value="3drender">Unreal Engine 5 3D Render</option>
+          </select>
+        </div>
+
+        <div class="option-group">
+          <label for="lightingSelect">Lighting &amp; Mood</label>
+          <select id="lightingSelect" onchange="enhancePrompt()">
+            <option value="golden">Golden Hour Sunrays</option>
+            <option value="studio">Dramatic Studio Rim Light</option>
+            <option value="volumetric">Moody Volumetric Haze</option>
+            <option value="bioluminescent">Bioluminescent Neon Glow</option>
+            <option value="overcast">Soft Natural Diffused Light</option>
+          </select>
+        </div>
+
+        <div class="option-group">
+          <label for="modelSelect">AI Model Engine</label>
+          <select id="modelSelect">
+            <option value="@cf/black-forest-labs/flux-1-schnell">Flux.1 Schnell (Cloudflare Workers AI)</option>
+            <option value="@cf/bytedance/stable-diffusion-xl-lightning">SDXL Lightning (ByteDance)</option>
+            <option value="@cf/stabilityai/stable-diffusion-xl-base-1.0">Stable Diffusion XL Base</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn-enhance" onclick="enhancePrompt()">&#9889; Refresh Prompt Tokens</button>
+        <button class="btn-generate" id="genBtn" onclick="generateLiveImage()">
+          <span>&#127912;</span>
+          <span id="genBtnText">Generate AI Image Live</span>
+        </button>
+      </div>
+
+      <!-- Enhanced Prompt Code Box -->
+      <div class="output-box" id="outputBox">
+        <div class="output-label">
+          <span>Enhanced Master Prompt</span>
+          <button class="btn-copy" id="copyBtn" onclick="copyResult()">Copy Prompt</button>
+        </div>
+        <div class="output-text" id="outputText">Click "Refresh Prompt Tokens" above to build your prompt...</div>
+      </div>
+
+      <!-- Live Generated Image Preview -->
+      <div class="image-preview-card" id="imagePreviewCard">
+        <div class="image-preview-header">
+          <span style="font-size:0.85rem; font-weight:700; color:#fff;">Live AI Generation Preview</span>
+          <span class="provider-pill" id="providerPill">Cloudflare Workers AI</span>
+        </div>
+
+        <div class="image-frame" id="imageFrame">
+          <div class="image-loading-overlay" id="loadingOverlay">
+            <div class="spinner"></div>
+            <div style="color:#e2e8f0; font-size:0.95rem; font-weight:600;" id="loadingText">Generating image with Cloudflare Workers AI...</div>
+            <div style="font-size:0.8rem; color:#94a3b8;">Running inference steps (typically takes ~3–6 seconds)</div>
+          </div>
+          <img id="resultImage" style="display:none;" alt="Generated AI artwork" />
+        </div>
+
+        <div class="image-actions" id="imageActions" style="display:none;">
+          <span style="font-size:0.8rem; color:#9ca3af;" id="genNotice">1024x1024 &bull; High Resolution</span>
+          <button class="btn-download" onclick="downloadImage()">&#11015; Download PNG</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    let currentEnhancedPrompt = '';
+
+    function enhancePrompt() {
+      const raw = document.getElementById('rawPrompt').value.trim() || 'A majestic cybernetic lion perched on a skyscraper overlooking a futuristic Tokyo in neon rain';
+      const style = document.getElementById('styleSelect').value;
+      const lighting = document.getElementById('lightingSelect').value;
+
+      const styleTokens = {
+        photorealistic: 'hyper-realistic 8k photograph, Hasselblad H6D-100c, 85mm f/1.4 lens, natural skin textures, intricate organic details, sharp focus, professional color grading, award-winning photography',
+        cinematic: 'cinematic 35mm film still, shot on ARRI Alexa Mini, anamorphic lens flares, depth of field, dramatic color palette, IMAX masterpiece, Panavision framing',
+        anime: 'masterpiece Studio Ghibli visual aesthetic, vibrant hand-drawn anime keyframe, Makoto Shinkai sky gradients, painterly cel-shaded textures, high aesthetic detail',
+        cyberpunk: 'futuristic cyberpunk aesthetic, rainy pavement reflections, wet asphalt, glowing holographic ads, ultra-sharp reflections, Blade Runner mood',
+        oilpainting: 'oil on canvas, rich impasto brushwork, chiaroscuro, Rembrandt and Caravaggio classical lighting, fine art museum gallery piece',
+        '3drender': 'octane render, Unreal Engine 5.4, subsurface scattering, ray-traced ambient occlusion, PBR materials, pristine 3D CGI masterpiece'
+      };
+
+      const lightTokens = {
+        golden: 'bathed in warm golden hour sunlight, soft radiant rays beaming through atmosphere, glowing highlights',
+        studio: 'three-point professional studio rim lighting, dual softboxes, clean contrasting shadows, perfectly balanced exposure',
+        volumetric: 'dense volumetric mist and atmospheric fog, crepuscular light rays, dark moody shadows',
+        bioluminescent: 'ethereal bioluminescent cyan and violet glow, illuminated spores floating in air, neon highlights',
+        overcast: 'soft diffused overcast daylight, even ambient illumination, smooth low-contrast micro-shadows'
+      };
+
+      currentEnhancedPrompt = `${raw}, ${styleTokens[style]}, ${lightTokens[lighting]}, high resolution, highly detailed`;
+      document.getElementById('outputText').textContent = currentEnhancedPrompt;
+    }
+
+    async function generateLiveImage() {
+      if (!currentEnhancedPrompt) enhancePrompt();
+
+      const model = document.getElementById('modelSelect').value;
+      const previewCard = document.getElementById('imagePreviewCard');
+      const loadingOverlay = document.getElementById('loadingOverlay');
+      const resultImg = document.getElementById('resultImage');
+      const imageActions = document.getElementById('imageActions');
+      const genBtn = document.getElementById('genBtn');
+      const genBtnText = document.getElementById('genBtnText');
+      const providerPill = document.getElementById('providerPill');
+      const genNotice = document.getElementById('genNotice');
+
+      // Show preview area with spinner
+      previewCard.style.display = 'block';
+      loadingOverlay.style.display = 'flex';
+      resultImg.style.display = 'none';
+      imageActions.style.display = 'none';
+      genBtn.disabled = true;
+      genBtnText.textContent = 'Generating...';
+
+      previewCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+      try {
+        const response = await fetch('/api/generate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            prompt: currentEnhancedPrompt,
+            model: model,
+            steps: 4
+          })
+        });
+
+        const data = await response.json();
+
+        if (data && data.image) {
+          resultImg.src = data.image;
+          resultImg.onload = () => {
+            loadingOverlay.style.display = 'none';
+            resultImg.style.display = 'block';
+            imageActions.style.display = 'flex';
+
+            if (data.provider === 'cloudflare-workers-ai') {
+              providerPill.textContent = 'Cloudflare Workers AI';
+              providerPill.style.background = 'rgba(243, 128, 32, 0.15)';
+              providerPill.style.color = '#fb923c';
+              genNotice.textContent = `${data.model} • 10,000 Neurons Tier`;
+            } else {
+              providerPill.textContent = 'Flux.1 Engine';
+              providerPill.style.background = 'rgba(99, 102, 241, 0.15)';
+              providerPill.style.color = '#818cf8';
+              genNotice.textContent = data.notice || 'High-Speed Flux Engine';
+            }
+          };
+        } else {
+          throw new Error(data.error || 'No image returned');
+        }
+      } catch (err) {
+        console.error('Generation failed:', err);
+        loadingOverlay.innerHTML = `<div style="color:#ef4444; font-weight:700;">Generation Error</div><div style="font-size:0.85rem; color:#9ca3af; margin-top:4px;">${err.message}</div>`;
+      } finally {
+        genBtn.disabled = false;
+        genBtnText.textContent = 'Generate AI Image Live';
+      }
+    }
+
+    function downloadImage() {
+      const img = document.getElementById('resultImage');
+      if (!img.src) return;
+      const a = document.createElement('a');
+      a.href = img.src;
+      a.download = `allaitools_ai_${Date.now()}.png`;
+      a.click();
+    }
+
+    function copyResult() {
+      const text = document.getElementById('outputText').textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = document.getElementById('copyBtn');
+        btn.textContent = '✓ Copied!';
+        setTimeout(() => btn.textContent = 'Copy Prompt', 2000);
+      });
+    }
+
+    // Auto-run once
+    enhancePrompt();
+  </script>
+</body>
+</html>

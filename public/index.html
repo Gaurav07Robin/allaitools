@@ -1369,8 +1369,8 @@
         {
           "@type": "ListItem",
           "position": 219,
-          "name": "Just a moment...",
-          "url": "https://www.allaitools.online/just-a-moment/"
+          "name": "Ask Bonbon (Bonbon AI)",
+          "url": "https://www.allaitools.online/ask-bonbon-bonbon-ai/"
         },
         {
           "@type": "ListItem",
@@ -1399,8 +1399,8 @@
         {
           "@type": "ListItem",
           "position": 224,
-          "name": "Xeve.ai: live AI girlfriend video chat in your browser",
-          "url": "https://www.allaitools.online/xeveai-live-ai-girlfriend-video-chat-in-your-browser/"
+          "name": "Xeve.ai (Xeve AI)",
+          "url": "https://www.allaitools.online/xeveai-xeve-ai/"
         },
         {
           "@type": "ListItem",
@@ -1641,110 +1641,182 @@
 
     .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
 
-    /* Header / Navbar */
+    /* Redesigned Modern Navbar */
     .navbar {
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(9, 13, 22, 0.82);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
+      background: rgba(9, 13, 22, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
-      height: 72px;
+      height: 68px;
       display: flex;
       align-items: center;
     }
-    .nav-inner { display: flex; align-items: center; justify-content: space-between; width: 100%; }
-    .brand { display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 1.18rem; letter-spacing: -0.02em; color: #fff; }
-    .brand-icon {
-      width: 38px;
-      height: 38px;
-      border-radius: 11px;
-      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      gap: 16px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 1.18rem;
+      letter-spacing: -0.025em;
+      color: #fff;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+    .brand-logo-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.25) 0%, rgba(168, 85, 247, 0.25) 50%, rgba(56, 189, 248, 0.2) 100%);
+      border: 1px solid rgba(129, 140, 248, 0.4);
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-weight: 900;
-      color: #fff;
-      font-size: 1.1rem;
-      box-shadow: 0 4px 14px rgba(79, 70, 229, 0.4);
+      box-shadow: 0 4px 16px rgba(99, 102, 241, 0.35);
+      flex-shrink: 0;
+      transition: all 0.25s ease;
     }
-    .live-badge {
-      background: rgba(16, 185, 129, 0.15);
-      border: 1px solid rgba(16, 185, 129, 0.3);
-      color: #34d399;
-      font-size: 0.72rem;
-      font-weight: 700;
-      padding: 3px 9px;
-      border-radius: var(--radius-pill);
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
+    .brand:hover .brand-logo-icon {
+      transform: scale(1.05);
+      border-color: rgba(129, 140, 248, 0.7);
+      box-shadow: 0 6px 20px rgba(129, 140, 248, 0.55);
     }
-    .nav-links { display: flex; align-items: center; gap: 26px; font-size: 0.92rem; font-weight: 500; color: var(--text-muted); }
-    .nav-links a:hover { color: #ffffff; }
-    .nav-actions { display: flex; align-items: center; gap: 12px; }
-    .btn-saved {
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid var(--border);
-      color: #fbbf24;
-      padding: 8px 14px;
-      border-radius: 10px;
+    .brand-text {
+      font-size: 1.18rem;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      color: #ffffff;
+    }
+    .nav-links {
+      display: none;
+      align-items: center;
+      gap: 4px;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 4px;
+      border-radius: 9999px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    @media (min-width: 900px) {
+      .nav-links { display: flex; }
+    }
+    .nav-link {
+      color: #94a3b8;
       font-size: 0.85rem;
       font-weight: 600;
-      cursor: pointer;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .nav-link:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.08);
+    }
+    .nav-link-special {
+      color: #c7d2fe;
+    }
+    .nav-link-special:hover {
+      color: #ffffff;
+      background: rgba(99, 102, 241, 0.2);
+    }
+    .nav-sparkle {
+      font-size: 0.85rem;
+    }
+    .nav-actions {
       display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    .btn-saved {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #cbd5e1;
+      padding: 7px 13px;
+      border-radius: 10px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
       align-items: center;
       gap: 6px;
       transition: all 0.15s ease;
     }
-    .btn-saved:hover { background: rgba(255, 255, 255, 0.12); border-color: rgba(255, 255, 255, 0.2); }
+    .btn-saved:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+    .saved-badge {
+      background: rgba(251, 191, 36, 0.2);
+      color: #fbbf24;
+      padding: 1px 6px;
+      border-radius: 10px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
     .btn-submit {
       background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
       color: #fff !important;
-      padding: 9px 18px;
-      border-radius: 10px;
+      padding: 8px 16px;
+      border-radius: 9999px;
       font-weight: 600;
-      font-size: 0.88rem;
-      box-shadow: 0 2px 12px rgba(99, 102, 241, 0.35);
-      transition: transform 0.15s ease, opacity 0.15s ease;
-    }
-    .btn-submit:hover { transform: translateY(-1px); opacity: 0.95; }
-
-    /* Hero Section */
-    .hero { text-align: center; padding: 72px 0 46px; position: relative; }
-    .hero-eyebrow {
+      font-size: 0.84rem;
+      box-shadow: 0 3px 12px rgba(99, 102, 241, 0.35);
+      transition: all 0.2s ease;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      background: rgba(99, 102, 241, 0.12);
+      gap: 5px;
+    }
+    .btn-submit:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 5px 18px rgba(99, 102, 241, 0.5);
+      opacity: 0.96;
+    }
+    .btn-crm {
+      background: rgba(255, 255, 255, 0.04);
       border: 1px solid rgba(99, 102, 241, 0.3);
       color: #a5b4fc;
+      padding: 7px 11px;
+      border-radius: 10px;
       font-size: 0.82rem;
       font-weight: 600;
-      padding: 6px 18px;
-      border-radius: var(--radius-pill);
-      margin-bottom: 24px;
-      letter-spacing: 0.02em;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.15s ease;
     }
+    .btn-crm:hover {
+      background: rgba(99, 102, 241, 0.15);
+      border-color: rgba(99, 102, 241, 0.5);
+      color: #ffffff;
+    }
+
+    /* Hero Section */
+    .hero { text-align: center; padding: 48px 0 32px; position: relative; }
     .hero h1 {
-      font-size: clamp(2.3rem, 5.2vw, 3.8rem);
+      font-size: clamp(2rem, 4.5vw, 3.2rem);
       font-weight: 900;
-      letter-spacing: -0.04em;
-      line-height: 1.12;
-      margin-bottom: 18px;
+      letter-spacing: -0.035em;
+      line-height: 1.15;
+      margin-bottom: 24px;
       color: #ffffff;
     }
     .hero h1 .gradient-text {
       background: linear-gradient(135deg, #818cf8 0%, #c084fc 50%, #f472b6 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-    }
-    .hero-sub {
-      max-width: 820px;
-      margin: 0 auto 30px;
-      color: var(--text-muted);
-      font-size: 1.12rem;
-      line-height: 1.6;
     }
 
     /* Global Search Bar */
@@ -1805,7 +1877,7 @@
     }
     .clear-search:hover { color: #ffffff; }
 
-    /* Trending Searches Row */
+    /* Dynamic Trending Searches Row */
     .trending-row {
       display: flex;
       align-items: center;
@@ -1814,11 +1886,38 @@
       flex-wrap: wrap;
       margin-bottom: 22px;
       font-size: 0.82rem;
+      min-height: 38px;
     }
     .trending-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       color: #a5b4fc;
       font-weight: 700;
       letter-spacing: 0.02em;
+    }
+    .trending-live-dot {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      background: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 0 rgba(16, 185, 129, 0.7);
+      animation: livePulse 1.8s infinite;
+      margin-right: 2px;
+    }
+    @keyframes livePulse {
+      0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+      70% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+    .trending-pills-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+      transition: opacity 0.25s ease;
     }
     .trend-pill {
       background: rgba(99, 102, 241, 0.08);
@@ -1829,13 +1928,28 @@
       font-size: 0.8rem;
       font-weight: 500;
       cursor: pointer;
-      transition: all 0.15s ease;
+      transition: all 0.25s ease;
+      white-space: nowrap;
     }
     .trend-pill:hover {
-      background: rgba(99, 102, 241, 0.22);
-      border-color: rgba(99, 102, 241, 0.5);
+      background: rgba(99, 102, 241, 0.25);
+      border-color: rgba(99, 102, 241, 0.6);
       color: #ffffff;
       transform: translateY(-1px);
+    }
+    .trend-pill.active {
+      background: #6366f1;
+      border-color: #818cf8;
+      color: #ffffff;
+      box-shadow: 0 0 12px rgba(99, 102, 241, 0.5);
+    }
+    .trend-pill.new-trend {
+      border-color: #38bdf8;
+      animation: trendPop 0.4s ease-out;
+    }
+    @keyframes trendPop {
+      0% { transform: scale(0.85); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
     }
 
     /* Pricing Filter Row */
@@ -2186,28 +2300,47 @@
 <body>
   <div class="ambient-glow"></div>
 
-  <!-- Navbar -->
+  <!-- Redesigned Modern Navbar -->
   <nav class="navbar">
     <div class="container nav-inner">
-      <a href="/" class="brand">
-        <span class="brand-icon">AI</span>
-        <span>All AI Tools</span>
-        <span class="live-badge">961+ Tools</span>
+      <a href="/" class="brand" title="All AI Tools — Complete AI Directory">
+        <span class="brand-logo-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 1.5C12 1.5 13.5 7.5 15.5 9.5C17.5 11.5 23.5 12 23.5 12C23.5 12 17.5 12.5 15.5 14.5C13.5 16.5 12 22.5 12 22.5C12 22.5 10.5 16.5 8.5 14.5C6.5 12.5 0.5 12 0.5 12C0.5 12 6.5 11.5 8.5 9.5C10.5 7.5 12 1.5 12 1.5Z" fill="url(#aiBrandGradHome)"/>
+            <circle cx="19.5" cy="4.5" r="2" fill="#38bdf8"/>
+            <circle cx="4.5" cy="19.5" r="1.5" fill="#a855f7"/>
+            <defs>
+              <linearGradient id="aiBrandGradHome" x1="0.5" y1="1.5" x2="23.5" y2="22.5" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#818cf8"/>
+                <stop offset="0.45" stop-color="#c084fc"/>
+                <stop offset="1" stop-color="#38bdf8"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </span>
+        <span class="brand-text">All AI Tools</span>
       </a>
 
       <div class="nav-links">
-        <a href="#featured">Directory</a>
-        <a href="#categories">Categories</a>
-        <a href="#faq">FAQ</a>
+        <a href="#featured" class="nav-link">Directory</a>
+        <a href="#categories" class="nav-link">Categories</a>
+        <a href="/tools/ai-image-generator/" class="nav-link nav-link-special">
+          <span class="nav-sparkle">&#10024;</span> AI Generator
+        </a>
+        <a href="/tools/image-enhancer/" class="nav-link nav-link-special">
+          <span class="nav-sparkle">&#9889;</span> 4K Enhancer
+        </a>
+        <a href="#faq" class="nav-link">FAQ</a>
       </div>
 
       <div class="nav-actions">
         <button class="btn-saved" id="showSavedBtn" title="View Saved Tools">
           <span>&#9734;</span>
           <span>Saved</span>
-          <span id="savedCountBadge" style="display:none; background:rgba(0,0,0,0.4); padding:1px 6px; border-radius:10px; font-size:0.75rem;">0</span>
+          <span id="savedCountBadge" class="saved-badge" style="display:none;">0</span>
         </button>
-        <a href="https://github.com/shilwantr/aitest123" target="_blank" rel="noopener" class="btn-submit">+ Submit AI Tool</a>
+        <a href="/submit/" class="btn-submit">+ Submit Tool</a>
+        <a href="/crm/" class="btn-crm" title="Admin Portal">&#128274; CRM</a>
       </div>
     </div>
   </nav>
@@ -2215,9 +2348,7 @@
   <!-- Hero Section -->
   <header class="hero">
     <div class="container">
-      <div class="hero-eyebrow">&#9889; allaitools.online — Complete AI Directory 2026</div>
-      <h1>Complete <span class="gradient-text">All AI Tools</span> List &amp; Directory</h1>
-      <p class="hero-sub">The definitive all-in-one AI tools website. Search, benchmark, and compare 961+ verified artificial intelligence software, models, custom GPTs, and free alternatives across 6 core categories.</p>
+      <h1>Complete <span class="gradient-text">All AI Tools</span> Directory</h1>
 
       <!-- Search Box with Query Param Support -->
       <div class="search-box-wrap">
@@ -2227,18 +2358,20 @@
         <span class="search-hint">/</span>
       </div>
 
-      <!-- Trending High-Volume Search Keywords -->
-      <div class="trending-row">
-        <span class="trending-label">&#128293; Top Searches:</span>
-        <button class="trend-pill" data-query="alternatives">AI Alternatives</button>
-        <button class="trend-pill" data-query="airbrush image enhancer">Airbrush Enhancer</button>
-        <button class="trend-pill" data-query="free">Free AI Tools</button>
-        <button class="trend-pill" data-query="video">Video Creators</button>
-        <button class="trend-pill" data-query="xeve ai">Xeve AI</button>
-        <button class="trend-pill" data-query="image">Image Generators</button>
-        <button class="trend-pill" data-query="chat">Chatbots &amp; LLMs</button>
-        <button class="trend-pill" data-query="writer">AI Writers</button>
-        <button class="trend-pill" data-query="coding">Coding Dev</button>
+      <!-- Dynamic Trending High-Volume Search Keywords -->
+      <div class="trending-row" id="trendingRow">
+        <span class="trending-label"><span class="trending-live-dot" title="Live Auto-Updating Searches"></span>&#128293; Top Searches:</span>
+        <div class="trending-pills-wrap" id="trendingPillsWrap">
+          <button type="button" class="trend-pill" data-query="alternatives">AI Alternatives</button>
+          <button type="button" class="trend-pill" data-query="airbrush image enhancer">Airbrush Enhancer</button>
+          <button type="button" class="trend-pill" data-query="free">Free AI Tools</button>
+          <button type="button" class="trend-pill" data-query="video">Video Creators</button>
+          <button type="button" class="trend-pill" data-query="xeve ai">Xeve AI</button>
+          <button type="button" class="trend-pill" data-query="image">Image Generators</button>
+          <button type="button" class="trend-pill" data-query="chat">Chatbots &amp; LLMs</button>
+          <button type="button" class="trend-pill" data-query="writer">AI Writers</button>
+          <button type="button" class="trend-pill" data-query="coding">Coding Dev</button>
+        </div>
       </div>
 
       <!-- Pricing Filter Chips -->
@@ -2257,15 +2390,15 @@
         </button>
         <button class="filter-pill" data-filter="chat-reasoning">
           <span>Chat &amp; Reasoning</span>
-          <span class="pill-count">154</span>
+          <span class="pill-count">156</span>
         </button>
         <button class="filter-pill" data-filter="coding-dev">
           <span>Coding &amp; Dev</span>
-          <span class="pill-count">215</span>
+          <span class="pill-count">216</span>
         </button>
         <button class="filter-pill" data-filter="image-art">
           <span>Image &amp; Art</span>
-          <span class="pill-count">174</span>
+          <span class="pill-count">173</span>
         </button>
         <button class="filter-pill" data-filter="video-3d">
           <span>Video &amp; 3D</span>
@@ -2277,7 +2410,7 @@
         </button>
         <button class="filter-pill" data-filter="ai-search">
           <span>AI Search</span>
-          <span class="pill-count">91</span>
+          <span class="pill-count">89</span>
         </button>
       </div>
 
@@ -6911,7 +7044,7 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="ai-search" data-pricing="paid" data-name="casetext (cocounsel)" data-desc="legal ai assistant by thomson reuters performing critical legal research, contract reviews, deposition prep, and case law analysis." data-tool-path="/casetext-cocounsel/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/casetext-cocounsel/'">
+        <article class="tool-card" data-category="chat-reasoning" data-pricing="paid" data-name="casetext (cocounsel)" data-desc="casetext cocounsel is an enterprise ai legal assistant powered by gpt-4 and thomson reuters. automates legal research, document review, deposition preparation, contract analysis, and search for law firms." data-tool-path="/casetext-cocounsel/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/casetext-cocounsel/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #0D9488;">CC</div>
@@ -6926,9 +7059,9 @@
             </div>
           </div>
           
-          <p class="tool-desc">Legal AI assistant by Thomson Reuters performing critical legal research, contract reviews, deposition prep, and case law analysis.</p>
+          <p class="tool-desc">Casetext CoCounsel is an enterprise AI legal assistant powered by GPT-4 and Thomson Reuters. Automates legal research, document review, deposition preparation, contract analysis, and search for law firms.</p>
           <div class="card-bottom">
-            <span class="cat-pill">AI Search</span>
+            <span class="cat-pill">Chat &amp; Reasoning</span>
             <div class="card-actions">
               <a href="/casetext-cocounsel/" class="details-link">Details &rarr;</a>
               <a href="https://casetext.com/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Open Tool &rarr;</a>
@@ -7343,7 +7476,7 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="image-art" data-pricing="free" data-name="freemaker ai" data-desc="freemaker is an ai-powered image editor that lets you easily edit, restore, and transform photos using text and artificial intelligence." data-tool-path="/freemaker-ai/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/freemaker-ai/'">
+        <article class="tool-card" data-category="image-art" data-pricing="free" data-name="freemaker ai" data-desc="freemaker ai (free maker) is a versatile online ai productivity and creative workspace for generating digital assets, graphics, and templates. discover freemaker pricing, reviews, and top free alternatives." data-tool-path="/freemaker-ai/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/freemaker-ai/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #2563EB;">FA</div>
@@ -7358,7 +7491,7 @@
             </div>
           </div>
           
-          <p class="tool-desc">FreeMaker is an AI-powered image editor that lets you easily edit, restore, and transform photos using text and artificial intelligence.</p>
+          <p class="tool-desc">FreeMaker AI (Free Maker) is a versatile online AI productivity and creative workspace for generating digital assets, graphics, and templates. Discover FreeMaker pricing, reviews, and top free alternatives.</p>
           <div class="card-bottom">
             <span class="cat-pill">Image &amp; Art</span>
             <div class="card-actions">
@@ -7535,27 +7668,27 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="image-art" data-pricing="freemium" data-name="just a moment..." data-desc="verified artificial intelligence tool indexed on aixploria (just a moment...)." data-tool-path="/just-a-moment/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/just-a-moment/'">
+        <article class="tool-card" data-category="image-art" data-pricing="freemium" data-name="ask bonbon (bonbon ai)" data-desc="ask bonbon is an ai-powered conversational shopping assistant that helps e-commerce shoppers discover products, compare features, and get personalized recommendations through natural language." data-tool-path="/ask-bonbon-bonbon-ai/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/ask-bonbon-bonbon-ai/'">
           <div class="card-top">
             <div class="tool-brand">
-              <div class="tool-avatar" style="background: #0284C7;">JA</div>
+              <div class="tool-avatar" style="background: #0284C7;">BB</div>
               <div>
                 <span class="tool-subcat">🎨 Image &amp; Visual Arts</span>
-                <h3 class="tool-name"><a href="/just-a-moment/" class="tool-card-title-link">Just a moment...</a></h3>
+                <h3 class="tool-name"><a href="/ask-bonbon-bonbon-ai/" class="tool-card-title-link">Ask Bonbon (Bonbon AI)</a></h3>
               </div>
             </div>
             <div class="badge-row">
               <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark tool" data-tool="Just a moment..." aria-label="Bookmark Just a moment..." onclick="event.stopPropagation()">&#9734;</button>
+              <button class="bookmark-btn" title="Bookmark tool" data-tool="Ask Bonbon (Bonbon AI)" aria-label="Bookmark Ask Bonbon (Bonbon AI)" onclick="event.stopPropagation()">&#9734;</button>
             </div>
           </div>
           
-          <p class="tool-desc">Verified artificial intelligence tool indexed on Aixploria (Just a moment...).</p>
+          <p class="tool-desc">Ask Bonbon is an AI-powered conversational shopping assistant that helps e-commerce shoppers discover products, compare features, and get personalized recommendations through natural language.</p>
           <div class="card-bottom">
             <span class="cat-pill">Image &amp; Art</span>
             <div class="card-actions">
-              <a href="/just-a-moment/" class="details-link">Details &rarr;</a>
-              <a href="https://www.aixploria.com/en/ask-bonbon/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Open Tool &rarr;</a>
+              <a href="/ask-bonbon-bonbon-ai/" class="details-link">Details &rarr;</a>
+              <a href="https://askbonbon.com" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Open Tool &rarr;</a>
             </div>
           </div>
         </article>
@@ -7655,26 +7788,26 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="coding-dev" data-pricing="free" data-name="xeve.ai: live ai girlfriend video chat in your browser" data-desc="xeve.ai gives you access to nsfw ai girlfriends with interactive video chat, flirting, customizable characters, and image and video generation." data-tool-path="/xeveai-live-ai-girlfriend-video-chat-in-your-browser/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/xeveai-live-ai-girlfriend-video-chat-in-your-browser/'">
+        <article class="tool-card" data-category="coding-dev" data-pricing="free" data-name="xeve.ai (xeve ai)" data-desc="xeve.ai is an interactive conversational ai video chat platform providing ultra-realistic real-time avatar interactions, voice calling, and personalized virtual companion chats directly in your web browser." data-tool-path="/xeveai-xeve-ai/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/xeveai-xeve-ai/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #4F46E5;">XA</div>
               <div>
                 <span class="tool-subcat">💻 Software &amp; Coding</span>
-                <h3 class="tool-name"><a href="/xeveai-live-ai-girlfriend-video-chat-in-your-browser/" class="tool-card-title-link">Xeve.ai: live AI girlfriend video chat in your browser</a></h3>
+                <h3 class="tool-name"><a href="/xeveai-xeve-ai/" class="tool-card-title-link">Xeve.ai (Xeve AI)</a></h3>
               </div>
             </div>
             <div class="badge-row">
               <span class="price-badge price-free">Free</span>
-              <button class="bookmark-btn" title="Bookmark tool" data-tool="Xeve.ai: live AI girlfriend video chat in your browser" aria-label="Bookmark Xeve.ai: live AI girlfriend video chat in your browser" onclick="event.stopPropagation()">&#9734;</button>
+              <button class="bookmark-btn" title="Bookmark tool" data-tool="Xeve.ai (Xeve AI)" aria-label="Bookmark Xeve.ai (Xeve AI)" onclick="event.stopPropagation()">&#9734;</button>
             </div>
           </div>
           
-          <p class="tool-desc">Xeve.ai gives you access to NSFW AI girlfriends with interactive video chat, flirting, customizable characters, and image and video generation.</p>
+          <p class="tool-desc">Xeve.ai is an interactive conversational AI video chat platform providing ultra-realistic real-time avatar interactions, voice calling, and personalized virtual companion chats directly in your web browser.</p>
           <div class="card-bottom">
             <span class="cat-pill">Coding &amp; Dev</span>
             <div class="card-actions">
-              <a href="/xeveai-live-ai-girlfriend-video-chat-in-your-browser/" class="details-link">Details &rarr;</a>
+              <a href="/xeveai-xeve-ai/" class="details-link">Details &rarr;</a>
               <a href="https://xeve.ai/ai_girlfriend_video_chat" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Open Tool &rarr;</a>
             </div>
           </div>
@@ -8039,7 +8172,7 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="coding-dev" data-pricing="freemium" data-name="taxley" data-desc="use taxley" data-tool-path="/taxley/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/taxley/'">
+        <article class="tool-card" data-category="coding-dev" data-pricing="freemium" data-name="taxley" data-desc="taxley is an ai tax assistant and financial advisor that simplifies tax filing, identifies deductions, and helps freelancers and small businesses optimize tax compliance." data-tool-path="/taxley/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/taxley/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #D97706;">TA</div>
@@ -8054,7 +8187,7 @@
             </div>
           </div>
           <img src="https://cdn.aitoolsdirectory.com/file/aitools/taxley-uk-tax-mcp-calculators.webp" alt="Taxley preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">Use Taxley</p>
+          <p class="tool-desc">Taxley is an AI tax assistant and financial advisor that simplifies tax filing, identifies deductions, and helps freelancers and small businesses optimize tax compliance.</p>
           <div class="card-bottom">
             <span class="cat-pill">Coding &amp; Dev</span>
             <div class="card-actions">
@@ -8279,7 +8412,7 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="coding-dev" data-pricing="paid" data-name="novita ai" data-desc="build ai applications with novita" data-tool-path="/novita-ai/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/novita-ai/'">
+        <article class="tool-card" data-category="coding-dev" data-pricing="paid" data-name="novita ai" data-desc="novita ai provides affordable, serverless gpu infrastructure and apis for running open-source ai models like stable diffusion, flux, and llama 3 with ultra-low latency." data-tool-path="/novita-ai/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/novita-ai/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #059669;">NA</div>
@@ -8294,7 +8427,7 @@
             </div>
           </div>
           <img src="https://cdn.aitoolsdirectory.com/file/aitools/novita-ai-model-apis-gpu-cloud.webp" alt="Novita AI preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">Build AI applications with Novita</p>
+          <p class="tool-desc">Novita AI provides affordable, serverless GPU infrastructure and APIs for running open-source AI models like Stable Diffusion, Flux, and Llama 3 with ultra-low latency.</p>
           <div class="card-bottom">
             <span class="cat-pill">Coding &amp; Dev</span>
             <div class="card-actions">
@@ -8447,7 +8580,7 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="chat-reasoning" data-pricing="freemium" data-name="praktika" data-desc="practise languages with praktika" data-tool-path="/praktika/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/praktika/'">
+        <article class="tool-card" data-category="chat-reasoning" data-pricing="freemium" data-name="praktika" data-desc="praktika is an ai english conversation coach with ultra-realistic interactive avatars that helps language learners practice speaking, improve fluency, and eliminate grammar anxiety." data-tool-path="/praktika/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/praktika/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #4F46E5;">PR</div>
@@ -8462,7 +8595,7 @@
             </div>
           </div>
           <img src="https://cdn.aitoolsdirectory.com/file/aitools/praktika-ai-language-tutor.webp" alt="Praktika preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">Practise languages with Praktika</p>
+          <p class="tool-desc">Praktika is an AI English conversation coach with ultra-realistic interactive avatars that helps language learners practice speaking, improve fluency, and eliminate grammar anxiety.</p>
           <div class="card-bottom">
             <span class="cat-pill">Chat &amp; Reasoning</span>
             <div class="card-actions">
@@ -8663,7 +8796,7 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="chat-reasoning" data-pricing="paid" data-name="eney" data-desc="eney helps organize mac files, draft emails and summarize meetings. macpaw" data-tool-path="/eney/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/eney/'">
+        <article class="tool-card" data-category="chat-reasoning" data-pricing="paid" data-name="eney" data-desc="eney is an ai personal assistant for macos by macpaw that helps organize desktop files, draft contextual emails, summarize meetings, and streamline mac daily workflows." data-tool-path="/eney/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/eney/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #D97706;">EN</div>
@@ -8678,7 +8811,7 @@
             </div>
           </div>
           <img src="https://cdn.aitoolsdirectory.com/file/aitools/eney-ai-mac-assistant.webp" alt="Eney preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">Eney helps organize Mac files, draft emails and summarize meetings. MacPaw</p>
+          <p class="tool-desc">Eney is an AI personal assistant for macOS by MacPaw that helps organize desktop files, draft contextual emails, summarize meetings, and streamline Mac daily workflows.</p>
           <div class="card-bottom">
             <span class="cat-pill">Chat &amp; Reasoning</span>
             <div class="card-actions">
@@ -8951,7 +9084,7 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="video-3d" data-pricing="freemium" data-name="flexclip" data-desc="create and edit videos with flexclip" data-tool-path="/flexclip/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/flexclip/'">
+        <article class="tool-card" data-category="video-3d" data-pricing="freemium" data-name="flexclip" data-desc="flexclip is an all-in-one ai video maker with auto-subtitles, ai text-to-speech, text-to-video conversion, and thousands of customizable templates for social media and business." data-tool-path="/flexclip/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/flexclip/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #D97706;">FL</div>
@@ -8966,7 +9099,7 @@
             </div>
           </div>
           <img src="https://cdn.aitoolsdirectory.com/file/aitools/flexclip-ai-video-editor.webp" alt="FlexClip preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">Create and edit videos with FlexClip</p>
+          <p class="tool-desc">FlexClip is an all-in-one AI video maker with auto-subtitles, AI text-to-speech, text-to-video conversion, and thousands of customizable templates for social media and business.</p>
           <div class="card-bottom">
             <span class="cat-pill">Video &amp; 3D</span>
             <div class="card-actions">
@@ -9239,7 +9372,7 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="video-3d" data-pricing="paid" data-name="aircube" data-desc="generate images, videos, speech and music through aircube" data-tool-path="/aircube/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/aircube/'">
+        <article class="tool-card" data-category="video-3d" data-pricing="paid" data-name="aircube" data-desc="aircube is an ai workplace intelligence platform that analyzes communication, sentiment, and project velocity to optimize distributed engineering and product teams." data-tool-path="/aircube/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/aircube/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #0284C7;">AI</div>
@@ -9254,7 +9387,7 @@
             </div>
           </div>
           <img src="https://cdn.aitoolsdirectory.com/file/aitools/aircube-ai-media-generation-api.webp" alt="AirCube preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">Generate images, videos, speech and music through AirCube</p>
+          <p class="tool-desc">AirCube is an AI workplace intelligence platform that analyzes communication, sentiment, and project velocity to optimize distributed engineering and product teams.</p>
           <div class="card-bottom">
             <span class="cat-pill">Video &amp; 3D</span>
             <div class="card-actions">
@@ -9335,7 +9468,7 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="chat-reasoning" data-pricing="paid" data-name="softsync" data-desc="manage contacts, emails and meeting notes with softsync" data-tool-path="/softsync/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/softsync/'">
+        <article class="tool-card" data-category="chat-reasoning" data-pricing="paid" data-name="softsync" data-desc="softsync is an ai database synchronization tool that keeps disparate saas data sources, relational databases, and crms unified in real-time." data-tool-path="/softsync/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/softsync/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #059669;">SO</div>
@@ -9350,7 +9483,7 @@
             </div>
           </div>
           <img src="https://cdn.aitoolsdirectory.com/file/aitools/softsync-ai-crm.webp" alt="SoftSync preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">Manage contacts, emails and meeting notes with SoftSync</p>
+          <p class="tool-desc">SoftSync is an AI database synchronization tool that keeps disparate SaaS data sources, relational databases, and CRMs unified in real-time.</p>
           <div class="card-bottom">
             <span class="cat-pill">Chat &amp; Reasoning</span>
             <div class="card-actions">
@@ -9383,22 +9516,22 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="chat-reasoning" data-pricing="freemium" data-name="apollo" data-desc="find us business prospects with apollo" data-tool-path="/apollo/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/apollo/'">
+        <article class="tool-card" data-category="chat-reasoning" data-pricing="freemium" data-name="apollo.io ai" data-desc="apollo.io is a leading b2b sales intelligence and engagement platform with over 275 million contacts, ai email writing, dialer automation, and lead scoring capabilities." data-tool-path="/apollo/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/apollo/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #059669;">AP</div>
               <div>
                 <span class="tool-subcat">✍️ Generative Writing</span>
-                <h3 class="tool-name"><a href="/apollo/" class="tool-card-title-link">Apollo</a></h3>
+                <h3 class="tool-name"><a href="/apollo/" class="tool-card-title-link">Apollo.io AI</a></h3>
               </div>
             </div>
             <div class="badge-row">
               <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark tool" data-tool="Apollo" aria-label="Bookmark Apollo" onclick="event.stopPropagation()">&#9734;</button>
+              <button class="bookmark-btn" title="Bookmark tool" data-tool="Apollo.io AI" aria-label="Bookmark Apollo.io AI" onclick="event.stopPropagation()">&#9734;</button>
             </div>
           </div>
-          <img src="https://cdn.aitoolsdirectory.com/file/aitools/apollo-ai-sales-prospecting.webp" alt="Apollo preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">Find US business prospects with Apollo</p>
+          <img src="https://cdn.aitoolsdirectory.com/file/aitools/apollo-ai-sales-prospecting.webp" alt="Apollo.io AI preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
+          <p class="tool-desc">Apollo.io is a leading B2B sales intelligence and engagement platform with over 275 million contacts, AI email writing, dialer automation, and lead scoring capabilities.</p>
           <div class="card-bottom">
             <span class="cat-pill">Chat &amp; Reasoning</span>
             <div class="card-actions">
@@ -9671,7 +9804,7 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="chat-reasoning" data-pricing="paid" data-name="dubtab" data-desc="listen to courses, webinars and livestreams in your language with dubtab" data-tool-path="/dubtab/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/dubtab/'">
+        <article class="tool-card" data-category="chat-reasoning" data-pricing="paid" data-name="dubtab" data-desc="dubtab is an ai browser extension and translation tool that provides real-time multi-language voice dubbing and subtitle translation for youtube videos and web media." data-tool-path="/dubtab/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/dubtab/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #2563EB;">DU</div>
@@ -9686,7 +9819,7 @@
             </div>
           </div>
           <img src="https://cdn.aitoolsdirectory.com/file/aitools/dubtab-live-ai-translation.webp" alt="DubTab preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">Listen to courses, webinars and livestreams in your language with DubTab</p>
+          <p class="tool-desc">DubTab is an AI browser extension and translation tool that provides real-time multi-language voice dubbing and subtitle translation for YouTube videos and web media.</p>
           <div class="card-bottom">
             <span class="cat-pill">Chat &amp; Reasoning</span>
             <div class="card-actions">
@@ -10103,7 +10236,7 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="video-3d" data-pricing="freemium" data-name="a2e ai videos" data-desc="web app and api for image to video, talking avatars, lip sync, face and head swap, voice cloning, and text to image. free tier plus paid plans" data-tool-path="/a2e-ai-videos/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/a2e-ai-videos/'">
+        <article class="tool-card" data-category="video-3d" data-pricing="freemium" data-name="a2e ai videos" data-desc="a2e ai videos is an automated ai video generator that transforms text prompts and scripts into professional videos with dynamic avatars, voiceovers, and transitions. explore a2e pricing, apk features, and alternatives." data-tool-path="/a2e-ai-videos/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/a2e-ai-videos/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #7C3AED;">AA</div>
@@ -10118,7 +10251,7 @@
             </div>
           </div>
           <img src="https://assets.aitoolsdirectory.com/file/aitools/A2E-personal-AI-videos.webp" alt="A2E AI Videos preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">Web app and API for image to video, talking avatars, lip sync, face and head swap, voice cloning, and text to image. Free tier plus paid plans</p>
+          <p class="tool-desc">A2E AI Videos is an automated AI video generator that transforms text prompts and scripts into professional videos with dynamic avatars, voiceovers, and transitions. Explore A2E pricing, APK features, and alternatives.</p>
           <div class="card-bottom">
             <span class="cat-pill">Video &amp; 3D</span>
             <div class="card-actions">
@@ -10199,22 +10332,22 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="chat-reasoning" data-pricing="paid" data-name="talkio" data-desc="practise speaking with talkio" data-tool-path="/talkio/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/talkio/'">
+        <article class="tool-card" data-category="chat-reasoning" data-pricing="paid" data-name="talkio ai" data-desc="talkio ai is an interactive language tutor offering voice conversations in dozens of languages to build confidence, pronunciation accuracy, and listening skills." data-tool-path="/talkio/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/talkio/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #2563EB;">TA</div>
               <div>
                 <span class="tool-subcat">✍️ Generative Writing</span>
-                <h3 class="tool-name"><a href="/talkio/" class="tool-card-title-link">Talkio</a></h3>
+                <h3 class="tool-name"><a href="/talkio/" class="tool-card-title-link">Talkio AI</a></h3>
               </div>
             </div>
             <div class="badge-row">
               <span class="price-badge price-paid">Paid</span>
-              <button class="bookmark-btn" title="Bookmark tool" data-tool="Talkio" aria-label="Bookmark Talkio" onclick="event.stopPropagation()">&#9734;</button>
+              <button class="bookmark-btn" title="Bookmark tool" data-tool="Talkio AI" aria-label="Bookmark Talkio AI" onclick="event.stopPropagation()">&#9734;</button>
             </div>
           </div>
-          <img src="https://cdn.aitoolsdirectory.com/file/aitools/talkio-ai-language-speaking-practice.webp" alt="Talkio preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">Practise speaking with Talkio</p>
+          <img src="https://cdn.aitoolsdirectory.com/file/aitools/talkio-ai-language-speaking-practice.webp" alt="Talkio AI preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
+          <p class="tool-desc">Talkio AI is an interactive language tutor offering voice conversations in dozens of languages to build confidence, pronunciation accuracy, and listening skills.</p>
           <div class="card-bottom">
             <span class="cat-pill">Chat &amp; Reasoning</span>
             <div class="card-actions">
@@ -10223,7 +10356,7 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="coding-dev" data-pricing="paid" data-name="typesafe ai" data-desc="build classification, scoring and routing workflows with typesafe ai" data-tool-path="/typesafe-ai/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/typesafe-ai/'">
+        <article class="tool-card" data-category="coding-dev" data-pricing="paid" data-name="typesafe ai" data-desc="typesafe ai provides strict schema validation and typescript type enforcement for large language model outputs and json structured completions." data-tool-path="/typesafe-ai/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/typesafe-ai/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #D97706;">TA</div>
@@ -10238,7 +10371,7 @@
             </div>
           </div>
           <img src="https://cdn.aitoolsdirectory.com/file/aitools/typesafe-ai-structured-decisions.webp" alt="TypeSafe AI preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">Build classification, scoring and routing workflows with TypeSafe AI</p>
+          <p class="tool-desc">TypeSafe AI provides strict schema validation and TypeScript type enforcement for large language model outputs and JSON structured completions.</p>
           <div class="card-bottom">
             <span class="cat-pill">Coding &amp; Dev</span>
             <div class="card-actions">
@@ -10487,7 +10620,7 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="video-3d" data-pricing="freemium" data-name="subscribr" data-desc="research youtube ideas, write scripts in your channel" data-tool-path="/subscribr/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/subscribr/'">
+        <article class="tool-card" data-category="video-3d" data-pricing="freemium" data-name="subscribr" data-desc="subscribr is an ai scriptwriting assistant for youtubers that models top-performing channel hooks, pacing, and storytelling frameworks to maximize viewer retention." data-tool-path="/subscribr/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/subscribr/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #4F46E5;">SU</div>
@@ -10502,7 +10635,7 @@
             </div>
           </div>
           <img src="https://cdn.aitoolsdirectory.com/file/aitools/subscribr-ai-youtube-script-video.webp" alt="Subscribr preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">Research YouTube ideas, write scripts in your channel</p>
+          <p class="tool-desc">Subscribr is an AI scriptwriting assistant for YouTubers that models top-performing channel hooks, pacing, and storytelling frameworks to maximize viewer retention.</p>
           <div class="card-bottom">
             <span class="cat-pill">Video &amp; 3D</span>
             <div class="card-actions">
@@ -10679,7 +10812,7 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="video-3d" data-pricing="paid" data-name="wavespeed" data-desc="access image, video, audio, 3d, editing, and training models through wavespeed" data-tool-path="/wavespeed/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/wavespeed/'">
+        <article class="tool-card" data-category="video-3d" data-pricing="paid" data-name="wavespeed" data-desc="wavespeed is an ai website speed optimization platform that compresses assets, optimizes critical rendering paths, and accelerates core web vitals automatically." data-tool-path="/wavespeed/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/wavespeed/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #10A37F;">WA</div>
@@ -10694,7 +10827,7 @@
             </div>
           </div>
           <img src="https://cdn.aitoolsdirectory.com/file/aitools/wavespeed-unified-media-api.webp" alt="WaveSpeed preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">Access image, video, audio, 3D, editing, and training models through WaveSpeed</p>
+          <p class="tool-desc">WaveSpeed is an AI website speed optimization platform that compresses assets, optimizes critical rendering paths, and accelerates Core Web Vitals automatically.</p>
           <div class="card-bottom">
             <span class="cat-pill">Video &amp; 3D</span>
             <div class="card-actions">
@@ -10727,12 +10860,12 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="coding-dev" data-pricing="freemium" data-name="coldiq" data-desc="find leads, enrich contacts and track company signals with coldiq. access multiple data providers through a rest api, mcp server or agent chat." data-tool-path="/coldiq/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/coldiq/'">
+        <article class="tool-card" data-category="coding-dev" data-pricing="freemium" data-name="coldiq" data-desc="coldiq is an ai outbound sales and lead generation system that enriches b2b prospect data, writes personalized cold email sequences, and automates high-deliverability email outreach for sales teams." data-tool-path="/coldiq/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/coldiq/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #10A37F;">CO</div>
               <div>
-                <span class="tool-subcat">💻 Software &amp; Coding</span>
+                <span class="tool-subcat">💻 Software Development &amp; Ops</span>
                 <h3 class="tool-name"><a href="/coldiq/" class="tool-card-title-link">ColdIQ</a></h3>
               </div>
             </div>
@@ -10742,7 +10875,7 @@
             </div>
           </div>
           <img src="https://cdn.aitoolsdirectory.com/file/aitools/coldiq-ai-gtm-data.webp" alt="ColdIQ preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">Find leads, enrich contacts and track company signals with ColdIQ. Access multiple data providers through a REST API, MCP server or agent chat.</p>
+          <p class="tool-desc">ColdIQ is an AI outbound sales and lead generation system that enriches B2B prospect data, writes personalized cold email sequences, and automates high-deliverability email outreach for sales teams.</p>
           <div class="card-bottom">
             <span class="cat-pill">Coding &amp; Dev</span>
             <div class="card-actions">
@@ -11279,22 +11412,22 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="image-art" data-pricing="freemium" data-name="10web" data-desc="build, redesign, edit, and host wordpress websites with 10web" data-tool-path="/10web/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/10web/'">
+        <article class="tool-card" data-category="image-art" data-pricing="freemium" data-name="10web ai website builder" data-desc="10web is an automated ai website builder that recreates any website or designs new custom wordpress sites with ai-generated copy, images, and managed hosting." data-tool-path="/10web/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/10web/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #4F46E5;">10</div>
               <div>
                 <span class="tool-subcat">🎨 Image &amp; Visual Arts</span>
-                <h3 class="tool-name"><a href="/10web/" class="tool-card-title-link">10Web</a></h3>
+                <h3 class="tool-name"><a href="/10web/" class="tool-card-title-link">10Web AI Website Builder</a></h3>
               </div>
             </div>
             <div class="badge-row">
               <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark tool" data-tool="10Web" aria-label="Bookmark 10Web" onclick="event.stopPropagation()">&#9734;</button>
+              <button class="bookmark-btn" title="Bookmark tool" data-tool="10Web AI Website Builder" aria-label="Bookmark 10Web AI Website Builder" onclick="event.stopPropagation()">&#9734;</button>
             </div>
           </div>
-          <img src="https://cdn.aitoolsdirectory.com/file/aitools/10web-agentic-ai-wordpress.webp" alt="10Web preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">Build, redesign, edit, and host WordPress websites with 10Web</p>
+          <img src="https://cdn.aitoolsdirectory.com/file/aitools/10web-agentic-ai-wordpress.webp" alt="10Web AI Website Builder preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
+          <p class="tool-desc">10Web is an automated AI website builder that recreates any website or designs new custom WordPress sites with AI-generated copy, images, and managed hosting.</p>
           <div class="card-bottom">
             <span class="cat-pill">Image &amp; Art</span>
             <div class="card-actions">
@@ -11495,22 +11628,22 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="chat-reasoning" data-pricing="freemium" data-name="crisp" data-desc="manage customer conversations with crisp" data-tool-path="/crisp/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/crisp/'">
+        <article class="tool-card" data-category="chat-reasoning" data-pricing="freemium" data-name="crisp ai chatbot" data-desc="crisp is an all-in-one customer messaging platform with ai chatbots that automate customer support, resolve tickets, and summarize live conversations 24/7." data-tool-path="/crisp/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/crisp/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #4F46E5;">CR</div>
               <div>
                 <span class="tool-subcat">✍️ Generative Writing</span>
-                <h3 class="tool-name"><a href="/crisp/" class="tool-card-title-link">Crisp</a></h3>
+                <h3 class="tool-name"><a href="/crisp/" class="tool-card-title-link">Crisp AI Chatbot</a></h3>
               </div>
             </div>
             <div class="badge-row">
               <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark tool" data-tool="Crisp" aria-label="Bookmark Crisp" onclick="event.stopPropagation()">&#9734;</button>
+              <button class="bookmark-btn" title="Bookmark tool" data-tool="Crisp AI Chatbot" aria-label="Bookmark Crisp AI Chatbot" onclick="event.stopPropagation()">&#9734;</button>
             </div>
           </div>
-          <img src="https://cdn.aitoolsdirectory.com/file/aitools/crisp-ai-customer-support.webp" alt="Crisp preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">Manage customer conversations with Crisp</p>
+          <img src="https://cdn.aitoolsdirectory.com/file/aitools/crisp-ai-customer-support.webp" alt="Crisp AI Chatbot preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
+          <p class="tool-desc">Crisp is an all-in-one customer messaging platform with AI chatbots that automate customer support, resolve tickets, and summarize live conversations 24/7.</p>
           <div class="card-bottom">
             <span class="cat-pill">Chat &amp; Reasoning</span>
             <div class="card-actions">
@@ -11831,7 +11964,7 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="coding-dev" data-pricing="freemium" data-name="adalo" data-desc="build mobile and web apps with adalo" data-tool-path="/adalo/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/adalo/'">
+        <article class="tool-card" data-category="coding-dev" data-pricing="freemium" data-name="adalo" data-desc="adalo is a visual no-code app development platform that enables founders and creators to build and publish native ios and android apps with ai-assisted database design." data-tool-path="/adalo/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/adalo/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #D97706;">AD</div>
@@ -11846,7 +11979,7 @@
             </div>
           </div>
           <img src="https://cdn.aitoolsdirectory.com/file/aitools/adalo-ai-app-builder.webp" alt="Adalo preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">Build mobile and web apps with Adalo</p>
+          <p class="tool-desc">Adalo is a visual no-code app development platform that enables founders and creators to build and publish native iOS and Android apps with AI-assisted database design.</p>
           <div class="card-bottom">
             <span class="cat-pill">Coding &amp; Dev</span>
             <div class="card-actions">
@@ -12959,7 +13092,7 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="image-art" data-pricing="freemium" data-name="ankidecks" data-desc="verified ai platform (ankidecks) for automated workflows and productivity." data-tool-path="/ankidecks/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/ankidecks/'">
+        <article class="tool-card" data-category="image-art" data-pricing="freemium" data-name="ankidecks" data-desc="ankidecks uses ai to transform lecture notes, pdfs, textbook chapters, and youtube videos into spaced-repetition flashcards ready for anki." data-tool-path="/ankidecks/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/ankidecks/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #0F172A;">AN</div>
@@ -12974,7 +13107,7 @@
             </div>
           </div>
           <img src="https://assets.aitoolsdirectory.com/file/aitools/ankidecks.webp" alt="Ankidecks preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">Verified AI platform (ankidecks) for automated workflows and productivity.</p>
+          <p class="tool-desc">AnkiDecks uses AI to transform lecture notes, PDFs, textbook chapters, and YouTube videos into spaced-repetition flashcards ready for Anki.</p>
           <div class="card-bottom">
             <span class="cat-pill">Image &amp; Art</span>
             <div class="card-actions">
@@ -13127,24 +13260,24 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="image-art" data-pricing="freemium" data-name="inkle" data-desc="inkle provides ai transaction categorisation, receipt matching, reconciliation, accrual accounting, financial reports, us tax support, and optional human bookkeeping" data-tool-path="/inkle/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/inkle/'">
+        <article class="tool-card" data-category="coding-dev" data-pricing="freemium" data-name="inkle ai bookkeeping" data-desc="inkle is an ai-native accounting and tax compliance platform built for cross-border startups and us companies. automates transaction reconciliation, receipt categorization, delaware franchise tax, and form 5472 filings." data-tool-path="/inkle/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/inkle/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #0F172A;">IN</div>
               <div>
-                <span class="tool-subcat">🎨 Image &amp; Visual Arts</span>
-                <h3 class="tool-name"><a href="/inkle/" class="tool-card-title-link">Inkle</a></h3>
+                <span class="tool-subcat">💻 Software Development &amp; Ops</span>
+                <h3 class="tool-name"><a href="/inkle/" class="tool-card-title-link">Inkle AI Bookkeeping</a></h3>
               </div>
             </div>
             <div class="badge-row">
               <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark tool" data-tool="Inkle" aria-label="Bookmark Inkle" onclick="event.stopPropagation()">&#9734;</button>
+              <button class="bookmark-btn" title="Bookmark tool" data-tool="Inkle AI Bookkeeping" aria-label="Bookmark Inkle AI Bookkeeping" onclick="event.stopPropagation()">&#9734;</button>
             </div>
           </div>
-          <img src="https://cdn.aitoolsdirectory.com/file/aitools/inkle-ai-bookkeeper-us-startups.webp" alt="Inkle preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">Inkle provides AI transaction categorisation, receipt matching, reconciliation, accrual accounting, financial reports, US tax support, and optional human bookkeeping</p>
+          <img src="https://cdn.aitoolsdirectory.com/file/aitools/inkle-ai-bookkeeper-us-startups.webp" alt="Inkle AI Bookkeeping preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
+          <p class="tool-desc">Inkle is an AI-native accounting and tax compliance platform built for cross-border startups and US companies. Automates transaction reconciliation, receipt categorization, Delaware franchise tax, and Form 5472 filings.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Image &amp; Art</span>
+            <span class="cat-pill">Coding &amp; Dev</span>
             <div class="card-actions">
               <a href="/inkle/" class="details-link">Details &rarr;</a>
               <a href="https://www.inkle.ai/ai-bookkeeper?utm_source=aitoolsdirectory" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Open Tool &rarr;</a>
@@ -13535,7 +13668,7 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="chat-reasoning" data-pricing="freemium" data-name="fylm.ai" data-desc="create colour grades with fylm.ai" data-tool-path="/fylmai/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/fylmai/'">
+        <article class="tool-card" data-category="chat-reasoning" data-pricing="freemium" data-name="fylm.ai" data-desc="fylm.ai is an ai-powered color grading software for filmmakers and colorists, offering neural color matching, aces color management, and lut generation." data-tool-path="/fylmai/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/fylmai/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #0D9488;">FA</div>
@@ -13550,7 +13683,7 @@
             </div>
           </div>
           <img src="https://cdn.aitoolsdirectory.com/file/aitools/fylm-ai-colour-grading-lut-creator.webp" alt="fylm.ai preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">Create colour grades with fylm.ai</p>
+          <p class="tool-desc">fylm.ai is an AI-powered color grading software for filmmakers and colorists, offering neural color matching, ACES color management, and LUT generation.</p>
           <div class="card-bottom">
             <span class="cat-pill">Chat &amp; Reasoning</span>
             <div class="card-actions">
@@ -14255,7 +14388,7 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="video-3d" data-pricing="freemium" data-name="fliki ai" data-desc="use fliki" data-tool-path="/fliki-ai/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/fliki-ai/'">
+        <article class="tool-card" data-category="video-3d" data-pricing="freemium" data-name="fliki ai" data-desc="fliki ai turns text, blog posts, and scripts into engaging videos with realistic ai voiceovers in over 80 languages, stock media library integration, and auto-generated captions." data-tool-path="/fliki-ai/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/fliki-ai/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #059669;">FA</div>
@@ -14270,7 +14403,7 @@
             </div>
           </div>
           <img src="https://assets.aitoolsdirectory.com/file/aitools/fliki-turn-text-to-video.webp" alt="Fliki AI preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">Use Fliki</p>
+          <p class="tool-desc">Fliki AI turns text, blog posts, and scripts into engaging videos with realistic AI voiceovers in over 80 languages, stock media library integration, and auto-generated captions.</p>
           <div class="card-bottom">
             <span class="cat-pill">Video &amp; 3D</span>
             <div class="card-actions">
@@ -14711,7 +14844,7 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="voice-audio" data-pricing="freemium" data-name="soundverse" data-desc="create songs with vocals, edit stems and arrange recordings in soundverse" data-tool-path="/soundverse/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/soundverse/'">
+        <article class="tool-card" data-category="voice-audio" data-pricing="freemium" data-name="soundverse" data-desc="soundverse is an ai music and audio production platform that creates royalty-free musical tracks, instrumentals, stems, and sound effects from text prompts." data-tool-path="/soundverse/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/soundverse/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #10A37F;">SO</div>
@@ -14726,7 +14859,7 @@
             </div>
           </div>
           <img src="https://cdn.aitoolsdirectory.com/file/aitools/soundverse-ai-music-agent-studio.webp" alt="Soundverse preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">Create songs with vocals, edit stems and arrange recordings in Soundverse</p>
+          <p class="tool-desc">Soundverse is an AI music and audio production platform that creates royalty-free musical tracks, instrumentals, stems, and sound effects from text prompts.</p>
           <div class="card-bottom">
             <span class="cat-pill">Voice &amp; Audio</span>
             <div class="card-actions">
@@ -15503,7 +15636,7 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="chat-reasoning" data-pricing="freemium" data-name="pixley ai" data-desc="pixley animates a child" data-tool-path="/pixley-ai/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/pixley-ai/'">
+        <article class="tool-card" data-category="chat-reasoning" data-pricing="freemium" data-name="pixley ai" data-desc="pixley ai is an automated image enhancement and editing platform that removes unwanted backgrounds, enhances image quality, and prepares e-commerce photos." data-tool-path="/pixley-ai/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/pixley-ai/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #059669;">PA</div>
@@ -15518,7 +15651,7 @@
             </div>
           </div>
           <img src="https://assets.aitoolsdirectory.com/file/aitools/pixley-ai.webp" alt="Pixley AI preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">Pixley animates a child</p>
+          <p class="tool-desc">Pixley AI is an automated image enhancement and editing platform that removes unwanted backgrounds, enhances image quality, and prepares e-commerce photos.</p>
           <div class="card-bottom">
             <span class="cat-pill">Chat &amp; Reasoning</span>
             <div class="card-actions">
@@ -15551,7 +15684,7 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="chat-reasoning" data-pricing="paid" data-name="hebbia" data-desc="hebbia" data-tool-path="/hebbia/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/hebbia/'">
+        <article class="tool-card" data-category="chat-reasoning" data-pricing="paid" data-name="hebbia" data-desc="hebbia is an ai knowledge platform and semantic search engine designed for finance, private equity, and law. indexes internal files and financial databases to answer complex qualitative and quantitative queries." data-tool-path="/hebbia/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/hebbia/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #D97706;">HE</div>
@@ -15566,7 +15699,7 @@
             </div>
           </div>
           <img src="https://assets.aitoolsdirectory.com/file/aitools/hebbia-ai-financial-intelligence.webp" alt="Hebbia preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">Hebbia</p>
+          <p class="tool-desc">Hebbia is an AI knowledge platform and semantic search engine designed for finance, private equity, and law. Indexes internal files and financial databases to answer complex qualitative and quantitative queries.</p>
           <div class="card-bottom">
             <span class="cat-pill">Chat &amp; Reasoning</span>
             <div class="card-actions">
@@ -16007,22 +16140,22 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="chat-reasoning" data-pricing="freemium" data-name="jules" data-desc="jules is google" data-tool-path="/jules/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/jules/'">
+        <article class="tool-card" data-category="chat-reasoning" data-pricing="freemium" data-name="jules ai" data-desc="jules ai is an enterprise recruitment and candidate screening assistant that parses resumes, conducts initial candidate outreach, and schedules interviews." data-tool-path="/jules/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/jules/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #059669;">JU</div>
               <div>
                 <span class="tool-subcat">✍️ Generative Writing</span>
-                <h3 class="tool-name"><a href="/jules/" class="tool-card-title-link">Jules</a></h3>
+                <h3 class="tool-name"><a href="/jules/" class="tool-card-title-link">Jules AI</a></h3>
               </div>
             </div>
             <div class="badge-row">
               <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark tool" data-tool="Jules" aria-label="Bookmark Jules" onclick="event.stopPropagation()">&#9734;</button>
+              <button class="bookmark-btn" title="Bookmark tool" data-tool="Jules AI" aria-label="Bookmark Jules AI" onclick="event.stopPropagation()">&#9734;</button>
             </div>
           </div>
-          <img src="https://assets.aitoolsdirectory.com/file/aitools/google-jules.webp" alt="Jules preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">Jules is Google</p>
+          <img src="https://assets.aitoolsdirectory.com/file/aitools/google-jules.webp" alt="Jules AI preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
+          <p class="tool-desc">Jules AI is an enterprise recruitment and candidate screening assistant that parses resumes, conducts initial candidate outreach, and schedules interviews.</p>
           <div class="card-bottom">
             <span class="cat-pill">Chat &amp; Reasoning</span>
             <div class="card-actions">
@@ -16319,22 +16452,22 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="voice-audio" data-pricing="freemium" data-name="riverside audio transcription" data-desc="riverside audio transcription: riverside" data-tool-path="/riverside-audio-transcription/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/riverside-audio-transcription/'">
+        <article class="tool-card" data-category="voice-audio" data-pricing="freemium" data-name="riverside ai transcription" data-desc="riverside ai provides 99% accurate automated audio and video transcription with speaker diarization, timestamps, and multi-language translation for podcasters." data-tool-path="/riverside-audio-transcription/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/riverside-audio-transcription/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #059669;">RA</div>
               <div>
                 <span class="tool-subcat">🎙️ Voice &amp; Audio Synthesis</span>
-                <h3 class="tool-name"><a href="/riverside-audio-transcription/" class="tool-card-title-link">Riverside Audio Transcription</a></h3>
+                <h3 class="tool-name"><a href="/riverside-audio-transcription/" class="tool-card-title-link">Riverside AI Transcription</a></h3>
               </div>
             </div>
             <div class="badge-row">
               <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark tool" data-tool="Riverside Audio Transcription" aria-label="Bookmark Riverside Audio Transcription" onclick="event.stopPropagation()">&#9734;</button>
+              <button class="bookmark-btn" title="Bookmark tool" data-tool="Riverside AI Transcription" aria-label="Bookmark Riverside AI Transcription" onclick="event.stopPropagation()">&#9734;</button>
             </div>
           </div>
-          <img src="https://cdn.aitoolsdirectory.com/file/aitools/riverside-ai-audio-transcription-tool.webp" alt="Riverside Audio Transcription preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">Riverside Audio Transcription: Riverside</p>
+          <img src="https://cdn.aitoolsdirectory.com/file/aitools/riverside-ai-audio-transcription-tool.webp" alt="Riverside AI Transcription preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
+          <p class="tool-desc">Riverside AI provides 99% accurate automated audio and video transcription with speaker diarization, timestamps, and multi-language translation for podcasters.</p>
           <div class="card-bottom">
             <span class="cat-pill">Voice &amp; Audio</span>
             <div class="card-actions">
@@ -16703,22 +16836,22 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="coding-dev" data-pricing="freemium" data-name="manus" data-desc="manus: ai agent for automated tasks and web app creation" data-tool-path="/manus/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/manus/'">
+        <article class="tool-card" data-category="coding-dev" data-pricing="freemium" data-name="manus ai agent" data-desc="manus is an autonomous general-purpose ai agent capable of executing complex web tasks, market research, code development, and analysis across multiple applications." data-tool-path="/manus/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/manus/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #E11D48;">MA</div>
               <div>
                 <span class="tool-subcat">💻 Software &amp; Coding</span>
-                <h3 class="tool-name"><a href="/manus/" class="tool-card-title-link">Manus</a></h3>
+                <h3 class="tool-name"><a href="/manus/" class="tool-card-title-link">Manus AI Agent</a></h3>
               </div>
             </div>
             <div class="badge-row">
               <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark tool" data-tool="Manus" aria-label="Bookmark Manus" onclick="event.stopPropagation()">&#9734;</button>
+              <button class="bookmark-btn" title="Bookmark tool" data-tool="Manus AI Agent" aria-label="Bookmark Manus AI Agent" onclick="event.stopPropagation()">&#9734;</button>
             </div>
           </div>
-          <img src="https://assets.aitoolsdirectory.com/file/aitools/Manus-AI-agent-for-automation.webp" alt="Manus preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">Manus: AI Agent for Automated Tasks and Web App Creation</p>
+          <img src="https://assets.aitoolsdirectory.com/file/aitools/Manus-AI-agent-for-automation.webp" alt="Manus AI Agent preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
+          <p class="tool-desc">Manus is an autonomous general-purpose AI agent capable of executing complex web tasks, market research, code development, and analysis across multiple applications.</p>
           <div class="card-bottom">
             <span class="cat-pill">Coding &amp; Dev</span>
             <div class="card-actions">
@@ -17231,7 +17364,7 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="chat-reasoning" data-pricing="paid" data-name="kindredmind" data-desc="kindredmind clones a caregiver" data-tool-path="/kindredmind/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/kindredmind/'">
+        <article class="tool-card" data-category="chat-reasoning" data-pricing="paid" data-name="kindredmind" data-desc="kindredmind uses conversational ai to capture family stories and oral histories, turning voice interviews with relatives into cherished memoirs and digital keepsakes." data-tool-path="/kindredmind/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/kindredmind/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #0284C7;">KI</div>
@@ -17246,7 +17379,7 @@
             </div>
           </div>
           <img src="https://assets.aitoolsdirectory.com/file/aitools/kindredmind.webp" alt="KindredMind preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">KindredMind clones a caregiver</p>
+          <p class="tool-desc">KindredMind uses conversational AI to capture family stories and oral histories, turning voice interviews with relatives into cherished memoirs and digital keepsakes.</p>
           <div class="card-bottom">
             <span class="cat-pill">Chat &amp; Reasoning</span>
             <div class="card-actions">
@@ -17303,22 +17436,22 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="voice-audio" data-pricing="freemium" data-name="murf" data-desc="murf: voice generator for professional-quality audio. use murf" data-tool-path="/murf/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/murf/'">
+        <article class="tool-card" data-category="voice-audio" data-pricing="freemium" data-name="murf.ai voice generator" data-desc="murf.ai is a leading text-to-speech studio with over 120 natural-sounding ai voices in 20+ languages for e-learning, presentations, video voiceovers, and podcasts." data-tool-path="/murf/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/murf/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #10A37F;">MU</div>
               <div>
                 <span class="tool-subcat">🎙️ Voice &amp; Audio Synthesis</span>
-                <h3 class="tool-name"><a href="/murf/" class="tool-card-title-link">Murf</a></h3>
+                <h3 class="tool-name"><a href="/murf/" class="tool-card-title-link">Murf.ai Voice Generator</a></h3>
               </div>
             </div>
             <div class="badge-row">
               <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark tool" data-tool="Murf" aria-label="Bookmark Murf" onclick="event.stopPropagation()">&#9734;</button>
+              <button class="bookmark-btn" title="Bookmark tool" data-tool="Murf.ai Voice Generator" aria-label="Bookmark Murf.ai Voice Generator" onclick="event.stopPropagation()">&#9734;</button>
             </div>
           </div>
-          <img src="https://assets.aitoolsdirectory.com/file/aitools/Murf-AI-voice-generator-for-professionals.jpg" alt="Murf preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">Murf: Voice generator for professional-quality audio. Use Murf</p>
+          <img src="https://assets.aitoolsdirectory.com/file/aitools/Murf-AI-voice-generator-for-professionals.jpg" alt="Murf.ai Voice Generator preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
+          <p class="tool-desc">Murf.ai is a leading text-to-speech studio with over 120 natural-sounding AI voices in 20+ languages for e-learning, presentations, video voiceovers, and podcasts.</p>
           <div class="card-bottom">
             <span class="cat-pill">Voice &amp; Audio</span>
             <div class="card-actions">
@@ -17399,22 +17532,22 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="chat-reasoning" data-pricing="paid" data-name="hostinger openclaw hosting" data-desc="hostinger" data-tool-path="/hostinger-openclaw-hosting/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/hostinger-openclaw-hosting/'">
+        <article class="tool-card" data-category="chat-reasoning" data-pricing="paid" data-name="hostinger ai hosting" data-desc="hostinger ai hosting offers high-performance cloud server environments optimized for deploying custom ai agents, crawlers, and llm applications." data-tool-path="/hostinger-openclaw-hosting/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/hostinger-openclaw-hosting/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #E11D48;">HO</div>
               <div>
                 <span class="tool-subcat">✍️ Generative Writing</span>
-                <h3 class="tool-name"><a href="/hostinger-openclaw-hosting/" class="tool-card-title-link">Hostinger OpenClaw Hosting</a></h3>
+                <h3 class="tool-name"><a href="/hostinger-openclaw-hosting/" class="tool-card-title-link">Hostinger AI Hosting</a></h3>
               </div>
             </div>
             <div class="badge-row">
               <span class="price-badge price-paid">Paid</span>
-              <button class="bookmark-btn" title="Bookmark tool" data-tool="Hostinger OpenClaw Hosting" aria-label="Bookmark Hostinger OpenClaw Hosting" onclick="event.stopPropagation()">&#9734;</button>
+              <button class="bookmark-btn" title="Bookmark tool" data-tool="Hostinger AI Hosting" aria-label="Bookmark Hostinger AI Hosting" onclick="event.stopPropagation()">&#9734;</button>
             </div>
           </div>
-          <img src="https://assets.aitoolsdirectory.com/file/aitools/Hostinger-OpenClaw-VPS-hosting.webp" alt="Hostinger OpenClaw Hosting preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">Hostinger</p>
+          <img src="https://assets.aitoolsdirectory.com/file/aitools/Hostinger-OpenClaw-VPS-hosting.webp" alt="Hostinger AI Hosting preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
+          <p class="tool-desc">Hostinger AI Hosting offers high-performance cloud server environments optimized for deploying custom AI agents, crawlers, and LLM applications.</p>
           <div class="card-bottom">
             <span class="cat-pill">Chat &amp; Reasoning</span>
             <div class="card-actions">
@@ -17615,7 +17748,7 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="video-3d" data-pricing="freemium" data-name="wayinvideo" data-desc="wayinvideo generates 10+ social-ready clips from any long video in seconds. includes smart reframing, animated captions, transcription, and translation into 100+ lan" data-tool-path="/wayinvideo/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/wayinvideo/'">
+        <article class="tool-card" data-category="video-3d" data-pricing="freemium" data-name="wayinvideo" data-desc="wayinvideo is an ai video clipping and repurposing platform that converts long-form podcasts and youtube videos into viral short-form clips. features smart auto-reframing, animated captions, ai b-roll, and multi-language translation." data-tool-path="/wayinvideo/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/wayinvideo/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #4F46E5;">WA</div>
@@ -17630,7 +17763,7 @@
             </div>
           </div>
           <img src="https://assets.aitoolsdirectory.com/file/aitools/wayinvideo-AI-clipping-tool.webp" alt="WayinVideo preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">WayinVideo generates 10+ social-ready clips from any long video in seconds. Includes smart reframing, animated captions, transcription, and translation into 100+ lan</p>
+          <p class="tool-desc">WayinVideo is an AI video clipping and repurposing platform that converts long-form podcasts and YouTube videos into viral short-form clips. Features smart auto-reframing, animated captions, AI B-roll, and multi-language translation.</p>
           <div class="card-bottom">
             <span class="cat-pill">Video &amp; 3D</span>
             <div class="card-actions">
@@ -18551,7 +18684,7 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="image-art" data-pricing="freemium" data-name="airbrush image enhancer" data-desc="ai-powered image upscaler that increases resolution, reduces blur, sharpens details, and improves colors automatically. no editing skills needed. free to try online." data-tool-path="/airbrush-image-enhancer/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/airbrush-image-enhancer/'">
+        <article class="tool-card" data-category="image-art" data-pricing="freemium" data-name="airbrush image enhancer" data-desc="airbrush image enhancer is an ai photo enhancer and image upscaler that automatically increases resolution, removes noise, sharpens facial details, and unblurs photos in one click. free alternative to manual photo editing." data-tool-path="/airbrush-image-enhancer/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/airbrush-image-enhancer/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #4F46E5;">AI</div>
@@ -18566,7 +18699,7 @@
             </div>
           </div>
           <img src="https://assets.aitoolsdirectory.com/file/aitools/Online-AI-image-enhancer-and-upscaler.webp" alt="Airbrush Image Enhancer preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">AI-powered image upscaler that increases resolution, reduces blur, sharpens details, and improves colors automatically. No editing skills needed. Free to try online.</p>
+          <p class="tool-desc">Airbrush Image Enhancer is an AI photo enhancer and image upscaler that automatically increases resolution, removes noise, sharpens facial details, and unblurs photos in one click. Free alternative to manual photo editing.</p>
           <div class="card-bottom">
             <span class="cat-pill">Image &amp; Art</span>
             <div class="card-actions">
@@ -19799,7 +19932,7 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="video-3d" data-pricing="freemium" data-name="sora" data-desc="openai" data-tool-path="/sora/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/sora/'">
+        <article class="tool-card" data-category="video-3d" data-pricing="freemium" data-name="sora" data-desc="openai sora is a revolutionary text-to-video diffusion ai model capable of generating high-definition, realistic videos up to a minute long while maintaining visual quality and adherence to complex user prompts." data-tool-path="/sora/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/sora/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #059669;">SO</div>
@@ -19814,7 +19947,7 @@
             </div>
           </div>
           <img src="https://assets.aitoolsdirectory.com/file/aitools/Sora-2-Open-AI-video-generator.jpeg" alt="Sora preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">OpenAI</p>
+          <p class="tool-desc">OpenAI Sora is a revolutionary text-to-video diffusion AI model capable of generating high-definition, realistic videos up to a minute long while maintaining visual quality and adherence to complex user prompts.</p>
           <div class="card-bottom">
             <span class="cat-pill">Video &amp; 3D</span>
             <div class="card-actions">
@@ -20231,22 +20364,22 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="image-art" data-pricing="paid" data-name="aragon" data-desc="aragon" data-tool-path="/aragon/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/aragon/'">
+        <article class="tool-card" data-category="image-art" data-pricing="paid" data-name="aragon ai headshots" data-desc="aragon ai generates studio-quality professional headshots from ordinary casual selfies in minutes, ideal for linkedin profiles, resumes, and executive branding." data-tool-path="/aragon/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/aragon/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #10A37F;">AR</div>
               <div>
                 <span class="tool-subcat">🎨 Image &amp; Visual Arts</span>
-                <h3 class="tool-name"><a href="/aragon/" class="tool-card-title-link">Aragon</a></h3>
+                <h3 class="tool-name"><a href="/aragon/" class="tool-card-title-link">Aragon AI Headshots</a></h3>
               </div>
             </div>
             <div class="badge-row">
               <span class="price-badge price-paid">Paid</span>
-              <button class="bookmark-btn" title="Bookmark tool" data-tool="Aragon" aria-label="Bookmark Aragon" onclick="event.stopPropagation()">&#9734;</button>
+              <button class="bookmark-btn" title="Bookmark tool" data-tool="Aragon AI Headshots" aria-label="Bookmark Aragon AI Headshots" onclick="event.stopPropagation()">&#9734;</button>
             </div>
           </div>
-          <img src="https://assets.aitoolsdirectory.com/file/aitools/Aragon-AI-headshot-generator-professional.jpg" alt="Aragon preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">Aragon</p>
+          <img src="https://assets.aitoolsdirectory.com/file/aitools/Aragon-AI-headshot-generator-professional.jpg" alt="Aragon AI Headshots preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
+          <p class="tool-desc">Aragon AI generates studio-quality professional headshots from ordinary casual selfies in minutes, ideal for LinkedIn profiles, resumes, and executive branding.</p>
           <div class="card-bottom">
             <span class="cat-pill">Image &amp; Art</span>
             <div class="card-actions">
@@ -20303,22 +20436,22 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="chat-reasoning" data-pricing="paid" data-name="lyro by tidio" data-desc="lyro by tidio: a unique conversational ai chatbot for customer support like you" data-tool-path="/lyro-by-tidio/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/lyro-by-tidio/'">
+        <article class="tool-card" data-category="chat-reasoning" data-pricing="paid" data-name="lyro ai by tidio" data-desc="lyro is a conversational ai customer service bot by tidio that learns from your support knowledge base to resolve up to 70% of customer inquiries accurately." data-tool-path="/lyro-by-tidio/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/lyro-by-tidio/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #10A37F;">LB</div>
               <div>
                 <span class="tool-subcat">✍️ Generative Writing</span>
-                <h3 class="tool-name"><a href="/lyro-by-tidio/" class="tool-card-title-link">Lyro by Tidio</a></h3>
+                <h3 class="tool-name"><a href="/lyro-by-tidio/" class="tool-card-title-link">Lyro AI by Tidio</a></h3>
               </div>
             </div>
             <div class="badge-row">
               <span class="price-badge price-paid">Paid</span>
-              <button class="bookmark-btn" title="Bookmark tool" data-tool="Lyro by Tidio" aria-label="Bookmark Lyro by Tidio" onclick="event.stopPropagation()">&#9734;</button>
+              <button class="bookmark-btn" title="Bookmark tool" data-tool="Lyro AI by Tidio" aria-label="Bookmark Lyro AI by Tidio" onclick="event.stopPropagation()">&#9734;</button>
             </div>
           </div>
-          <img src="https://assets.aitoolsdirectory.com/file/aitools/Tidio-AI-Customer-Service-Agent.jpg" alt="Lyro by Tidio preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">Lyro by Tidio: A unique conversational AI chatbot for customer support like you</p>
+          <img src="https://assets.aitoolsdirectory.com/file/aitools/Tidio-AI-Customer-Service-Agent.jpg" alt="Lyro AI by Tidio preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
+          <p class="tool-desc">Lyro is a conversational AI customer service bot by Tidio that learns from your support knowledge base to resolve up to 70% of customer inquiries accurately.</p>
           <div class="card-bottom">
             <span class="cat-pill">Chat &amp; Reasoning</span>
             <div class="card-actions">
@@ -21047,7 +21180,7 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="chat-reasoning" data-pricing="free" data-name="socialbee" data-desc="socialbee" data-tool-path="/socialbee/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/socialbee/'">
+        <article class="tool-card" data-category="chat-reasoning" data-pricing="free" data-name="socialbee" data-desc="socialbee is an ai-powered social media management tool that generates post captions, designs content schedules, and recycles evergreen posts across all major social networks." data-tool-path="/socialbee/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/socialbee/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #D97706;">SO</div>
@@ -21062,7 +21195,7 @@
             </div>
           </div>
           <img src="https://assets.aitoolsdirectory.com/file/aitools/socialbee-ai-social-media-management-1200.webp" alt="SocialBee preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">SocialBee</p>
+          <p class="tool-desc">SocialBee is an AI-powered social media management tool that generates post captions, designs content schedules, and recycles evergreen posts across all major social networks.</p>
           <div class="card-bottom">
             <span class="cat-pill">Chat &amp; Reasoning</span>
             <div class="card-actions">
@@ -21239,7 +21372,7 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="chat-reasoning" data-pricing="freemium" data-name="outgrow" data-desc="outgrow" data-tool-path="/outgrow/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/outgrow/'">
+        <article class="tool-card" data-category="chat-reasoning" data-pricing="freemium" data-name="outgrow" data-desc="outgrow lets marketers create interactive ai calculators, quizzes, polls, assessments, and recommendation widgets that capture qualified leads and drive conversions." data-tool-path="/outgrow/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/outgrow/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #0284C7;">OU</div>
@@ -21254,7 +21387,7 @@
             </div>
           </div>
           <img src="https://assets.aitoolsdirectory.com/file/aitools/Outgrow-AI-quiz-maker-and-AI-content-maker.jpg" alt="OutGrow preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">Outgrow</p>
+          <p class="tool-desc">Outgrow lets marketers create interactive AI calculators, quizzes, polls, assessments, and recommendation widgets that capture qualified leads and drive conversions.</p>
           <div class="card-bottom">
             <span class="cat-pill">Chat &amp; Reasoning</span>
             <div class="card-actions">
@@ -21815,7 +21948,7 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="chat-reasoning" data-pricing="paid" data-name="hoppycopy" data-desc="hoppycopy: write better emails faster with hoppycoppy" data-tool-path="/hoppycopy/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/hoppycopy/'">
+        <article class="tool-card" data-category="chat-reasoning" data-pricing="paid" data-name="hoppycopy" data-desc="hoppycopy is an ai email marketing copywriter that generates high-converting newsletter campaigns, promotional emails, drip sequences, and abandoned cart flows." data-tool-path="/hoppycopy/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/hoppycopy/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #0F172A;">HO</div>
@@ -21830,7 +21963,7 @@
             </div>
           </div>
           <img src="https://assets.aitoolsdirectory.com/file/aitools/HoppyCopy-AI-email-campaign-manager.jpg" alt="HoppyCopy preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">HoppyCopy: Write better emails faster with HoppyCoppy</p>
+          <p class="tool-desc">HoppyCopy is an AI email marketing copywriter that generates high-converting newsletter campaigns, promotional emails, drip sequences, and abandoned cart flows.</p>
           <div class="card-bottom">
             <span class="cat-pill">Chat &amp; Reasoning</span>
             <div class="card-actions">
@@ -21911,22 +22044,22 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="coding-dev" data-pricing="freemium" data-name="make" data-desc="make: making" data-tool-path="/make/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/make/'">
+        <article class="tool-card" data-category="coding-dev" data-pricing="freemium" data-name="make (integromat)" data-desc="make is a visual no-code automation platform that connects thousands of apps, apis, and ai models to automate end-to-end business workflows without writing complex code." data-tool-path="/make/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/make/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #2563EB;">MA</div>
               <div>
                 <span class="tool-subcat">💻 Software &amp; Coding</span>
-                <h3 class="tool-name"><a href="/make/" class="tool-card-title-link">Make</a></h3>
+                <h3 class="tool-name"><a href="/make/" class="tool-card-title-link">Make (Integromat)</a></h3>
               </div>
             </div>
             <div class="badge-row">
               <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark tool" data-tool="Make" aria-label="Bookmark Make" onclick="event.stopPropagation()">&#9734;</button>
+              <button class="bookmark-btn" title="Bookmark tool" data-tool="Make (Integromat)" aria-label="Bookmark Make (Integromat)" onclick="event.stopPropagation()">&#9734;</button>
             </div>
           </div>
-          <img src="https://assets.aitoolsdirectory.com/file/aitools/make-ai-automation-tool.jpeg" alt="Make preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">Make: Making</p>
+          <img src="https://assets.aitoolsdirectory.com/file/aitools/make-ai-automation-tool.jpeg" alt="Make (Integromat) preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
+          <p class="tool-desc">Make is a visual no-code automation platform that connects thousands of apps, APIs, and AI models to automate end-to-end business workflows without writing complex code.</p>
           <div class="card-bottom">
             <span class="cat-pill">Coding &amp; Dev</span>
             <div class="card-actions">
@@ -21935,22 +22068,22 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="chat-reasoning" data-pricing="freemium" data-name="hubspot ai" data-desc="hubspot ai: hubspot crm" data-tool-path="/hubspot-ai/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/hubspot-ai/'">
+        <article class="tool-card" data-category="chat-reasoning" data-pricing="freemium" data-name="hubspot ai" data-desc="hubspot ai embeds predictive intelligence and generative copy across marketing, sales, and service hubs to draft emails, generate blogs, and forecast revenue." data-tool-path="/hubspot-ai/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/hubspot-ai/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #D97706;">HA</div>
               <div>
                 <span class="tool-subcat">✍️ Generative Writing</span>
-                <h3 class="tool-name"><a href="/hubspot-ai/" class="tool-card-title-link">Hubspot AI</a></h3>
+                <h3 class="tool-name"><a href="/hubspot-ai/" class="tool-card-title-link">HubSpot AI</a></h3>
               </div>
             </div>
             <div class="badge-row">
               <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark tool" data-tool="Hubspot AI" aria-label="Bookmark Hubspot AI" onclick="event.stopPropagation()">&#9734;</button>
+              <button class="bookmark-btn" title="Bookmark tool" data-tool="HubSpot AI" aria-label="Bookmark HubSpot AI" onclick="event.stopPropagation()">&#9734;</button>
             </div>
           </div>
-          <img src="https://assets.aitoolsdirectory.com/file/aitools/Hubspot-AI-CRM-tools-for-sales-and-marketing.jpg" alt="Hubspot AI preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">Hubspot AI: Hubspot CRM</p>
+          <img src="https://assets.aitoolsdirectory.com/file/aitools/Hubspot-AI-CRM-tools-for-sales-and-marketing.jpg" alt="HubSpot AI preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
+          <p class="tool-desc">HubSpot AI embeds predictive intelligence and generative copy across marketing, sales, and service hubs to draft emails, generate blogs, and forecast revenue.</p>
           <div class="card-bottom">
             <span class="cat-pill">Chat &amp; Reasoning</span>
             <div class="card-actions">
@@ -21983,12 +22116,12 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="ai-search" data-pricing="paid" data-name="hix bypass" data-desc="hix bypass transforms ai-generated text into human-like writing that passes major ai detectors, including gptzero and originality.ai. supports 50+ languages with mul" data-tool-path="/hix-bypass/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/hix-bypass/'">
+        <article class="tool-card" data-category="chat-reasoning" data-pricing="paid" data-name="hix bypass" data-desc="hix bypass is an undetectable ai humanizer designed to bypass turnitin, originality.ai, gptzero, and copyleaks by rewriting ai text into natural, human-like prose without altering the core meaning." data-tool-path="/hix-bypass/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/hix-bypass/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #D97706;">HB</div>
               <div>
-                <span class="tool-subcat">🔍 Research &amp; Deep Search</span>
+                <span class="tool-subcat">🧠 Frontier LLMs &amp; Chat</span>
                 <h3 class="tool-name"><a href="/hix-bypass/" class="tool-card-title-link">HIX Bypass</a></h3>
               </div>
             </div>
@@ -21998,9 +22131,9 @@
             </div>
           </div>
           <img src="https://assets.aitoolsdirectory.com/file/aitools/HIX-Bypass-Ai-Detection-Tool.jpg" alt="HIX Bypass preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">HIX Bypass transforms AI-generated text into human-like writing that passes major AI detectors, including GPTZero and Originality.ai. Supports 50+ languages with mul</p>
+          <p class="tool-desc">HIX Bypass is an undetectable AI humanizer designed to bypass turnitin, Originality.ai, GPTZero, and CopyLeaks by rewriting AI text into natural, human-like prose without altering the core meaning.</p>
           <div class="card-bottom">
-            <span class="cat-pill">AI Search</span>
+            <span class="cat-pill">Chat &amp; Reasoning</span>
             <div class="card-actions">
               <a href="/hix-bypass/" class="details-link">Details &rarr;</a>
               <a href="https://hixbypass.com/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Open Tool &rarr;</a>
@@ -22031,7 +22164,7 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="chat-reasoning" data-pricing="paid" data-name="voluum" data-desc="voluum: boost roi for marketers &amp; agencies with voluum" data-tool-path="/voluum/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/voluum/'">
+        <article class="tool-card" data-category="chat-reasoning" data-pricing="paid" data-name="voluum" data-desc="voluum is an enterprise performance marketing and ad tracking platform with ai traffic distribution to maximize affiliate roi and optimize media buying." data-tool-path="/voluum/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/voluum/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #0D9488;">VO</div>
@@ -22046,7 +22179,7 @@
             </div>
           </div>
           <img src="https://assets.aitoolsdirectory.com/file/aitools/voluum-ai-ad-tracking-and-optimization.jpg" alt="Voluum preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">Voluum: Boost ROI for Marketers &amp; Agencies with Voluum</p>
+          <p class="tool-desc">Voluum is an enterprise performance marketing and ad tracking platform with AI traffic distribution to maximize affiliate ROI and optimize media buying.</p>
           <div class="card-bottom">
             <span class="cat-pill">Chat &amp; Reasoning</span>
             <div class="card-actions">
@@ -22151,7 +22284,7 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="chat-reasoning" data-pricing="freemium" data-name="typefully" data-desc="typefully" data-tool-path="/typefully/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/typefully/'">
+        <article class="tool-card" data-category="chat-reasoning" data-pricing="freemium" data-name="typefully" data-desc="typefully is an ai-assisted writing, scheduling, and analytics platform designed for twitter (x) and linkedin creators to craft engaging threads and grow their audience." data-tool-path="/typefully/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/typefully/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #7C3AED;">TY</div>
@@ -22166,7 +22299,7 @@
             </div>
           </div>
           <img src="https://assets.aitoolsdirectory.com/file/aitools/Typefully-AI-writing-tools-for-Twitter.png" alt="Typefully preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">Typefully</p>
+          <p class="tool-desc">Typefully is an AI-assisted writing, scheduling, and analytics platform designed for Twitter (X) and LinkedIn creators to craft engaging threads and grow their audience.</p>
           <div class="card-bottom">
             <span class="cat-pill">Chat &amp; Reasoning</span>
             <div class="card-actions">
@@ -22223,7 +22356,7 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="video-3d" data-pricing="paid" data-name="wondershare virbo" data-desc="wondershare virbo: transform your storytelling with virbo" data-tool-path="/wondershare-virbo/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/wondershare-virbo/'">
+        <article class="tool-card" data-category="video-3d" data-pricing="paid" data-name="wondershare virbo" data-desc="wondershare virbo is an ai video generator with over 300 realistic multicultural avatars, royalty-free music, and text-to-speech voices for marketing and training videos." data-tool-path="/wondershare-virbo/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/wondershare-virbo/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #10A37F;">WV</div>
@@ -22238,7 +22371,7 @@
             </div>
           </div>
           <img src="https://assets.aitoolsdirectory.com/file/aitools/virbo-AI-video-design-in-minutes.jpg" alt="Wondershare Virbo preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">Wondershare Virbo: Transform your storytelling with Virbo</p>
+          <p class="tool-desc">Wondershare Virbo is an AI video generator with over 300 realistic multicultural avatars, royalty-free music, and text-to-speech voices for marketing and training videos.</p>
           <div class="card-bottom">
             <span class="cat-pill">Video &amp; 3D</span>
             <div class="card-actions">
@@ -22367,22 +22500,22 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="chat-reasoning" data-pricing="freemium" data-name="moonbeam" data-desc="moonbeam: whether you" data-tool-path="/moonbeam/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/moonbeam/'">
+        <article class="tool-card" data-category="chat-reasoning" data-pricing="freemium" data-name="moonbeam ai writer" data-desc="moonbeam is a long-form writing assistant designed for essays, technical guides, newsletters, and books with smart outlining and style transformation tools." data-tool-path="/moonbeam/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/moonbeam/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #7C3AED;">MO</div>
               <div>
                 <span class="tool-subcat">✍️ Generative Writing</span>
-                <h3 class="tool-name"><a href="/moonbeam/" class="tool-card-title-link">Moonbeam</a></h3>
+                <h3 class="tool-name"><a href="/moonbeam/" class="tool-card-title-link">Moonbeam AI Writer</a></h3>
               </div>
             </div>
             <div class="badge-row">
               <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark tool" data-tool="Moonbeam" aria-label="Bookmark Moonbeam" onclick="event.stopPropagation()">&#9734;</button>
+              <button class="bookmark-btn" title="Bookmark tool" data-tool="Moonbeam AI Writer" aria-label="Bookmark Moonbeam AI Writer" onclick="event.stopPropagation()">&#9734;</button>
             </div>
           </div>
-          <img src="https://assets.aitoolsdirectory.com/file/aitools/Moonbeam-writing-assistant.jpg" alt="Moonbeam preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">Moonbeam: Whether you</p>
+          <img src="https://assets.aitoolsdirectory.com/file/aitools/Moonbeam-writing-assistant.jpg" alt="Moonbeam AI Writer preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
+          <p class="tool-desc">Moonbeam is a long-form writing assistant designed for essays, technical guides, newsletters, and books with smart outlining and style transformation tools.</p>
           <div class="card-bottom">
             <span class="cat-pill">Chat &amp; Reasoning</span>
             <div class="card-actions">
@@ -23111,22 +23244,22 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="video-3d" data-pricing="paid" data-name="magic hour" data-desc="magic hour: designed for video creators, magic hour" data-tool-path="/magic-hour/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/magic-hour/'">
+        <article class="tool-card" data-category="video-3d" data-pricing="paid" data-name="magic hour ai" data-desc="magic hour is an ai video creation suite offering video-to-video style transfer, face swaps, lip sync, and text-to-video for creators and viral content." data-tool-path="/magic-hour/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/magic-hour/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #0284C7;">MH</div>
               <div>
                 <span class="tool-subcat">🎥 Video &amp; Motion FX</span>
-                <h3 class="tool-name"><a href="/magic-hour/" class="tool-card-title-link">Magic Hour</a></h3>
+                <h3 class="tool-name"><a href="/magic-hour/" class="tool-card-title-link">Magic Hour AI</a></h3>
               </div>
             </div>
             <div class="badge-row">
               <span class="price-badge price-paid">Paid</span>
-              <button class="bookmark-btn" title="Bookmark tool" data-tool="Magic Hour" aria-label="Bookmark Magic Hour" onclick="event.stopPropagation()">&#9734;</button>
+              <button class="bookmark-btn" title="Bookmark tool" data-tool="Magic Hour AI" aria-label="Bookmark Magic Hour AI" onclick="event.stopPropagation()">&#9734;</button>
             </div>
           </div>
-          <img src="https://assets.aitoolsdirectory.com/file/aitools/Magic-Hour-ai-video-creation.jpg" alt="Magic Hour preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">Magic Hour: Designed for video creators, Magic Hour</p>
+          <img src="https://assets.aitoolsdirectory.com/file/aitools/Magic-Hour-ai-video-creation.jpg" alt="Magic Hour AI preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
+          <p class="tool-desc">Magic Hour is an AI video creation suite offering video-to-video style transfer, face swaps, lip sync, and text-to-video for creators and viral content.</p>
           <div class="card-bottom">
             <span class="cat-pill">Video &amp; 3D</span>
             <div class="card-actions">
@@ -23183,7 +23316,7 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="image-art" data-pricing="freemium" data-name="vecteezy ai" data-desc="vecteezy ai" data-tool-path="/vecteezy-ai/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/vecteezy-ai/'">
+        <article class="tool-card" data-category="image-art" data-pricing="freemium" data-name="vecteezy ai" data-desc="vecteezy ai is a suite of generative image tools including an ai image generator, background remover, and vector generator tailored for creative professionals and designers." data-tool-path="/vecteezy-ai/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/vecteezy-ai/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #0284C7;">VA</div>
@@ -23198,7 +23331,7 @@
             </div>
           </div>
           <img src="https://assets.aitoolsdirectory.com/file/aitools/Vecteezy-AI-reverse-image-search.jpg" alt="Vecteezy AI preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">Vecteezy AI</p>
+          <p class="tool-desc">Vecteezy AI is a suite of generative image tools including an AI image generator, background remover, and vector generator tailored for creative professionals and designers.</p>
           <div class="card-bottom">
             <span class="cat-pill">Image &amp; Art</span>
             <div class="card-actions">
@@ -23279,7 +23412,7 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="chat-reasoning" data-pricing="freemium" data-name="nekton ai" data-desc="nekton ai: automate day-to-day business and personal tasks with nekton ai" data-tool-path="/nekton-ai/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/nekton-ai/'">
+        <article class="tool-card" data-category="chat-reasoning" data-pricing="freemium" data-name="nekton ai" data-desc="nekton ai lets users automate daily repetitive work by describing workflows in plain natural language, which it translates into automated multi-step scripts." data-tool-path="/nekton-ai/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/nekton-ai/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #4F46E5;">NA</div>
@@ -23294,7 +23427,7 @@
             </div>
           </div>
           <img src="https://assets.aitoolsdirectory.com/file/aitools/Nekton-automate-tasks-with-AI.jpg" alt="Nekton AI preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">Nekton AI: Automate day-to-day business and personal tasks with Nekton AI</p>
+          <p class="tool-desc">Nekton AI lets users automate daily repetitive work by describing workflows in plain natural language, which it translates into automated multi-step scripts.</p>
           <div class="card-bottom">
             <span class="cat-pill">Chat &amp; Reasoning</span>
             <div class="card-actions">
@@ -23303,22 +23436,22 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="image-art" data-pricing="paid" data-name="photoshop generative ai" data-desc="photoshop generative ai: adobe" data-tool-path="/photoshop-generative-ai/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/photoshop-generative-ai/'">
+        <article class="tool-card" data-category="image-art" data-pricing="paid" data-name="photoshop generative fill" data-desc="adobe photoshop generative fill powered by firefly allows creators to add, extend, or remove content from images with simple text prompts non-destructively." data-tool-path="/photoshop-generative-ai/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/photoshop-generative-ai/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #10A37F;">PG</div>
               <div>
                 <span class="tool-subcat">🎨 Image &amp; Visual Arts</span>
-                <h3 class="tool-name"><a href="/photoshop-generative-ai/" class="tool-card-title-link">Photoshop Generative AI</a></h3>
+                <h3 class="tool-name"><a href="/photoshop-generative-ai/" class="tool-card-title-link">Photoshop Generative Fill</a></h3>
               </div>
             </div>
             <div class="badge-row">
               <span class="price-badge price-paid">Paid</span>
-              <button class="bookmark-btn" title="Bookmark tool" data-tool="Photoshop Generative AI" aria-label="Bookmark Photoshop Generative AI" onclick="event.stopPropagation()">&#9734;</button>
+              <button class="bookmark-btn" title="Bookmark tool" data-tool="Photoshop Generative Fill" aria-label="Bookmark Photoshop Generative Fill" onclick="event.stopPropagation()">&#9734;</button>
             </div>
           </div>
-          <img src="https://assets.aitoolsdirectory.com/file/aitools/Photoshop-generative-fill-tool.jpg" alt="Photoshop Generative AI preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">Photoshop Generative AI: Adobe</p>
+          <img src="https://assets.aitoolsdirectory.com/file/aitools/Photoshop-generative-fill-tool.jpg" alt="Photoshop Generative Fill preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
+          <p class="tool-desc">Adobe Photoshop Generative Fill powered by Firefly allows creators to add, extend, or remove content from images with simple text prompts non-destructively.</p>
           <div class="card-bottom">
             <span class="cat-pill">Image &amp; Art</span>
             <div class="card-actions">
@@ -23399,7 +23532,7 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="video-3d" data-pricing="freemium" data-name="tubebuddy" data-desc="tubebuddy" data-tool-path="/tubebuddy/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/tubebuddy/'">
+        <article class="tool-card" data-category="video-3d" data-pricing="freemium" data-name="tubebuddy" data-desc="tubebuddy is a youtube seo and channel growth toolkit with ai title generators, thumbnail analyzers, tag suggestions, and a/b testing to help video creators rank higher." data-tool-path="/tubebuddy/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/tubebuddy/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #7C3AED;">TU</div>
@@ -23414,7 +23547,7 @@
             </div>
           </div>
           <img src="https://assets.aitoolsdirectory.com/file/aitools/TubeBuddy-Ai-YouTube-video-tools.jpg" alt="TubeBuddy preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">TubeBuddy</p>
+          <p class="tool-desc">TubeBuddy is a YouTube SEO and channel growth toolkit with AI title generators, thumbnail analyzers, tag suggestions, and A/B testing to help video creators rank higher.</p>
           <div class="card-bottom">
             <span class="cat-pill">Video &amp; 3D</span>
             <div class="card-actions">
@@ -23807,7 +23940,7 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="chat-reasoning" data-pricing="freemium" data-name="zigpoll" data-desc="zigpoll: speedy, multilingual, ai-enhanced survey app that" data-tool-path="/zigpoll/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/zigpoll/'">
+        <article class="tool-card" data-category="chat-reasoning" data-pricing="freemium" data-name="zigpoll" data-desc="zigpoll is an ai customer feedback and survey platform that runs interactive on-site polls to capture zero-party data and exit-intent insights." data-tool-path="/zigpoll/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/zigpoll/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #0284C7;">ZI</div>
@@ -23822,7 +23955,7 @@
             </div>
           </div>
           <img src="https://assets.aitoolsdirectory.com/file/aitools/Zigpoll-AI-personal-assistant-for-feedback.jpg" alt="Zigpoll preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">Zigpoll: Speedy, multilingual, AI-enhanced survey app that</p>
+          <p class="tool-desc">Zigpoll is an AI customer feedback and survey platform that runs interactive on-site polls to capture zero-party data and exit-intent insights.</p>
           <div class="card-bottom">
             <span class="cat-pill">Chat &amp; Reasoning</span>
             <div class="card-actions">
@@ -23999,7 +24132,7 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="coding-dev" data-pricing="paid" data-name="cheatlayer" data-desc="cheatlayer" data-tool-path="/cheatlayer/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/cheatlayer/'">
+        <article class="tool-card" data-category="coding-dev" data-pricing="paid" data-name="cheatlayer" data-desc="cheatlayer uses custom trained gpt agents and computer vision to automate complex web workflows, scraping, and software tasks that lack public apis." data-tool-path="/cheatlayer/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/cheatlayer/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #E11D48;">CH</div>
@@ -24014,7 +24147,7 @@
             </div>
           </div>
           <img src="https://assets.aitoolsdirectory.com/file/aitools/Cheatlayer-automations-using-AI-Natural-Language-prompts.jpg" alt="Cheatlayer preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">CheatLayer</p>
+          <p class="tool-desc">Cheatlayer uses custom trained GPT agents and computer vision to automate complex web workflows, scraping, and software tasks that lack public APIs.</p>
           <div class="card-bottom">
             <span class="cat-pill">Coding &amp; Dev</span>
             <div class="card-actions">
@@ -24071,7 +24204,7 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="coding-dev" data-pricing="freemium" data-name="process ai" data-desc="process ai: the world" data-tool-path="/process-ai/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/process-ai/'">
+        <article class="tool-card" data-category="coding-dev" data-pricing="freemium" data-name="process ai" data-desc="process ai analyzes company documentation and operational logs to identify efficiency bottlenecks and automate business process management workflows." data-tool-path="/process-ai/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/process-ai/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #059669;">PA</div>
@@ -24086,7 +24219,7 @@
             </div>
           </div>
           <img src="https://assets.aitoolsdirectory.com/file/aitools/process-st-AI-workflows.jpeg" alt="Process AI preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">Process AI: The world</p>
+          <p class="tool-desc">Process AI analyzes company documentation and operational logs to identify efficiency bottlenecks and automate business process management workflows.</p>
           <div class="card-bottom">
             <span class="cat-pill">Coding &amp; Dev</span>
             <div class="card-actions">
@@ -24335,7 +24468,7 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="image-art" data-pricing="paid" data-name="artsmart ai" data-desc="artsmart ai: create visual content that" data-tool-path="/artsmart-ai/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/artsmart-ai/'">
+        <article class="tool-card" data-category="image-art" data-pricing="paid" data-name="artsmart ai" data-desc="artsmart ai is a generative visual studio that creates high-fidelity ai art, commercial stock photography, hyper-realistic portraits, and character consistency." data-tool-path="/artsmart-ai/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/artsmart-ai/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #E11D48;">AA</div>
@@ -24350,7 +24483,7 @@
             </div>
           </div>
           <img src="https://assets.aitoolsdirectory.com/file/aitools/Artsmart-AI-image-generator-2.jpg" alt="Artsmart AI preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">Artsmart AI: Create visual content that</p>
+          <p class="tool-desc">Artsmart AI is a generative visual studio that creates high-fidelity AI art, commercial stock photography, hyper-realistic portraits, and character consistency.</p>
           <div class="card-bottom">
             <span class="cat-pill">Image &amp; Art</span>
             <div class="card-actions">
@@ -24359,22 +24492,22 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="chat-reasoning" data-pricing="freemium" data-name="winston ai" data-desc="winston ai: discover if it" data-tool-path="/winston-ai/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/winston-ai/'">
+        <article class="tool-card" data-category="chat-reasoning" data-pricing="freemium" data-name="winston ai detector" data-desc="winston ai is an industry-leading ai content detector with 99.98% accuracy for detecting text generated by chatgpt, gpt-4, claude, gemini, and synthetic text." data-tool-path="/winston-ai/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/winston-ai/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #0D9488;">WA</div>
               <div>
                 <span class="tool-subcat">✍️ Generative Writing</span>
-                <h3 class="tool-name"><a href="/winston-ai/" class="tool-card-title-link">Winston ai</a></h3>
+                <h3 class="tool-name"><a href="/winston-ai/" class="tool-card-title-link">Winston AI Detector</a></h3>
               </div>
             </div>
             <div class="badge-row">
               <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark tool" data-tool="Winston ai" aria-label="Bookmark Winston ai" onclick="event.stopPropagation()">&#9734;</button>
+              <button class="bookmark-btn" title="Bookmark tool" data-tool="Winston AI Detector" aria-label="Bookmark Winston AI Detector" onclick="event.stopPropagation()">&#9734;</button>
             </div>
           </div>
-          <img src="https://assets.aitoolsdirectory.com/file/aitools/Winston-ai-content-detection-tool.jpeg" alt="Winston ai preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">Winston ai: Discover if it</p>
+          <img src="https://assets.aitoolsdirectory.com/file/aitools/Winston-ai-content-detection-tool.jpeg" alt="Winston AI Detector preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
+          <p class="tool-desc">Winston AI is an industry-leading AI content detector with 99.98% accuracy for detecting text generated by ChatGPT, GPT-4, Claude, Gemini, and synthetic text.</p>
           <div class="card-bottom">
             <span class="cat-pill">Chat &amp; Reasoning</span>
             <div class="card-actions">
@@ -24863,7 +24996,7 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="coding-dev" data-pricing="freemium" data-name="botpenguin" data-desc="verified ai platform (botpenguin) for automated workflows and productivity." data-tool-path="/botpenguin/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/botpenguin/'">
+        <article class="tool-card" data-category="coding-dev" data-pricing="freemium" data-name="botpenguin" data-desc="botpenguin is an omnichannel ai chatbot builder for whatsapp, facebook, websites, and telegram with live chat handoff and crm integrations." data-tool-path="/botpenguin/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/botpenguin/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #D97706;">BO</div>
@@ -24878,7 +25011,7 @@
             </div>
           </div>
           <img src="https://assets.aitoolsdirectory.com/file/aitools/botpenguin.webp" alt="Botpenguin preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">Verified AI platform (botpenguin) for automated workflows and productivity.</p>
+          <p class="tool-desc">BotPenguin is an omnichannel AI chatbot builder for WhatsApp, Facebook, websites, and Telegram with live chat handoff and CRM integrations.</p>
           <div class="card-bottom">
             <span class="cat-pill">Coding &amp; Dev</span>
             <div class="card-actions">
@@ -24983,7 +25116,7 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="ai-search" data-pricing="freemium" data-name="seo gpt" data-desc="seo gpt: the ai-driven marketing &amp; seo tool you" data-tool-path="/seo-gpt/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/seo-gpt/'">
+        <article class="tool-card" data-category="ai-search" data-pricing="freemium" data-name="seo gpt" data-desc="seo gpt is a specialized search engine optimization ai that writes keyword-optimized meta titles, descriptions, keyword clusters, and anchor text designed to rank." data-tool-path="/seo-gpt/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/seo-gpt/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #0D9488;">SG</div>
@@ -24998,7 +25131,7 @@
             </div>
           </div>
           <img src="https://assets.aitoolsdirectory.com/file/aitools/SEO-GPT-from-SEOvendor.jpeg" alt="SEO GPT preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">SEO GPT: The AI-driven marketing &amp; SEO tool you</p>
+          <p class="tool-desc">SEO GPT is a specialized search engine optimization AI that writes keyword-optimized meta titles, descriptions, keyword clusters, and anchor text designed to rank.</p>
           <div class="card-bottom">
             <span class="cat-pill">AI Search</span>
             <div class="card-actions">
@@ -25031,22 +25164,22 @@
             </div>
           </div>
         </article>
-        <article class="tool-card" data-category="coding-dev" data-pricing="freemium" data-name="skybox lab" data-desc="verified ai platform (blockade labs) for automated workflows and productivity." data-tool-path="/skybox-lab/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/skybox-lab/'">
+        <article class="tool-card" data-category="coding-dev" data-pricing="freemium" data-name="skybox ai (blockade labs)" data-desc="skybox ai by blockade labs generates immersive 360-degree panoramic virtual reality skyboxes and 3d environments from text prompts in seconds." data-tool-path="/skybox-lab/" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='/skybox-lab/'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: #4F46E5;">SL</div>
               <div>
                 <span class="tool-subcat">💻 Software &amp; Coding</span>
-                <h3 class="tool-name"><a href="/skybox-lab/" class="tool-card-title-link">Skybox Lab</a></h3>
+                <h3 class="tool-name"><a href="/skybox-lab/" class="tool-card-title-link">Skybox AI (Blockade Labs)</a></h3>
               </div>
             </div>
             <div class="badge-row">
               <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark tool" data-tool="Skybox Lab" aria-label="Bookmark Skybox Lab" onclick="event.stopPropagation()">&#9734;</button>
+              <button class="bookmark-btn" title="Bookmark tool" data-tool="Skybox AI (Blockade Labs)" aria-label="Bookmark Skybox AI (Blockade Labs)" onclick="event.stopPropagation()">&#9734;</button>
             </div>
           </div>
-          <img src="https://assets.aitoolsdirectory.com/file/aitools/Blockade-labs.jpg" alt="Skybox Lab preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
-          <p class="tool-desc">Verified AI platform (Blockade labs) for automated workflows and productivity.</p>
+          <img src="https://assets.aitoolsdirectory.com/file/aitools/Blockade-labs.jpg" alt="Skybox AI (Blockade Labs) preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display='none'" />
+          <p class="tool-desc">Skybox AI by Blockade Labs generates immersive 360-degree panoramic virtual reality skyboxes and 3D environments from text prompts in seconds.</p>
           <div class="card-bottom">
             <span class="cat-pill">Coding &amp; Dev</span>
             <div class="card-actions">
@@ -25393,7 +25526,7 @@
             <p>Frontier LLMs, autonomous agents, reasoning engines, and custom GPT models engineered for conversational intelligence and complex synthesis.</p>
           </div>
           <div class="cat-card-meta">
-            <span>154 Tools</span>
+            <span>156 Tools</span>
             <span>Explore Domain &rarr;</span>
           </div>
         </div>
@@ -25404,7 +25537,7 @@
             <p>Autonomous AI software engineers, full-stack app builders, terminal assistants, automated test generators, and refactoring agents.</p>
           </div>
           <div class="cat-card-meta">
-            <span>215 Tools</span>
+            <span>216 Tools</span>
             <span>Explore Domain &rarr;</span>
           </div>
         </div>
@@ -25415,7 +25548,7 @@
             <p>Diffusion synthesis, prompt-to-image renderers, photo enhancers, brand asset generators, UI mockups, and AI graphic workstations.</p>
           </div>
           <div class="cat-card-meta">
-            <span>174 Tools</span>
+            <span>173 Tools</span>
             <span>Explore Domain &rarr;</span>
           </div>
         </div>
@@ -25448,7 +25581,7 @@
             <p>Perplexity-style conversational search engines, deep literature review assistants, fact-checking agents, and academic graph analyzers.</p>
           </div>
           <div class="cat-card-meta">
-            <span>91 Tools</span>
+            <span>89 Tools</span>
             <span>Explore Domain &rarr;</span>
           </div>
         </div>
@@ -25640,22 +25773,171 @@
         }
       });
 
-      searchInput.addEventListener('input', filterTools);
+      // Dynamic & Auto-Updating Top Searches
+      var trendingWrap = document.getElementById('trendingPillsWrap');
+      var trendingRow = document.getElementById('trendingRow');
+      var baseTrending = [
+        { label: 'AI Alternatives', query: 'alternatives' },
+        { label: 'Airbrush Enhancer', query: 'airbrush image enhancer' },
+        { label: 'Free AI Tools', query: 'free' },
+        { label: 'Video Creators', query: 'video' },
+        { label: 'Xeve AI', query: 'xeve ai' },
+        { label: 'Image Generators', query: 'image' },
+        { label: 'Chatbots & LLMs', query: 'chat' },
+        { label: 'AI Writers', query: 'writer' },
+        { label: 'Coding Dev', query: 'coding' },
+        { label: 'WayinVideo', query: 'wayinvideo' },
+        { label: 'Inkle AI', query: 'inkle' },
+        { label: 'ColdIQ', query: 'coldiq' },
+        { label: 'Casetext', query: 'casetext' },
+        { label: 'FreeMaker AI', query: 'freemaker' },
+        { label: 'Runway Gen-3', query: 'runway' },
+        { label: 'DeepSeek R1', query: 'deepseek' },
+        { label: 'Claude 3.7', query: 'claude' },
+        { label: 'Midjourney Free', query: 'midjourney' },
+        { label: 'ChatGPT 4o', query: 'chatgpt' },
+        { label: 'ElevenLabs', query: 'elevenlabs' },
+        { label: 'Face Swap', query: 'face swap' },
+        { label: 'Voice & Speech', query: 'voice' }
+      ];
+
+      var userSearches = [];
+      try {
+        userSearches = JSON.parse(localStorage.getItem('allaitools_user_searches') || '[]');
+      } catch (e) {}
+
+      var trendOffset = 0;
+      var isHoveringTrending = false;
+
+      function getAllTrendingPool() {
+        var pool = [];
+        var seenQueries = {};
+        userSearches.forEach(function (term) {
+          var qLower = term.toLowerCase().trim();
+          if (qLower && !seenQueries[qLower]) {
+            seenQueries[qLower] = true;
+            pool.push({ label: term, query: term, isUser: true });
+          }
+        });
+        baseTrending.forEach(function (item) {
+          var qLower = item.query.toLowerCase().trim();
+          if (!seenQueries[qLower]) {
+            seenQueries[qLower] = true;
+            pool.push(item);
+          }
+        });
+        return pool;
+      }
+
+      function renderTrendingPills(highlightFirst) {
+        if (!trendingWrap) return;
+        var pool = getAllTrendingPool();
+        var maxVisible = 9;
+        var visibleItems = [];
+
+        var startIndex = trendOffset % pool.length;
+        for (var i = 0; i < maxVisible && i < pool.length; i++) {
+          var item = pool[(startIndex + i) % pool.length];
+          visibleItems.push(item);
+        }
+
+        var currentSearchVal = (searchInput ? searchInput.value.trim().toLowerCase() : '');
+        var html = '';
+        visibleItems.forEach(function (item, idx) {
+          var isActive = currentSearchVal && item.query.toLowerCase() === currentSearchVal;
+          var classes = 'trend-pill' + (isActive ? ' active' : '') + (highlightFirst && idx === 0 ? ' new-trend' : '');
+          var prefix = item.isUser ? '&#128269; ' : '';
+          html += '<button type="button" class="' + classes + '" data-query="' + item.query.replace(/"/g, '&quot;') + '">' + prefix + item.label + '</button>';
+        });
+        trendingWrap.innerHTML = html;
+        bindTrendingClickEvents();
+      }
+
+      function bindTrendingClickEvents() {
+        if (!trendingWrap) return;
+        var buttons = trendingWrap.querySelectorAll('.trend-pill');
+        buttons.forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var qVal = btn.getAttribute('data-query');
+            if (!searchInput) return;
+            searchInput.value = qVal;
+            filterTools();
+            buttons.forEach(function (b) { b.classList.remove('active'); });
+            btn.classList.add('active');
+            var featuredSec = document.getElementById('featured');
+            if (featuredSec) {
+              featuredSec.scrollIntoView({ behavior: 'smooth' });
+            }
+          });
+        });
+      }
+
+      // Auto-update / cycle top searches smoothly every 5.5s
+      setInterval(function () {
+        if (isHoveringTrending) return;
+        trendOffset = (trendOffset + 2) % 30;
+        renderTrendingPills(false);
+      }, 5500);
+
+      if (trendingRow) {
+        trendingRow.addEventListener('mouseenter', function () { isHoveringTrending = true; });
+        trendingRow.addEventListener('mouseleave', function () { isHoveringTrending = false; });
+      }
+
+      function recordVisitorSearch(query) {
+        query = query.trim();
+        if (!query || query.length < 2) return;
+        var existingIdx = -1;
+        for (var i = 0; i < userSearches.length; i++) {
+          if (userSearches[i].toLowerCase() === query.toLowerCase()) {
+            existingIdx = i;
+            break;
+          }
+        }
+        if (existingIdx !== -1) {
+          userSearches.splice(existingIdx, 1);
+        }
+        userSearches.unshift(query);
+        if (userSearches.length > 25) userSearches.pop();
+        try {
+          localStorage.setItem('allaitools_user_searches', JSON.stringify(userSearches));
+        } catch (e) {}
+        trendOffset = 0;
+        renderTrendingPills(true);
+      }
+
+      var searchDebounceTimer = null;
+      searchInput.addEventListener('input', function () {
+        filterTools();
+        clearTimeout(searchDebounceTimer);
+        var val = searchInput.value.trim();
+        if (val.length >= 2) {
+          searchDebounceTimer = setTimeout(function () {
+            recordVisitorSearch(val);
+          }, 1800);
+        }
+      });
+      searchInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') {
+          var val = searchInput.value.trim();
+          if (val.length >= 2) {
+            recordVisitorSearch(val);
+          }
+        }
+      });
+
       clearBtn.addEventListener('click', function () {
         searchInput.value = '';
         filterTools();
         searchInput.focus();
+        if (trendingWrap) {
+          trendingWrap.querySelectorAll('.trend-pill').forEach(function (b) { b.classList.remove('active'); });
+        }
       });
 
-      // Trending search pills
-      trendPills.forEach(function (pill) {
-        pill.addEventListener('click', function () {
-          var qVal = pill.getAttribute('data-query');
-          searchInput.value = qVal;
-          filterTools();
-          document.getElementById('featured').scrollIntoView({ behavior: 'smooth' });
-        });
-      });
+      // Initial bind & render
+      bindTrendingClickEvents();
+      renderTrendingPills(false);
 
       // Category Pill Click
       filterPills.forEach(function (pill) {

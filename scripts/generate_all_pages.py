@@ -313,110 +313,182 @@ index_html_content = f"""<!DOCTYPE html>
 
     .container {{ max-width: 1280px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }}
 
-    /* Header / Navbar */
+    /* Redesigned Modern Navbar */
     .navbar {{
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(9, 13, 22, 0.82);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
+      background: rgba(9, 13, 22, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
-      height: 72px;
+      height: 68px;
       display: flex;
       align-items: center;
     }}
-    .nav-inner {{ display: flex; align-items: center; justify-content: space-between; width: 100%; }}
-    .brand {{ display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 1.18rem; letter-spacing: -0.02em; color: #fff; }}
-    .brand-icon {{
-      width: 38px;
-      height: 38px;
-      border-radius: 11px;
-      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    .nav-inner {{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      gap: 16px;
+    }}
+    .brand {{
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 1.18rem;
+      letter-spacing: -0.025em;
+      color: #fff;
+      text-decoration: none;
+      flex-shrink: 0;
+    }}
+    .brand-logo-icon {{
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.25) 0%, rgba(168, 85, 247, 0.25) 50%, rgba(56, 189, 248, 0.2) 100%);
+      border: 1px solid rgba(129, 140, 248, 0.4);
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-weight: 900;
-      color: #fff;
-      font-size: 1.1rem;
-      box-shadow: 0 4px 14px rgba(79, 70, 229, 0.4);
+      box-shadow: 0 4px 16px rgba(99, 102, 241, 0.35);
+      flex-shrink: 0;
+      transition: all 0.25s ease;
     }}
-    .live-badge {{
-      background: rgba(16, 185, 129, 0.15);
-      border: 1px solid rgba(16, 185, 129, 0.3);
-      color: #34d399;
-      font-size: 0.72rem;
-      font-weight: 700;
-      padding: 3px 9px;
-      border-radius: var(--radius-pill);
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
+    .brand:hover .brand-logo-icon {{
+      transform: scale(1.05);
+      border-color: rgba(129, 140, 248, 0.7);
+      box-shadow: 0 6px 20px rgba(129, 140, 248, 0.55);
     }}
-    .nav-links {{ display: flex; align-items: center; gap: 26px; font-size: 0.92rem; font-weight: 500; color: var(--text-muted); }}
-    .nav-links a:hover {{ color: #ffffff; }}
-    .nav-actions {{ display: flex; align-items: center; gap: 12px; }}
-    .btn-saved {{
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid var(--border);
-      color: #fbbf24;
-      padding: 8px 14px;
-      border-radius: 10px;
+    .brand-text {{
+      font-size: 1.18rem;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      color: #ffffff;
+    }}
+    .nav-links {{
+      display: none;
+      align-items: center;
+      gap: 4px;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 4px;
+      border-radius: 9999px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }}
+    @media (min-width: 900px) {{
+      .nav-links {{ display: flex; }}
+    }}
+    .nav-link {{
+      color: #94a3b8;
       font-size: 0.85rem;
       font-weight: 600;
-      cursor: pointer;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }}
+    .nav-link:hover {{
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.08);
+    }}
+    .nav-link-special {{
+      color: #c7d2fe;
+    }}
+    .nav-link-special:hover {{
+      color: #ffffff;
+      background: rgba(99, 102, 241, 0.2);
+    }}
+    .nav-sparkle {{
+      font-size: 0.85rem;
+    }}
+    .nav-actions {{
       display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }}
+    .btn-saved {{
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #cbd5e1;
+      padding: 7px 13px;
+      border-radius: 10px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
       align-items: center;
       gap: 6px;
       transition: all 0.15s ease;
     }}
-    .btn-saved:hover {{ background: rgba(255, 255, 255, 0.12); border-color: rgba(255, 255, 255, 0.2); }}
+    .btn-saved:hover {{
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.2);
+    }}
+    .saved-badge {{
+      background: rgba(251, 191, 36, 0.2);
+      color: #fbbf24;
+      padding: 1px 6px;
+      border-radius: 10px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }}
     .btn-submit {{
       background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
       color: #fff !important;
-      padding: 9px 18px;
-      border-radius: 10px;
+      padding: 8px 16px;
+      border-radius: 9999px;
       font-weight: 600;
-      font-size: 0.88rem;
-      box-shadow: 0 2px 12px rgba(99, 102, 241, 0.35);
-      transition: transform 0.15s ease, opacity 0.15s ease;
-    }}
-    .btn-submit:hover {{ transform: translateY(-1px); opacity: 0.95; }}
-
-    /* Hero Section */
-    .hero {{ text-align: center; padding: 72px 0 46px; position: relative; }}
-    .hero-eyebrow {{
+      font-size: 0.84rem;
+      box-shadow: 0 3px 12px rgba(99, 102, 241, 0.35);
+      transition: all 0.2s ease;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      background: rgba(99, 102, 241, 0.12);
+      gap: 5px;
+    }}
+    .btn-submit:hover {{
+      transform: translateY(-1px);
+      box-shadow: 0 5px 18px rgba(99, 102, 241, 0.5);
+      opacity: 0.96;
+    }}
+    .btn-crm {{
+      background: rgba(255, 255, 255, 0.04);
       border: 1px solid rgba(99, 102, 241, 0.3);
       color: #a5b4fc;
+      padding: 7px 11px;
+      border-radius: 10px;
       font-size: 0.82rem;
       font-weight: 600;
-      padding: 6px 18px;
-      border-radius: var(--radius-pill);
-      margin-bottom: 24px;
-      letter-spacing: 0.02em;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.15s ease;
     }}
+    .btn-crm:hover {{
+      background: rgba(99, 102, 241, 0.15);
+      border-color: rgba(99, 102, 241, 0.5);
+      color: #ffffff;
+    }}
+
+    /* Hero Section */
+    .hero {{ text-align: center; padding: 48px 0 32px; position: relative; }}
     .hero h1 {{
-      font-size: clamp(2.3rem, 5.2vw, 3.8rem);
+      font-size: clamp(2rem, 4.5vw, 3.2rem);
       font-weight: 900;
-      letter-spacing: -0.04em;
-      line-height: 1.12;
-      margin-bottom: 18px;
+      letter-spacing: -0.035em;
+      line-height: 1.15;
+      margin-bottom: 24px;
       color: #ffffff;
     }}
     .hero h1 .gradient-text {{
       background: linear-gradient(135deg, #818cf8 0%, #c084fc 50%, #f472b6 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-    }}
-    .hero-sub {{
-      max-width: 820px;
-      margin: 0 auto 30px;
-      color: var(--text-muted);
-      font-size: 1.12rem;
-      line-height: 1.6;
     }}
 
     /* Global Search Bar */
@@ -477,7 +549,7 @@ index_html_content = f"""<!DOCTYPE html>
     }}
     .clear-search:hover {{ color: #ffffff; }}
 
-    /* Trending Searches Row */
+    /* Dynamic Trending Searches Row */
     .trending-row {{
       display: flex;
       align-items: center;
@@ -486,11 +558,38 @@ index_html_content = f"""<!DOCTYPE html>
       flex-wrap: wrap;
       margin-bottom: 22px;
       font-size: 0.82rem;
+      min-height: 38px;
     }}
     .trending-label {{
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       color: #a5b4fc;
       font-weight: 700;
       letter-spacing: 0.02em;
+    }}
+    .trending-live-dot {{
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      background: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 0 rgba(16, 185, 129, 0.7);
+      animation: livePulse 1.8s infinite;
+      margin-right: 2px;
+    }}
+    @keyframes livePulse {{
+      0% {{ box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }}
+      70% {{ box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }}
+      100% {{ box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }}
+    }}
+    .trending-pills-wrap {{
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+      transition: opacity 0.25s ease;
     }}
     .trend-pill {{
       background: rgba(99, 102, 241, 0.08);
@@ -501,13 +600,28 @@ index_html_content = f"""<!DOCTYPE html>
       font-size: 0.8rem;
       font-weight: 500;
       cursor: pointer;
-      transition: all 0.15s ease;
+      transition: all 0.25s ease;
+      white-space: nowrap;
     }}
     .trend-pill:hover {{
-      background: rgba(99, 102, 241, 0.22);
-      border-color: rgba(99, 102, 241, 0.5);
+      background: rgba(99, 102, 241, 0.25);
+      border-color: rgba(99, 102, 241, 0.6);
       color: #ffffff;
       transform: translateY(-1px);
+    }}
+    .trend-pill.active {{
+      background: #6366f1;
+      border-color: #818cf8;
+      color: #ffffff;
+      box-shadow: 0 0 12px rgba(99, 102, 241, 0.5);
+    }}
+    .trend-pill.new-trend {{
+      border-color: #38bdf8;
+      animation: trendPop 0.4s ease-out;
+    }}
+    @keyframes trendPop {{
+      0% {{ transform: scale(0.85); opacity: 0; }}
+      100% {{ transform: scale(1); opacity: 1; }}
     }}
 
     /* Pricing Filter Row */
@@ -858,28 +972,47 @@ index_html_content = f"""<!DOCTYPE html>
 <body>
   <div class="ambient-glow"></div>
 
-  <!-- Navbar -->
+  <!-- Redesigned Modern Navbar -->
   <nav class="navbar">
     <div class="container nav-inner">
-      <a href="/" class="brand">
-        <span class="brand-icon">AI</span>
-        <span>All AI Tools</span>
-        <span class="live-badge">{total_tools}+ Tools</span>
+      <a href="/" class="brand" title="All AI Tools — Complete AI Directory">
+        <span class="brand-logo-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 1.5C12 1.5 13.5 7.5 15.5 9.5C17.5 11.5 23.5 12 23.5 12C23.5 12 17.5 12.5 15.5 14.5C13.5 16.5 12 22.5 12 22.5C12 22.5 10.5 16.5 8.5 14.5C6.5 12.5 0.5 12 0.5 12C0.5 12 6.5 11.5 8.5 9.5C10.5 7.5 12 1.5 12 1.5Z" fill="url(#aiBrandGradHome)"/>
+            <circle cx="19.5" cy="4.5" r="2" fill="#38bdf8"/>
+            <circle cx="4.5" cy="19.5" r="1.5" fill="#a855f7"/>
+            <defs>
+              <linearGradient id="aiBrandGradHome" x1="0.5" y1="1.5" x2="23.5" y2="22.5" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#818cf8"/>
+                <stop offset="0.45" stop-color="#c084fc"/>
+                <stop offset="1" stop-color="#38bdf8"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </span>
+        <span class="brand-text">All AI Tools</span>
       </a>
 
       <div class="nav-links">
-        <a href="#featured">Directory</a>
-        <a href="#categories">Categories</a>
-        <a href="#faq">FAQ</a>
+        <a href="#featured" class="nav-link">Directory</a>
+        <a href="#categories" class="nav-link">Categories</a>
+        <a href="/tools/ai-image-generator/" class="nav-link nav-link-special">
+          <span class="nav-sparkle">&#10024;</span> AI Generator
+        </a>
+        <a href="/tools/image-enhancer/" class="nav-link nav-link-special">
+          <span class="nav-sparkle">&#9889;</span> 4K Enhancer
+        </a>
+        <a href="#faq" class="nav-link">FAQ</a>
       </div>
 
       <div class="nav-actions">
         <button class="btn-saved" id="showSavedBtn" title="View Saved Tools">
           <span>&#9734;</span>
           <span>Saved</span>
-          <span id="savedCountBadge" style="display:none; background:rgba(0,0,0,0.4); padding:1px 6px; border-radius:10px; font-size:0.75rem;">0</span>
+          <span id="savedCountBadge" class="saved-badge" style="display:none;">0</span>
         </button>
-        <a href="https://github.com/shilwantr/aitest123" target="_blank" rel="noopener" class="btn-submit">+ Submit AI Tool</a>
+        <a href="/submit/" class="btn-submit">+ Submit Tool</a>
+        <a href="/crm/" class="btn-crm" title="Admin Portal">&#128274; CRM</a>
       </div>
     </div>
   </nav>
@@ -887,9 +1020,7 @@ index_html_content = f"""<!DOCTYPE html>
   <!-- Hero Section -->
   <header class="hero">
     <div class="container">
-      <div class="hero-eyebrow">&#9889; allaitools.online — Complete AI Directory 2026</div>
-      <h1>Complete <span class="gradient-text">All AI Tools</span> List &amp; Directory</h1>
-      <p class="hero-sub">The definitive all-in-one AI tools website. Search, benchmark, and compare {total_tools}+ verified artificial intelligence software, models, custom GPTs, and free alternatives across 6 core categories.</p>
+      <h1>Complete <span class="gradient-text">All AI Tools</span> Directory</h1>
 
       <!-- Search Box with Query Param Support -->
       <div class="search-box-wrap">
@@ -899,18 +1030,20 @@ index_html_content = f"""<!DOCTYPE html>
         <span class="search-hint">/</span>
       </div>
 
-      <!-- Trending High-Volume Search Keywords -->
-      <div class="trending-row">
-        <span class="trending-label">&#128293; Top Searches:</span>
-        <button class="trend-pill" data-query="alternatives">AI Alternatives</button>
-        <button class="trend-pill" data-query="airbrush image enhancer">Airbrush Enhancer</button>
-        <button class="trend-pill" data-query="free">Free AI Tools</button>
-        <button class="trend-pill" data-query="video">Video Creators</button>
-        <button class="trend-pill" data-query="xeve ai">Xeve AI</button>
-        <button class="trend-pill" data-query="image">Image Generators</button>
-        <button class="trend-pill" data-query="chat">Chatbots &amp; LLMs</button>
-        <button class="trend-pill" data-query="writer">AI Writers</button>
-        <button class="trend-pill" data-query="coding">Coding Dev</button>
+      <!-- Dynamic Trending High-Volume Search Keywords -->
+      <div class="trending-row" id="trendingRow">
+        <span class="trending-label"><span class="trending-live-dot" title="Live Auto-Updating Searches"></span>&#128293; Top Searches:</span>
+        <div class="trending-pills-wrap" id="trendingPillsWrap">
+          <button type="button" class="trend-pill" data-query="alternatives">AI Alternatives</button>
+          <button type="button" class="trend-pill" data-query="airbrush image enhancer">Airbrush Enhancer</button>
+          <button type="button" class="trend-pill" data-query="free">Free AI Tools</button>
+          <button type="button" class="trend-pill" data-query="video">Video Creators</button>
+          <button type="button" class="trend-pill" data-query="xeve ai">Xeve AI</button>
+          <button type="button" class="trend-pill" data-query="image">Image Generators</button>
+          <button type="button" class="trend-pill" data-query="chat">Chatbots &amp; LLMs</button>
+          <button type="button" class="trend-pill" data-query="writer">AI Writers</button>
+          <button type="button" class="trend-pill" data-query="coding">Coding Dev</button>
+        </div>
       </div>
 
       <!-- Pricing Filter Chips -->
@@ -1249,22 +1382,171 @@ index_html_content = f"""<!DOCTYPE html>
         }}
       }});
 
-      searchInput.addEventListener('input', filterTools);
+      // Dynamic & Auto-Updating Top Searches
+      var trendingWrap = document.getElementById('trendingPillsWrap');
+      var trendingRow = document.getElementById('trendingRow');
+      var baseTrending = [
+        {{ label: 'AI Alternatives', query: 'alternatives' }},
+        {{ label: 'Airbrush Enhancer', query: 'airbrush image enhancer' }},
+        {{ label: 'Free AI Tools', query: 'free' }},
+        {{ label: 'Video Creators', query: 'video' }},
+        {{ label: 'Xeve AI', query: 'xeve ai' }},
+        {{ label: 'Image Generators', query: 'image' }},
+        {{ label: 'Chatbots & LLMs', query: 'chat' }},
+        {{ label: 'AI Writers', query: 'writer' }},
+        {{ label: 'Coding Dev', query: 'coding' }},
+        {{ label: 'WayinVideo', query: 'wayinvideo' }},
+        {{ label: 'Inkle AI', query: 'inkle' }},
+        {{ label: 'ColdIQ', query: 'coldiq' }},
+        {{ label: 'Casetext', query: 'casetext' }},
+        {{ label: 'FreeMaker AI', query: 'freemaker' }},
+        {{ label: 'Runway Gen-3', query: 'runway' }},
+        {{ label: 'DeepSeek R1', query: 'deepseek' }},
+        {{ label: 'Claude 3.7', query: 'claude' }},
+        {{ label: 'Midjourney Free', query: 'midjourney' }},
+        {{ label: 'ChatGPT 4o', query: 'chatgpt' }},
+        {{ label: 'ElevenLabs', query: 'elevenlabs' }},
+        {{ label: 'Face Swap', query: 'face swap' }},
+        {{ label: 'Voice & Speech', query: 'voice' }}
+      ];
+
+      var userSearches = [];
+      try {{
+        userSearches = JSON.parse(localStorage.getItem('allaitools_user_searches') || '[]');
+      }} catch (e) {{}}
+
+      var trendOffset = 0;
+      var isHoveringTrending = false;
+
+      function getAllTrendingPool() {{
+        var pool = [];
+        var seenQueries = {{}};
+        userSearches.forEach(function (term) {{
+          var qLower = term.toLowerCase().trim();
+          if (qLower && !seenQueries[qLower]) {{
+            seenQueries[qLower] = true;
+            pool.push({{ label: term, query: term, isUser: true }});
+          }}
+        }});
+        baseTrending.forEach(function (item) {{
+          var qLower = item.query.toLowerCase().trim();
+          if (!seenQueries[qLower]) {{
+            seenQueries[qLower] = true;
+            pool.push(item);
+          }}
+        }});
+        return pool;
+      }}
+
+      function renderTrendingPills(highlightFirst) {{
+        if (!trendingWrap) return;
+        var pool = getAllTrendingPool();
+        var maxVisible = 9;
+        var visibleItems = [];
+
+        var startIndex = trendOffset % pool.length;
+        for (var i = 0; i < maxVisible && i < pool.length; i++) {{
+          var item = pool[(startIndex + i) % pool.length];
+          visibleItems.push(item);
+        }}
+
+        var currentSearchVal = (searchInput ? searchInput.value.trim().toLowerCase() : '');
+        var html = '';
+        visibleItems.forEach(function (item, idx) {{
+          var isActive = currentSearchVal && item.query.toLowerCase() === currentSearchVal;
+          var classes = 'trend-pill' + (isActive ? ' active' : '') + (highlightFirst && idx === 0 ? ' new-trend' : '');
+          var prefix = item.isUser ? '&#128269; ' : '';
+          html += '<button type="button" class="' + classes + '" data-query="' + item.query.replace(/"/g, '&quot;') + '">' + prefix + item.label + '</button>';
+        }});
+        trendingWrap.innerHTML = html;
+        bindTrendingClickEvents();
+      }}
+
+      function bindTrendingClickEvents() {{
+        if (!trendingWrap) return;
+        var buttons = trendingWrap.querySelectorAll('.trend-pill');
+        buttons.forEach(function (btn) {{
+          btn.addEventListener('click', function () {{
+            var qVal = btn.getAttribute('data-query');
+            if (!searchInput) return;
+            searchInput.value = qVal;
+            filterTools();
+            buttons.forEach(function (b) {{ b.classList.remove('active'); }});
+            btn.classList.add('active');
+            var featuredSec = document.getElementById('featured');
+            if (featuredSec) {{
+              featuredSec.scrollIntoView({{ behavior: 'smooth' }});
+            }}
+          }});
+        }});
+      }}
+
+      // Auto-update / cycle top searches smoothly every 5.5s
+      setInterval(function () {{
+        if (isHoveringTrending) return;
+        trendOffset = (trendOffset + 2) % 30;
+        renderTrendingPills(false);
+      }}, 5500);
+
+      if (trendingRow) {{
+        trendingRow.addEventListener('mouseenter', function () {{ isHoveringTrending = true; }});
+        trendingRow.addEventListener('mouseleave', function () {{ isHoveringTrending = false; }});
+      }}
+
+      function recordVisitorSearch(query) {{
+        query = query.trim();
+        if (!query || query.length < 2) return;
+        var existingIdx = -1;
+        for (var i = 0; i < userSearches.length; i++) {{
+          if (userSearches[i].toLowerCase() === query.toLowerCase()) {{
+            existingIdx = i;
+            break;
+          }}
+        }}
+        if (existingIdx !== -1) {{
+          userSearches.splice(existingIdx, 1);
+        }}
+        userSearches.unshift(query);
+        if (userSearches.length > 25) userSearches.pop();
+        try {{
+          localStorage.setItem('allaitools_user_searches', JSON.stringify(userSearches));
+        }} catch (e) {{}}
+        trendOffset = 0;
+        renderTrendingPills(true);
+      }}
+
+      var searchDebounceTimer = null;
+      searchInput.addEventListener('input', function () {{
+        filterTools();
+        clearTimeout(searchDebounceTimer);
+        var val = searchInput.value.trim();
+        if (val.length >= 2) {{
+          searchDebounceTimer = setTimeout(function () {{
+            recordVisitorSearch(val);
+          }}, 1800);
+        }}
+      }});
+      searchInput.addEventListener('keydown', function (e) {{
+        if (e.key === 'Enter') {{
+          var val = searchInput.value.trim();
+          if (val.length >= 2) {{
+            recordVisitorSearch(val);
+          }}
+        }}
+      }});
+
       clearBtn.addEventListener('click', function () {{
         searchInput.value = '';
         filterTools();
         searchInput.focus();
+        if (trendingWrap) {{
+          trendingWrap.querySelectorAll('.trend-pill').forEach(function (b) {{ b.classList.remove('active'); }});
+        }}
       }});
 
-      // Trending search pills
-      trendPills.forEach(function (pill) {{
-        pill.addEventListener('click', function () {{
-          var qVal = pill.getAttribute('data-query');
-          searchInput.value = qVal;
-          filterTools();
-          document.getElementById('featured').scrollIntoView({{ behavior: 'smooth' }});
-        }});
-      }});
+      // Initial bind & render
+      bindTrendingClickEvents();
+      renderTrendingPills(false);
 
       // Category Pill Click
       filterPills.forEach(function (pill) {{
@@ -1602,7 +1884,7 @@ print(f"Generated sitemap.xml with {len(sitemap_urls)} URLs (1 home + {len(tools
 # 7. Generate vercel.json
 vercel_json_content = {
     "cleanUrls": True,
-    "trailingSlash": False,
+    "trailingSlash": True,
     "headers": [
         {
             "source": "/(.*)",
@@ -1903,32 +2185,60 @@ def render_tool_page(tool, all_tools):
 
     .container {{ max-width: 1240px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }}
 
-    /* Navbar */
+    /* Redesigned Modern Navbar */
     .navbar {{
       position: sticky;
       top: 0;
       z-index: 100;
       background: rgba(9, 13, 22, 0.88);
-      backdrop-filter: blur(14px);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
-      height: 72px;
+      height: 68px;
       display: flex;
       align-items: center;
     }}
-    .nav-inner {{ display: flex; align-items: center; justify-content: space-between; width: 100%; gap: 16px; }}
-    .brand {{ display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 1.18rem; letter-spacing: -0.02em; color: #fff; }}
-    .brand-icon {{
-      width: 38px;
-      height: 38px;
-      border-radius: 11px;
-      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    .nav-inner {{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      gap: 18px;
+    }}
+    .brand {{
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 1.18rem;
+      letter-spacing: -0.025em;
+      color: #fff;
+      text-decoration: none;
+      flex-shrink: 0;
+    }}
+    .brand-logo-icon {{
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.25) 0%, rgba(168, 85, 247, 0.25) 50%, rgba(56, 189, 248, 0.2) 100%);
+      border: 1px solid rgba(129, 140, 248, 0.4);
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-weight: 900;
-      color: #fff;
-      font-size: 1.1rem;
-      box-shadow: 0 4px 14px rgba(79, 70, 229, 0.4);
+      box-shadow: 0 4px 16px rgba(99, 102, 241, 0.35);
+      flex-shrink: 0;
+      transition: all 0.25s ease;
+    }}
+    .brand:hover .brand-logo-icon {{
+      transform: scale(1.05);
+      border-color: rgba(129, 140, 248, 0.7);
+      box-shadow: 0 6px 20px rgba(129, 140, 248, 0.55);
+    }}
+    .brand-text {{
+      font-size: 1.18rem;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      color: #ffffff;
     }}
     .nav-search-wrap {{
       flex: 1;
@@ -1958,20 +2268,49 @@ def render_tool_page(tool, all_tools):
       font-size: 0.9rem;
       pointer-events: none;
     }}
-    .nav-links {{ display: flex; align-items: center; gap: 16px; font-size: 0.9rem; }}
-    .btn-back {{
+    .nav-actions {{
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }}
+    .nav-mini-pill {{
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #cbd5e1;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: var(--radius-pill);
+      transition: all 0.2s ease;
+      display: none;
+      align-items: center;
+      gap: 5px;
+    }}
+    @media (min-width: 900px) {{ .nav-mini-pill {{ display: inline-flex; }} }}
+    .nav-mini-pill:hover {{
+      background: rgba(99, 102, 241, 0.18);
+      border-color: rgba(99, 102, 241, 0.45);
+      color: #ffffff;
+      transform: translateY(-1px);
+    }}
+    .btn-nav-submit {{
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+      color: #ffffff !important;
+      padding: 8px 16px;
+      border-radius: 9999px;
+      font-weight: 600;
+      font-size: 0.84rem;
+      box-shadow: 0 3px 12px rgba(99, 102, 241, 0.35);
+      transition: all 0.2s ease;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      color: var(--text-muted);
-      font-weight: 600;
-      padding: 8px 14px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      background: rgba(255, 255, 255, 0.04);
-      transition: all 0.15s ease;
+      gap: 5px;
     }}
-    .btn-back:hover {{ color: #fff; background: rgba(255, 255, 255, 0.09); border-color: rgba(255, 255, 255, 0.2); }}
+    .btn-nav-submit:hover {{
+      transform: translateY(-1px);
+      box-shadow: 0 5px 18px rgba(99, 102, 241, 0.5);
+    }}
 
     /* Breadcrumbs */
     .breadcrumbs {{
@@ -1993,11 +2332,11 @@ def render_tool_page(tool, all_tools):
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
-      padding: 36px 32px;
-      margin-bottom: 32px;
+      padding: 24px 28px;
+      margin-bottom: 24px;
       position: relative;
       overflow: hidden;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
     }}
     .tool-hero::before {{
       content: "";
@@ -2011,49 +2350,49 @@ def render_tool_page(tool, all_tools):
     }}
     .hero-top-row {{
       display: flex;
-      align-items: flex-start;
-      gap: 24px;
+      align-items: center;
+      gap: 18px;
       flex-wrap: wrap;
-      margin-bottom: 24px;
+      margin-bottom: 18px;
     }}
     .hero-avatar {{
-      width: 80px;
-      height: 80px;
-      border-radius: 20px;
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
       color: #fff;
       font-weight: 900;
-      font-size: 1.9rem;
+      font-size: 1.4rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
       flex-shrink: 0;
     }}
-    .hero-info {{ flex: 1; min-width: 280px; }}
+    .hero-info {{ flex: 1; min-width: 260px; }}
     .hero-subcat {{
-      font-size: 0.82rem;
+      font-size: 0.74rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.08em;
       color: #818cf8;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
       display: inline-block;
     }}
     .hero-title {{
-      font-size: clamp(1.8rem, 4vw, 2.6rem);
-      font-weight: 900;
+      font-size: clamp(1.35rem, 2.5vw, 1.85rem);
+      font-weight: 800;
       letter-spacing: -0.02em;
       color: #ffffff;
-      margin-bottom: 12px;
-      line-height: 1.2;
+      margin-bottom: 8px;
+      line-height: 1.25;
     }}
-    .hero-badges {{ display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }}
+    .hero-badges {{ display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }}
 
     /* Badges */
     .price-badge {{
-      font-size: 0.76rem;
+      font-size: 0.74rem;
       font-weight: 700;
-      padding: 5px 12px;
+      padding: 4px 10px;
       border-radius: var(--radius-pill);
       text-transform: uppercase;
       letter-spacing: 0.04em;
@@ -2063,58 +2402,70 @@ def render_tool_page(tool, all_tools):
     .price-paid {{ background: rgba(244, 63, 94, 0.15); color: #fda4af; border: 1px solid rgba(244, 63, 94, 0.3); }}
 
     .meta-pill {{
-      font-size: 0.8rem;
+      font-size: 0.74rem;
       font-weight: 600;
       color: #94a3b8;
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid var(--border);
-      padding: 5px 12px;
+      padding: 4px 10px;
       border-radius: var(--radius-pill);
     }}
     .status-pill {{
-      font-size: 0.78rem;
+      font-size: 0.74rem;
       font-weight: 600;
       color: #34d399;
       background: rgba(16, 185, 129, 0.12);
       border: 1px solid rgba(16, 185, 129, 0.25);
-      padding: 5px 12px;
+      padding: 4px 10px;
       border-radius: var(--radius-pill);
     }}
     .domain-pill {{
-      font-size: 0.78rem;
+      font-size: 0.74rem;
       font-weight: 600;
-      color: #cbd5e1;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--border);
-      padding: 5px 12px;
+      color: #c7d2fe;
+      background: rgba(99, 102, 241, 0.12);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      padding: 4px 10px;
       border-radius: var(--radius-pill);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }}
+    .domain-pill:hover {{
+      background: rgba(99, 102, 241, 0.28);
+      border-color: rgba(99, 102, 241, 0.6);
+      color: #ffffff;
+      transform: translateY(-1px);
     }}
 
     /* Action Row */
     .hero-actions {{
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
       flex-wrap: wrap;
-      padding-top: 20px;
+      padding-top: 16px;
       border-top: 1px solid var(--border);
     }}
     .btn-open-tool {{
       background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
       color: #ffffff !important;
       font-weight: 700;
-      font-size: 1.05rem;
-      padding: 14px 30px;
-      border-radius: 12px;
+      font-size: 0.95rem;
+      padding: 11px 22px;
+      border-radius: 10px;
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+      gap: 8px;
+      box-shadow: 0 4px 16px rgba(99, 102, 241, 0.35);
       transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     }}
     .btn-open-tool:hover {{
       transform: translateY(-2px);
-      box-shadow: 0 8px 28px rgba(99, 102, 241, 0.6);
+      box-shadow: 0 8px 24px rgba(99, 102, 241, 0.55);
       opacity: 0.95;
     }}
     .btn-bookmark, .btn-share {{
@@ -2122,13 +2473,13 @@ def render_tool_page(tool, all_tools):
       border: 1px solid var(--border);
       color: #cbd5e1;
       font-weight: 600;
-      font-size: 0.92rem;
-      padding: 14px 20px;
-      border-radius: 12px;
+      font-size: 0.86rem;
+      padding: 11px 18px;
+      border-radius: 10px;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
       transition: all 0.15s ease;
     }}
     .btn-bookmark:hover, .btn-share:hover {{
@@ -2406,21 +2757,36 @@ def render_tool_page(tool, all_tools):
 <body>
   <div class="ambient-glow"></div>
 
-  <!-- Navbar -->
+  <!-- Redesigned Navbar -->
   <header class="navbar">
     <div class="container nav-inner">
-      <a href="/" class="brand">
-        <span class="brand-icon">AI</span>
-        <span>All AI Tools (allaitools)</span>
+      <a href="/" class="brand" title="All AI Tools — Home">
+        <span class="brand-logo-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 1.5C12 1.5 13.5 7.5 15.5 9.5C17.5 11.5 23.5 12 23.5 12C23.5 12 17.5 12.5 15.5 14.5C13.5 16.5 12 22.5 12 22.5C12 22.5 10.5 16.5 8.5 14.5C6.5 12.5 0.5 12 0.5 12C0.5 12 6.5 11.5 8.5 9.5C10.5 7.5 12 1.5 12 1.5Z" fill="url(#aiBrandGradDetail)"/>
+            <circle cx="19.5" cy="4.5" r="2" fill="#38bdf8"/>
+            <circle cx="4.5" cy="19.5" r="1.5" fill="#a855f7"/>
+            <defs>
+              <linearGradient id="aiBrandGradDetail" x1="0.5" y1="1.5" x2="23.5" y2="22.5" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#818cf8"/>
+                <stop offset="0.45" stop-color="#c084fc"/>
+                <stop offset="1" stop-color="#38bdf8"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </span>
+        <span class="brand-text">All AI Tools</span>
       </a>
 
       <div class="nav-search-wrap">
         <span class="nav-search-icon">&#128269;</span>
-        <input type="search" class="nav-search-input" id="navSearchInput" placeholder="Search {total_tools}+ AI tools (Press Enter)..." />
+        <input type="search" class="nav-search-input" id="navSearchInput" placeholder="Search {total_tools}+ AI tools (Press '/' to focus)..." />
       </div>
 
-      <div class="nav-links">
-        <a href="/" class="btn-back">&larr; Back to Directory</a>
+      <div class="nav-actions">
+        <a href="/tools/ai-image-generator/" class="nav-mini-pill" title="Free AI Image Generator">&#10024; Generator</a>
+        <a href="/tools/image-enhancer/" class="nav-mini-pill" title="Real AI 4K Upscaler">&#9889; Enhancer</a>
+        <a href="/submit/" class="btn-nav-submit">+ Submit</a>
       </div>
     </div>
   </header>
@@ -2446,7 +2812,7 @@ def render_tool_page(tool, all_tools):
             <span class="price-badge {price_class}">{html.escape(pricing)}</span>
             <span class="meta-pill">{html.escape(pill)}</span>
             <span class="status-pill">&#10003; Verified &amp; Active (2026)</span>
-            <span class="domain-pill">&#127760; {html.escape(domain)}</span>
+            <a href="{html.escape(url)}" target="_blank" rel="noopener noreferrer nofollow" class="domain-pill" title="Visit official site: {html.escape(domain)}">&#127760; {html.escape(domain)} &nearr;</a>
           </div>
         </div>
       </div>
@@ -2542,24 +2908,20 @@ def render_tool_page(tool, all_tools):
 
       <!-- Right Sidebar Column -->
       <aside class="sidebar-column">
-        <!-- Quick Action Sidebar -->
-        <div class="sidebar-card">
-          <h3>Quick Access</h3>
-          <p style="font-size:0.88rem; color:var(--text-muted);">Launch the official {html.escape(name)} portal in a new tab:</p>
-          <a href="{html.escape(url)}" target="_blank" rel="noopener noreferrer nofollow" class="sidebar-cta-btn">
-            Open Tool ({html.escape(domain)}) &rarr;
-          </a>
-        </div>
-
         <!-- Related Tools / Alternatives -->
         <div class="card-box">
           <h2>Top {html.escape(pill)} Alternatives</h2>
           <div class="related-list">
             {related_block}
           </div>
-          <a href="/?category={cat_slug}" class="view-detail-link" style="display:inline-block; margin-top:10px; font-weight:600; color:#818cf8;">
-            Browse all {html.escape(pill)} tools &rarr;
-          </a>
+          <div style="margin-top:12px; display:flex; flex-direction:column; gap:6px;">
+            <a href="/alternatives/{slug}/" class="view-detail-link" style="font-weight:700; color:#a5b4fc;">
+              &#9889; Compare Best {html.escape(name)} Alternatives &rarr;
+            </a>
+            <a href="/?category={cat_slug}" class="view-detail-link" style="font-weight:600; color:#818cf8;">
+              Browse all {html.escape(pill)} tools &rarr;
+            </a>
+          </div>
         </div>
 
         <!-- Categories Sidebar -->
@@ -2676,12 +3038,26 @@ for idx, tool in enumerate(tools):
     # 1. public/<slug>/index.html
     dir_path = os.path.join("public", slug)
     os.makedirs(dir_path, exist_ok=True)
-    with open(os.path.join(dir_path, "index.html"), "w", encoding="utf-8") as f:
-        f.write(html_page)
+    index_file = os.path.join(dir_path, "index.html")
+    for _ in range(5):
+        try:
+            with open(index_file, "w", encoding="utf-8") as f:
+                f.write(html_page)
+            break
+        except OSError:
+            import time
+            time.sleep(0.05)
 
     # 2. public/<slug>.html (to prevent any trailing slash redirect issues!)
-    with open(os.path.join("public", f"{slug}.html"), "w", encoding="utf-8") as f:
-        f.write(html_page)
+    slug_file = os.path.join("public", f"{slug}.html")
+    for _ in range(5):
+        try:
+            with open(slug_file, "w", encoding="utf-8") as f:
+                f.write(html_page)
+            break
+        except OSError:
+            import time
+            time.sleep(0.05)
 
     generated_count += 1
     if generated_count % 200 == 0 or generated_count == len(tools):

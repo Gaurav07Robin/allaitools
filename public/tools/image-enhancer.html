@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free AI Image Enhancer &amp; Photo Upscaler (2026) — Unblur &amp; Sharpen to 4K | All AI Tools</title>
+  <meta name="description" content="Free online AI image enhancer and photo upscaler. Unblur blurry photos, enhance facial details, fix lighting, and upscale images to 4K resolution instantly with zero quality loss." />
+  <meta name="keywords" content="airbrush photo enhancer free, image enhancer airbrush, ai image upscaler, photo enhancer online, unblur image ai, airbrush image upscaler, free image enhancer, allaitools" />
+  <link rel="canonical" href="https://www.allaitools.online/tools/image-enhancer/" />
+
+  <!-- OpenGraph -->
+  <meta property="og:title" content="Free AI Image Enhancer &amp; Photo Upscaler (2026) | All AI Tools" />
+  <meta property="og:description" content="Unblur, sharpen, and upscale photos to 4K resolution online for free. Real-time before/after comparison." />
+  <meta property="og:url" content="https://www.allaitools.online/tools/image-enhancer/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="All AI Tools" />
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%234F46E5%22/><text y=%2268%22 x=%2250%22 font-family=%22system-ui,sans-serif%22 font-weight=%22800%22 font-size=%2254%22 fill=%22white%22 text-anchor=%22middle%22>AI</text></svg>" />
+
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Free AI Image Enhancer & Photo Upscaler",
+  "url": "https://www.allaitools.online/tools/image-enhancer/",
+  "applicationCategory": "MultimediaApplication",
+  "operatingSystem": "All",
+  "description": "Free web-based AI photo enhancer, unblur tool, and resolution upscaler with split before/after viewer.",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  }
+}
+  </script>
+
+  <style>
+    :root {
+      --bg-dark: #0a0d14;
+      --bg-surface: #111827;
+      --bg-card: #182234;
+      --border: rgba(255, 255, 255, 0.08);
+      --text-main: #f9fafb;
+      --text-muted: #9ca3af;
+      --primary: #6366f1;
+      --primary-hover: #4f46e5;
+      --emerald: #10b981;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    body { background-color: var(--bg-dark); color: var(--text-main); min-height: 100vh; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+
+    .navbar { border-bottom: 1px solid var(--border); background: rgba(11, 15, 25, 0.85); backdrop-filter: blur(12px); position: sticky; top: 0; z-index: 100; }
+    .container { max-width: 1040px; margin: 0 auto; padding: 0 20px; }
+    .nav-inner { display: flex; justify-content: space-between; align-items: center; height: 68px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.1rem; }
+    .brand-icon { width: 34px; height: 34px; border-radius: 8px; background: linear-gradient(135deg, #6366f1, #8b5cf6); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.95rem; }
+    .nav-links { display: flex; align-items: center; gap: 16px; }
+    .nav-link { color: var(--text-muted); font-size: 0.9rem; transition: color 0.15s; }
+    .nav-link:hover { color: #fff; }
+    .nav-link.active { color: #34d399; font-weight: 600; }
+
+    .header-section { text-align: center; padding: 48px 0 28px; }
+    .badge-bar { display: flex; justify-content: center; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+    .badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(16, 185, 129, 0.12); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 9999px; padding: 4px 14px; font-size: 0.8rem; font-weight: 600; }
+    .badge-privacy { background: rgba(99, 102, 241, 0.12); color: #818cf8; border-color: rgba(99, 102, 241, 0.3); }
+    .header-section h1 { font-size: 2.3rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 10px; }
+    .gradient-text { background: linear-gradient(135deg, #fff 30%, #34d399 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .header-section p { color: var(--text-muted); font-size: 1rem; max-width: 640px; margin: 0 auto; }
+
+    /* Main Enhancer Studio */
+    .enhancer-box { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 16px; padding: 32px; margin-bottom: 48px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); }
+
+    /* Dropzone */
+    .dropzone {
+      border: 2px dashed rgba(255, 255, 255, 0.15);
+      border-radius: 14px;
+      padding: 48px 24px;
+      text-align: center;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.02);
+      transition: all 0.2s ease;
+      margin-bottom: 24px;
+    }
+    .dropzone:hover, .dropzone.dragover {
+      border-color: var(--emerald);
+      background: rgba(16, 185, 129, 0.04);
+    }
+    .upload-icon { font-size: 2.8rem; margin-bottom: 12px; opacity: 0.8; }
+    .drop-title { font-size: 1.15rem; font-weight: 700; margin-bottom: 6px; color: #fff; }
+    .drop-sub { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px; }
+    .sample-pill-row { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+    .sample-pill {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border);
+      color: #cbd5e1;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      cursor: pointer;
+    }
+    .sample-pill:hover { background: rgba(16, 185, 129, 0.2); border-color: rgba(16, 185, 129, 0.4); color: #fff; }
+
+    /* Controls Row */
+    .controls-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
+    .ctrl-group { display: flex; flex-direction: column; gap: 8px; }
+    .ctrl-group label { font-size: 0.85rem; font-weight: 700; color: #e5e7eb; }
+    select {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 12px;
+      color: #fff;
+      font-size: 0.88rem;
+    }
+    select option { background: #1f2937; color: #fff; }
+
+    .btn-enhance-action {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 14px 28px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      transition: all 0.15s ease;
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-enhance-action:hover { opacity: 0.95; transform: translateY(-1px); }
+
+    /* Before / After Comparison Slider Frame */
+    .compare-container {
+      display: none;
+      background: #000;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      position: relative;
+      margin-bottom: 20px;
+      user-select: none;
+    }
+    .img-wrapper { position: relative; width: 100%; max-height: 520px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .img-wrapper img { width: 100%; height: auto; display: block; object-fit: contain; }
+    .img-after {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    .slider-handle {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 4px;
+      background: #fff;
+      cursor: ew-resize;
+      z-index: 10;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+    }
+    .slider-button {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 38px;
+      height: 38px;
+      background: #fff;
+      color: #000;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 800;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+    .label-badge {
+      position: absolute;
+      top: 14px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      z-index: 5;
+      backdrop-filter: blur(8px);
+    }
+    .label-before { left: 14px; background: rgba(0, 0, 0, 0.6); color: #fff; }
+    .label-after { right: 14px; background: rgba(16, 185, 129, 0.85); color: #fff; }
+
+    /* Results Bar */
+    .results-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 20px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+    .stat-pill { font-size: 0.85rem; color: #cbd5e1; }
+    .stat-pill strong { color: #34d399; }
+    .btn-download-enhanced {
+      background: #10b981;
+      color: #fff;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-download-enhanced:hover { opacity: 0.9; }
+
+    /* SEO & Competitor Row */
+    .competitor-section { margin-top: 48px; }
+    .competitor-section h2 { font-size: 1.4rem; font-weight: 800; margin-bottom: 16px; }
+    .competitor-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .comp-card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+    .comp-card h3 { font-size: 1.05rem; margin-bottom: 6px; color: #fff; }
+    .comp-card p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
+
+    @media (max-width: 720px) {
+      .controls-grid { grid-template-columns: 1fr; }
+      .competitor-grid { grid-template-columns: 1fr; }
+      .header-section h1 { font-size: 1.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="/" class="brand">
+        <span class="brand-icon">AI</span>
+        <span>All AI Tools</span>
+      </a>
+      <div class="nav-links">
+        <a href="/" class="nav-link">&larr; Directory</a>
+        <a href="/tools/image-enhancer/" class="nav-link active">&#10024; Image Enhancer</a>
+        <a href="/tools/ai-image-generator/" class="nav-link">&#127912; Image Generator</a>
+        <a href="/submit/" class="nav-link">+ Submit Tool</a>
+        <a href="/crm/" class="nav-link" style="color:#818cf8;">&#128274; CRM</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="header-section">
+      <div class="badge-bar">
+        <span class="badge">&#10024; Real Deep-Learning AI Upscaler</span>
+        <span class="badge badge-privacy">&#129504; Powered by Real-ESRGAN &amp; GFPGAN</span>
+      </div>
+      <h1>Free AI <span class="gradient-text">Image Enhancer</span> &amp; Upscaler</h1>
+      <p>Unblur blurry photos, restore lost facial textures, reconstruct missing details, and upscale resolutions up to 4K powered by Real-ESRGAN and GFPGAN deep neural networks.</p>
+    </div>
+
+    <div class="enhancer-box">
+      <!-- Drag & Drop Zone -->
+      <div class="dropzone" id="dropzone" onclick="document.getElementById('fileInput').click()">
+        <div class="upload-icon">&#128247;</div>
+        <div class="drop-title">Drop your image here, or browse files</div>
+        <div class="drop-sub">Supports JPG, PNG, WEBP &bull; True Deep Learning AI Reconstruction</div>
+        <input type="file" id="fileInput" accept="image/*" style="display:none;" onchange="handleFile(this.files[0])" />
+        
+        <div class="sample-pill-row" onclick="event.stopPropagation()">
+          <span style="font-size:0.75rem; color:var(--text-muted); align-self:center;">Or try demo sample:</span>
+          <button class="sample-pill" onclick="loadSample('portrait')">Portrait Photo</button>
+          <button class="sample-pill" onclick="loadSample('landscape')">Landscape Scene</button>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="controls-grid">
+        <div class="ctrl-group">
+          <label for="enhancementMode">Neural AI Model</label>
+          <select id="enhancementMode">
+            <option value="RealESRGAN_x4plus">Real-ESRGAN x4plus (Deep 4K Super-Resolution)</option>
+            <option value="GFPGAN">GFPGAN + Real-ESRGAN (Face Restoration &amp; Unblur)</option>
+            <option value="CodeFormer">CodeFormer (Deep Facial Reconstruction)</option>
+          </select>
+        </div>
+
+        <div class="ctrl-group">
+          <label for="upscaleFactor">Resolution Target</label>
+          <select id="upscaleFactor">
+            <option value="4">4x Ultra-HD 4K Upscale</option>
+            <option value="2">2x High-Definition Upscale</option>
+          </select>
+        </div>
+
+        <div class="ctrl-group">
+          <label for="sharpnessLevel">AI Enhancement Pass</label>
+          <select id="sharpnessLevel">
+            <option value="balanced">Full Generative Detail Restoration</option>
+            <option value="high">High Contrast &amp; Edge Sharpening</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="btn-enhance-action" id="enhanceBtn" onclick="processEnhancement()">
+        <span>&#9889;</span>
+        <span id="enhanceBtnText">Enhance &amp; Upscale with Neural AI</span>
+      </button>
+
+      <!-- Interactive Before / After Split Slider Frame -->
+      <div class="compare-container" id="compareContainer">
+        <div class="label-badge label-before">BEFORE (ORIGINAL)</div>
+        <div class="label-badge label-after">AFTER (ENHANCED 4K)</div>
+
+        <div class="img-wrapper" id="imgWrapper">
+          <img id="beforeImg" alt="Original raw image" />
+          <div class="img-after" id="afterWrapper">
+            <img id="afterImg" alt="Enhanced high-resolution image" />
+          </div>
+          <div class="slider-handle" id="sliderHandle">
+            <div class="slider-button">&#8596;</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Results Download Bar -->
+      <div class="results-bar" id="resultsBar" style="display:none;">
+        <div class="stat-pill" id="statDetails">Enhanced to <strong>4K Resolution</strong> &bull; Completed in <strong>0.3s</strong></div>
+        <button class="btn-download-enhanced" onclick="downloadEnhanced()">&#11015; Download Enhanced Image</button>
+      </div>
+    </div>
+
+    <!-- Related Directory Alternatives -->
+    <div class="competitor-section">
+      <h2>Compare Top Image Enhancers &amp; Upscalers in our Directory</h2>
+      <div class="competitor-grid">
+        <a href="/airbrush-image-enhancer/" class="comp-card">
+          <h3>Airbrush Image Enhancer &rarr;</h3>
+          <p>Read our full specs review on Airbrush, explore its pricing plans, and discover verified competitors.</p>
+        </a>
+        <a href="/alternatives/airbrush-image-enhancer/" class="comp-card">
+          <h3>Airbrush Alternatives &rarr;</h3>
+          <p>Top free alternatives to Airbrush including Upscayl, BigJPG, and VanceAI for desktop and web.</p>
+        </a>
+        <a href="/tools/ai-image-generator/" class="comp-card">
+          <h3>AI Image Generator &rarr;</h3>
+          <p>Want to generate completely new artwork from scratch? Use our free Flux.1 text-to-image studio.</p>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <canvas id="hiddenCanvas" style="display:none;"></canvas>
+
+  <script>
+    let currentOriginalDataUrl = '';
+    let currentEnhancedDataUrl = '';
+
+    // Drag and drop handlers
+    const dropzone = document.getElementById('dropzone');
+    dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('dragover'); });
+    dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+    dropzone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropzone.classList.remove('dragover');
+      if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+    });
+
+    function handleFile(file) {
+      if (!file || !file.type.startsWith('image/')) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        currentOriginalDataUrl = e.target.result;
+        document.getElementById('beforeImg').src = currentOriginalDataUrl;
+        processEnhancement();
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function loadSample(type) {
+      const canvas = document.createElement('canvas');
+      canvas.width = 600;
+      canvas.height = 400;
+      const ctx = canvas.getContext('2d');
+
+      // Generate attractive demo pattern
+      if (type === 'portrait') {
+        const grad = ctx.createRadialGradient(300, 200, 20, 300, 200, 200);
+        grad.addColorStop(0, '#fbcfe8');
+        grad.addColorStop(0.5, '#f472b6');
+        grad.addColorStop(1, '#831843');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, 600, 400);
+
+        ctx.fillStyle = '#fff';
+        ctx.font = 'bold 24px system-ui';
+        ctx.textAlign = 'center';
+        ctx.fillText('Sample Portrait Image', 300, 190);
+        ctx.font = '14px system-ui';
+        ctx.fillText('Testing facial unblur and edge sharpening', 300, 220);
+      } else {
+        const grad = ctx.createLinearGradient(0, 0, 600, 400);
+        grad.addColorStop(0, '#0284c7');
+        grad.addColorStop(0.5, '#38bdf8');
+        grad.addColorStop(1, '#0c4a6e');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, 600, 400);
+
+        ctx.fillStyle = '#fff';
+        ctx.font = 'bold 24px system-ui';
+        ctx.textAlign = 'center';
+        ctx.fillText('Sample Landscape Scene', 300, 190);
+        ctx.font = '14px system-ui';
+        ctx.fillText('Testing 4K super-resolution & HDR contrast', 300, 220);
+      }
+
+      currentOriginalDataUrl = canvas.toDataURL('image/png');
+      document.getElementById('beforeImg').src = currentOriginalDataUrl;
+      processEnhancement();
+    }
+
+    async function processEnhancement() {
+      if (!currentOriginalDataUrl) {
+        loadSample('portrait');
+        return;
+      }
+
+      const btn = document.getElementById('enhanceBtn');
+      const btnText = document.getElementById('enhanceBtnText');
+      btn.disabled = true;
+      btnText.textContent = '🧠 Processing with Neural AI Cluster (~15–30s)...';
+
+      const factor = parseInt(document.getElementById('upscaleFactor').value, 10) || 4;
+      const mode = document.getElementById('enhancementMode').value;
+      const startTime = performance.now();
+
+      try {
+        const response = await fetch('/api/upscale', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            image: currentOriginalDataUrl,
+            engine: mode,
+            scale: factor
+          })
+        });
+
+        const data = await response.json();
+
+        if (data && data.image) {
+          currentEnhancedDataUrl = data.image;
+          const afterImg = document.getElementById('afterImg');
+          afterImg.onload = () => {
+            const compareBox = document.getElementById('compareContainer');
+            const resultsBar = document.getElementById('resultsBar');
+            compareBox.style.display = 'block';
+            resultsBar.style.display = 'flex';
+
+            const elapsed = ((performance.now() - startTime) / 1000).toFixed(1);
+            const engineLabel = data.engine || 'Real-ESRGAN x4plus Neural Model';
+            const workerInfo = data.worker ? ` via ${data.worker}` : '';
+            document.getElementById('statDetails').innerHTML = `Neural AI: <strong>${engineLabel}${workerInfo}</strong> &bull; Completed in <strong>${elapsed}s</strong>`;
+
+            initSplitSlider();
+            compareBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          };
+          afterImg.src = currentEnhancedDataUrl;
+        } else {
+          throw new Error(data.error || 'Neural upscaling failed on worker cluster.');
+        }
+      } catch (err) {
+        console.error(err);
+        alert('Neural AI Upscale Notice: ' + err.message);
+      } finally {
+        btn.disabled = false;
+        btnText.textContent = 'Enhance & Upscale with Neural AI';
+      }
+    }
+
+    // Before/After Slider Interaction
+    function initSplitSlider() {
+      const container = document.getElementById('imgWrapper');
+      const afterWrap = document.getElementById('afterWrapper');
+      const handle = document.getElementById('sliderHandle');
+      let isDragging = false;
+
+      function updateSlider(x) {
+        const rect = container.getBoundingClientRect();
+        let pos = (x - rect.left) / rect.width;
+        if (pos < 0.05) pos = 0.05;
+        if (pos > 0.95) pos = 0.95;
+
+        const pct = pos * 100;
+        handle.style.left = pct + '%';
+        afterWrap.style.clipPath = `polygon(${pct}% 0, 100% 0, 100% 100%, ${pct}% 100%)`;
+      }
+
+      handle.onmousedown = () => isDragging = true;
+      window.onmouseup = () => isDragging = false;
+      window.onmousemove = (e) => {
+        if (isDragging) updateSlider(e.clientX);
+      };
+
+      // Touch support
+      handle.ontouchstart = () => isDragging = true;
+      window.ontouchend = () => isDragging = false;
+      window.ontouchmove = (e) => {
+        if (isDragging && e.touches.length) updateSlider(e.touches[0].clientX);
+      };
+
+      // Set initial 50% split
+      updateSlider(container.getBoundingClientRect().left + container.getBoundingClientRect().width / 2);
+    }
+
+    function downloadEnhanced() {
+      if (!currentEnhancedDataUrl) return;
+      const a = document.createElement('a');
+      a.href = currentEnhancedDataUrl;
+      a.download = `allaitools_enhanced_${Date.now()}.png`;
+      a.click();
+    }
+  </script>
+</body>
+</html>

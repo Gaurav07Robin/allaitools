@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>All AI Tools — Submissions CRM &amp; Review Portal</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%234F46E5%22/><text y=%2268%22 x=%2250%22 font-family=%22system-ui,sans-serif%22 font-weight=%22800%22 font-size=%2254%22 fill=%22white%22 text-anchor=%22middle%22>AI</text></svg>" />
+
+  <style>
+    :root {
+      --bg-dark: #0a0d14;
+      --bg-surface: #111827;
+      --bg-card: #182234;
+      --border: rgba(255, 255, 255, 0.08);
+      --text-main: #f9fafb;
+      --text-muted: #9ca3af;
+      --primary: #6366f1;
+      --primary-hover: #4f46e5;
+      --warning: #f59e0b;
+      --success: #10b981;
+      --danger: #ef4444;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    body { background-color: var(--bg-dark); color: var(--text-main); min-height: 100vh; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+
+    /* Top Navigation */
+    .crm-navbar {
+      background: rgba(17, 24, 39, 0.9);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+    }
+    .container { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+    .nav-inner { display: flex; justify-content: space-between; align-items: center; height: 68px; }
+    .brand-group { display: flex; align-items: center; gap: 10px; }
+    .brand-logo-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.25) 0%, rgba(168, 85, 247, 0.25) 50%, rgba(56, 189, 248, 0.2) 100%);
+      border: 1px solid rgba(129, 140, 248, 0.4);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px rgba(99, 102, 241, 0.35);
+      flex-shrink: 0;
+      transition: all 0.25s ease;
+    }
+    .brand-group:hover .brand-logo-icon {
+      transform: scale(1.05);
+      border-color: rgba(129, 140, 248, 0.7);
+      box-shadow: 0 6px 20px rgba(129, 140, 248, 0.55);
+    }
+    .brand-title { font-weight: 800; font-size: 1.15rem; letter-spacing: -0.025em; color: #fff; }
+    .crm-badge { background: rgba(99, 102, 241, 0.2); color: #818cf8; border: 1px solid rgba(99, 102, 241, 0.35); font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+    
+    .nav-actions { display: flex; align-items: center; gap: 12px; }
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border);
+      color: #e5e7eb;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+    .btn-secondary:hover { background: rgba(255, 255, 255, 0.12); color: #fff; }
+    .btn-primary {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border: none;
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: opacity 0.15s ease;
+    }
+    .btn-primary:hover { opacity: 0.9; }
+
+    /* Login / PIN Gate */
+    #pinGateModal {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 13, 20, 0.95);
+      backdrop-filter: blur(8px);
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .pin-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 36px 32px;
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    }
+    .pin-card h2 { font-size: 1.4rem; margin-bottom: 8px; }
+    .pin-card p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 24px; }
+    .pin-input {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      color: #fff;
+      font-size: 1.1rem;
+      text-align: center;
+      letter-spacing: 0.2em;
+      margin-bottom: 16px;
+    }
+    .pin-input:focus { outline: none; border-color: var(--primary); }
+
+    /* Dashboard Header */
+    .dashboard-header { padding: 36px 0 24px; }
+    .dashboard-header h1 { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 6px; }
+    .dashboard-header p { color: var(--text-muted); font-size: 0.95rem; }
+
+    /* KPI Cards */
+    .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px; }
+    .kpi-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      position: relative;
+      overflow: hidden;
+    }
+    .kpi-card::before { content: ""; position: absolute; top: 0; left: 0; width: 4px; height: 100%; }
+    .kpi-card.total::before { background: #6366f1; }
+    .kpi-card.pending::before { background: var(--warning); }
+    .kpi-card.approved::before { background: var(--success); }
+    .kpi-card.rejected::before { background: var(--danger); }
+    .kpi-label { font-size: 0.82rem; font-weight: 600; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.04em; }
+    .kpi-val { font-size: 1.9rem; font-weight: 800; color: #fff; }
+
+    /* Filters Bar */
+    .toolbar-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .filter-tabs { display: flex; gap: 8px; }
+    .filter-tab {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .filter-tab:hover { color: #fff; background: rgba(255, 255, 255, 0.04); }
+    .filter-tab.active { background: rgba(99, 102, 241, 0.15); color: #818cf8; border-color: rgba(99, 102, 241, 0.35); }
+    
+    .search-box {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 14px;
+      color: #fff;
+      font-size: 0.9rem;
+      width: 260px;
+    }
+    .search-box:focus { outline: none; border-color: var(--primary); }
+
+    /* Submissions Table */
+    .table-container {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 40px;
+    }
+    table { width: 100%; border-collapse: collapse; text-align: left; }
+    th {
+      background: rgba(255, 255, 255, 0.02);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 18px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+    }
+    td {
+      padding: 16px 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      font-size: 0.9rem;
+      vertical-align: middle;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(255, 255, 255, 0.02); }
+
+    .tool-cell { display: flex; flex-direction: column; gap: 2px; }
+    .tool-name-link { font-weight: 700; color: #fff; display: inline-flex; align-items: center; gap: 4px; }
+    .tool-name-link:hover { text-decoration: underline; color: #818cf8; }
+    .tool-url { color: var(--text-muted); font-size: 0.78rem; }
+    
+    .pill { display: inline-block; padding: 3px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; }
+    .pill-freemium { background: rgba(99, 102, 241, 0.15); color: #a5b4fc; }
+    .pill-free { background: rgba(16, 185, 129, 0.15); color: #6ee7b7; }
+    .pill-paid { background: rgba(245, 158, 11, 0.15); color: #fcd34d; }
+
+    .status-badge { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 9999px; font-size: 0.8rem; font-weight: 700; }
+    .status-pending { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .status-approved { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+    .status-rejected { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+
+    .action-group { display: flex; gap: 6px; }
+    .btn-act {
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.05);
+      color: #e5e7eb;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .btn-act:hover { background: rgba(255, 255, 255, 0.12); }
+    .btn-act.approve:hover { background: #10b981; color: #fff; border-color: #10b981; }
+    .btn-act.reject:hover { background: #ef4444; color: #fff; border-color: #ef4444; }
+    .btn-act.delete:hover { background: #b91c1c; color: #fff; border-color: #b91c1c; }
+
+    .empty-state { text-align: center; padding: 48px 20px; color: var(--text-muted); }
+
+    /* Modal for JSON code copy */
+    #snippetModal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .snippet-box {
+      background: #111827;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      max-width: 600px;
+      width: 100%;
+    }
+    .snippet-pre {
+      background: #000;
+      padding: 16px;
+      border-radius: 8px;
+      font-family: monospace;
+      font-size: 0.85rem;
+      color: #a5b4fc;
+      max-height: 260px;
+      overflow-y: auto;
+      margin: 14px 0;
+      white-space: pre-wrap;
+    }
+
+    @media (max-width: 800px) {
+      .kpi-grid { grid-template-columns: 1fr 1fr; }
+      .table-container { overflow-x: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PIN Protection Modal -->
+  <div id="pinGateModal" style="display:none;">
+    <div class="pin-card">
+      <h2>&#128274; Admin CRM Portal</h2>
+      <p>Enter your admin access PIN to review submissions:</p>
+      <input type="password" id="pinInput" class="pin-input" placeholder="PIN" maxlength="12" />
+      <button class="btn-primary" style="width:100%; justify-content:center; padding:12px;" onclick="verifyPin()">Unlock CRM Dashboard &rarr;</button>
+      <div id="pinError" style="color:#ef4444; font-size:0.85rem; margin-top:10px; display:none;">Incorrect PIN. Default PIN is <code>admin2026</code>.</div>
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <header class="crm-navbar">
+    <div class="container nav-inner">
+      <div class="brand-group">
+        <a href="/" class="brand-logo-icon" title="All AI Tools — Home">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 1.5C12 1.5 13.5 7.5 15.5 9.5C17.5 11.5 23.5 12 23.5 12C23.5 12 17.5 12.5 15.5 14.5C13.5 16.5 12 22.5 12 22.5C12 22.5 10.5 16.5 8.5 14.5C6.5 12.5 0.5 12 0.5 12C0.5 12 6.5 11.5 8.5 9.5C10.5 7.5 12 1.5 12 1.5Z" fill="url(#aiBrandGradCrm)"/>
+            <circle cx="19.5" cy="4.5" r="2" fill="#38bdf8"/>
+            <circle cx="4.5" cy="19.5" r="1.5" fill="#a855f7"/>
+            <defs>
+              <linearGradient id="aiBrandGradCrm" x1="0.5" y1="1.5" x2="23.5" y2="22.5" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#818cf8"/>
+                <stop offset="0.45" stop-color="#c084fc"/>
+                <stop offset="1" stop-color="#38bdf8"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </a>
+        <a href="/" class="brand-title">All AI Tools</a>
+        <span class="crm-badge">Editorial CRM</span>
+      </div>
+      <div class="nav-actions">
+        <button class="btn-secondary" onclick="addDemoSubmission()">+ Add Demo Submission</button>
+        <button class="btn-secondary" onclick="exportCSV()">&#128196; Export CSV</button>
+        <button class="btn-primary" onclick="exportJSON()">&#128190; Export JSON</button>
+        <a href="/" class="btn-secondary">&larr; Back to Site</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="dashboard-header">
+      <h1>Submissions Review &amp; Approval Pipeline</h1>
+      <p>Monitor real-time directory submissions from AI founders, approve listings, and prepare catalog integrations.</p>
+    </div>
+
+    <!-- KPIs -->
+    <div class="kpi-grid">
+      <div class="kpi-card total">
+        <span class="kpi-label">Total Inflow</span>
+        <span class="kpi-val" id="kpiTotal">0</span>
+      </div>
+      <div class="kpi-card pending">
+        <span class="kpi-label">Pending Review</span>
+        <span class="kpi-val" id="kpiPending" style="color:#fbbf24;">0</span>
+      </div>
+      <div class="kpi-card approved">
+        <span class="kpi-label">Approved Tools</span>
+        <span class="kpi-val" id="kpiApproved" style="color:#34d399;">0</span>
+      </div>
+      <div class="kpi-card rejected">
+        <span class="kpi-label">Rejected</span>
+        <span class="kpi-val" id="kpiRejected" style="color:#f87171;">0</span>
+      </div>
+    </div>
+
+    <!-- Toolbar & Filters -->
+    <div class="toolbar-card">
+      <div class="filter-tabs">
+        <button class="filter-tab active" data-filter="all" onclick="setFilter('all', this)">All (<span id="countAll">0</span>)</button>
+        <button class="filter-tab" data-filter="Pending" onclick="setFilter('Pending', this)">Pending (<span id="countPending">0</span>)</button>
+        <button class="filter-tab" data-filter="Approved" onclick="setFilter('Approved', this)">Approved (<span id="countApproved">0</span>)</button>
+        <button class="filter-tab" data-filter="Rejected" onclick="setFilter('Rejected', this)">Rejected (<span id="countRejected">0</span>)</button>
+      </div>
+
+      <input type="search" class="search-box" id="searchInput" placeholder="Search tool, email, or category..." oninput="renderTable()" />
+    </div>
+
+    <!-- Table -->
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Tool Name &amp; URL</th>
+            <th>Category</th>
+            <th>Pricing</th>
+            <th>Submitter Email</th>
+            <th>Tagline</th>
+            <th>Status</th>
+            <th style="text-align:right;">Editorial Actions</th>
+          </tr>
+        </thead>
+        <tbody id="submissionsTableBody">
+          <!-- Populated by JS -->
+        </tbody>
+      </table>
+      <div class="empty-state" id="emptyState" style="display:none;">
+        <p>No submissions found matching your filters.</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal for copying JSON to tools.json -->
+  <div id="snippetModal">
+    <div class="snippet-box">
+      <h3 style="margin-bottom:8px;">Ready for tools.json:</h3>
+      <p style="color:var(--text-muted); font-size:0.85rem;">Copy and paste this snippet directly into your <code>tools.json</code> catalog file:</p>
+      <div class="snippet-pre" id="snippetPre"></div>
+      <div style="display:flex; justify-content:flex-end; gap:8px;">
+        <button class="btn-secondary" onclick="closeSnippet()">Close</button>
+        <button class="btn-primary" onclick="copySnippet()">Copy JSON</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const DEFAULT_PIN = "admin2026";
+    let activeFilter = 'all';
+
+    // Seed data if empty
+    function initializeSeedData() {
+      let existing = [];
+      try {
+        existing = JSON.parse(localStorage.getItem('allaitools_submissions') || '[]');
+      } catch (e) {
+        existing = [];
+      }
+
+      if (existing.length === 0) {
+        const seed = [
+          {
+            id: 'sub_seed_1',
+            name: 'VoiceCraft AI Studio',
+            url: 'https://voicecraft.ai',
+            category: 'voice-audio',
+            pricing: 'Freemium',
+            description: 'Zero-shot voice cloning and expressive text-to-speech engine with emotional control and 35+ realistic accents.',
+            email: 'alex@voicecraft.ai',
+            twitter: '@voicecraft_ai',
+            submittedAt: new Date(Date.now() - 3600000 * 4).toISOString(),
+            status: 'Pending'
+          },
+          {
+            id: 'sub_seed_2',
+            name: 'PromptLayer Studio',
+            url: 'https://promptlayer.dev',
+            category: 'coding-dev',
+            pricing: 'Free',
+            description: 'Collaborative prompt engineering IDE with versioning, LLM regression testing, and instant latency benchmarking.',
+            email: 'sarah@promptlayer.dev',
+            twitter: '@sarah_dev',
+            submittedAt: new Date(Date.now() - 3600000 * 18).toISOString(),
+            status: 'Approved'
+          },
+          {
+            id: 'sub_seed_3',
+            name: 'ArtisanFlow 3D Generator',
+            url: 'https://artisanflow.com',
+            category: 'video-3d',
+            pricing: 'Paid',
+            description: 'Generate photorealistic game-ready 3D meshes and PBR texture maps from a single 2D concept image in under 60 seconds.',
+            email: 'marcus@artisanflow.com',
+            twitter: '@artisanflow3d',
+            submittedAt: new Date(Date.now() - 3600000 * 36).toISOString(),
+            status: 'Pending'
+          }
+        ];
+        localStorage.setItem('allaitools_submissions', JSON.stringify(seed));
+      }
+    }
+
+    // Check PIN Authentication
+    function checkAuth() {
+      const isAuthed = sessionStorage.getItem('allaitools_crm_authed');
+      if (isAuthed !== 'true') {
+        document.getElementById('pinGateModal').style.display = 'flex';
+      }
+    }
+
+    function verifyPin() {
+      const entered = document.getElementById('pinInput').value.trim();
+      if (entered === DEFAULT_PIN || entered === 'admin') {
+        sessionStorage.setItem('allaitools_crm_authed', 'true');
+        document.getElementById('pinGateModal').style.display = 'none';
+      } else {
+        document.getElementById('pinError').style.display = 'block';
+      }
+    }
+
+    document.getElementById('pinInput').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') verifyPin();
+    });
+
+    function getSubmissions() {
+      try {
+        return JSON.parse(localStorage.getItem('allaitools_submissions') || '[]');
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function saveSubmissions(list) {
+      localStorage.setItem('allaitools_submissions', JSON.stringify(list));
+      updateKPIs();
+      renderTable();
+    }
+
+    function updateKPIs() {
+      const list = getSubmissions();
+      const total = list.length;
+      const pending = list.filter(s => s.status === 'Pending').length;
+      const approved = list.filter(s => s.status === 'Approved').length;
+      const rejected = list.filter(s => s.status === 'Rejected').length;
+
+      document.getElementById('kpiTotal').textContent = total;
+      document.getElementById('kpiPending').textContent = pending;
+      document.getElementById('kpiApproved').textContent = approved;
+      document.getElementById('kpiRejected').textContent = rejected;
+
+      document.getElementById('countAll').textContent = total;
+      document.getElementById('countPending').textContent = pending;
+      document.getElementById('countApproved').textContent = approved;
+      document.getElementById('countRejected').textContent = rejected;
+    }
+
+    function setFilter(filter, el) {
+      activeFilter = filter;
+      document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+      el.classList.add('active');
+      renderTable();
+    }
+
+    function renderTable() {
+      const tbody = document.getElementById('submissionsTableBody');
+      const empty = document.getElementById('emptyState');
+      const search = document.getElementById('searchInput').value.toLowerCase().trim();
+      const list = getSubmissions();
+
+      const filtered = list.filter(item => {
+        const matchesFilter = (activeFilter === 'all') || (item.status === activeFilter);
+        const matchesSearch = !search || 
+          item.name.toLowerCase().includes(search) || 
+          (item.email && item.email.toLowerCase().includes(search)) ||
+          (item.category && item.category.toLowerCase().includes(search)) ||
+          (item.description && item.description.toLowerCase().includes(search));
+        return matchesFilter && matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = '';
+        empty.style.display = 'block';
+        return;
+      }
+
+      empty.style.display = 'none';
+      tbody.innerHTML = filtered.map(item => {
+        const dateStr = item.submittedAt ? new Date(item.submittedAt).toLocaleDateString(undefined, {month:'short', day:'numeric', hour:'2-digit', minute:'2-digit'}) : 'Recently';
+        const pricingClass = item.pricing === 'Free' ? 'pill-free' : (item.pricing === 'Paid' ? 'pill-paid' : 'pill-freemium');
+        const statusClass = item.status === 'Approved' ? 'status-approved' : (item.status === 'Rejected' ? 'status-rejected' : 'status-pending');
+
+        return `
+          <tr>
+            <td>
+              <div class="tool-cell">
+                <a href="${item.url}" target="_blank" rel="noopener" class="tool-name-link">
+                  ${item.name} ↗
+                </a>
+                <span class="tool-url">${item.url}</span>
+                <span style="font-size:0.75rem; color:#6b7280;">Submitted: ${dateStr}</span>
+              </div>
+            </td>
+            <td><span style="text-transform:capitalize; font-size:0.85rem; color:#cbd5e1;">${(item.category || '').replace('-', ' & ')}</span></td>
+            <td><span class="pill ${pricingClass}">${item.pricing || 'Freemium'}</span></td>
+            <td><span style="font-size:0.85rem; color:#93c5fd;">${item.email || '—'}</span></td>
+            <td><div style="max-width:280px; font-size:0.82rem; color:#9ca3af; line-height:1.4;">${item.description || '—'}</div></td>
+            <td><span class="status-badge ${statusClass}">${item.status}</span></td>
+            <td style="text-align:right;">
+              <div class="action-group" style="justify-content:flex-end;">
+                ${item.status !== 'Approved' ? `<button class="btn-act approve" onclick="setStatus('${item.id}', 'Approved')">✓ Approve</button>` : `<button class="btn-act" onclick="showSnippet('${item.id}')">&#128203; Get JSON</button>`}
+                ${item.status !== 'Rejected' ? `<button class="btn-act reject" onclick="setStatus('${item.id}', 'Rejected')">✕ Reject</button>` : ''}
+                <button class="btn-act delete" onclick="deleteItem('${item.id}')" title="Delete">🗑</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function setStatus(id, newStatus) {
+      const list = getSubmissions();
+      const item = list.find(s => s.id === id);
+      if (item) {
+        item.status = newStatus;
+        saveSubmissions(list);
+      }
+    }
+
+    function deleteItem(id) {
+      if (confirm('Are you sure you want to delete this submission?')) {
+        let list = getSubmissions();
+        list = list.filter(s => s.id !== id);
+        saveSubmissions(list);
+      }
+    }
+
+    function addDemoSubmission() {
+      const randomNames = ['HyperAgent AI', 'NeuralDocu Flow', 'PixelCraft 8K', 'DataSync Agent', 'CodeRefactor GPT'];
+      const randomCategories = ['coding-dev', 'chat-reasoning', 'image-art', 'video-3d', 'voice-audio', 'ai-search'];
+      const randomPricing = ['Free', 'Freemium', 'Paid'];
+
+      const randomName = randomNames[Math.floor(Math.random() * randomNames.length)] + ' ' + Math.floor(Math.random() * 90 + 10);
+      const newSub = {
+        id: 'sub_' + Date.now(),
+        name: randomName,
+        url: 'https://' + randomName.toLowerCase().replace(/[^a-z0-9]/g, '') + '.io',
+        category: randomCategories[Math.floor(Math.random() * randomCategories.length)],
+        pricing: randomPricing[Math.floor(Math.random() * randomPricing.length)],
+        description: 'Next-generation AI workflow automation platform designed to accelerate productivity and boost accuracy.',
+        email: 'founder@' + randomName.toLowerCase().replace(/[^a-z0-9]/g, '') + '.io',
+        twitter: '@' + randomName.toLowerCase().replace(/[^a-z0-9]/g, ''),
+        submittedAt: new Date().toISOString(),
+        status: 'Pending'
+      };
+
+      const list = getSubmissions();
+      list.unshift(newSub);
+      saveSubmissions(list);
+    }
+
+    function exportJSON() {
+      const list = getSubmissions();
+      const blob = new Blob([JSON.stringify(list, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `allaitools_submissions_${new Date().toISOString().split('T')[0]}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function exportCSV() {
+      const list = getSubmissions();
+      if (list.length === 0) return alert('No submissions to export');
+      const headers = ['ID', 'Name', 'URL', 'Category', 'Pricing', 'Email', 'Twitter', 'Status', 'SubmittedAt'];
+      const rows = list.map(s => [
+        s.id,
+        `"${(s.name || '').replace(/"/g, '""')}"`,
+        s.url,
+        s.category,
+        s.pricing,
+        s.email,
+        s.twitter || '',
+        s.status,
+        s.submittedAt
+      ]);
+      const csvContent = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+      const blob = new Blob([csvContent], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `allaitools_submissions_${new Date().toISOString().split('T')[0]}.csv`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function showSnippet(id) {
+      const list = getSubmissions();
+      const item = list.find(s => s.id === id);
+      if (!item) return;
+
+      const slug = item.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+      const toolEntry = {
+        badge: item.name.substring(0, 2).toUpperCase(),
+        color: "#6366F1",
+        name: item.name,
+        pricing: item.pricing || "Freemium",
+        category_slug: item.category || "coding-dev",
+        category_pill: (item.category || '').replace('-', ' ').toUpperCase(),
+        category_section: "✨ Community Submissions",
+        description: item.description,
+        url: item.url,
+        slug: slug,
+        path: `/${slug}/`
+      };
+
+      document.getElementById('snippetPre').textContent = JSON.stringify(toolEntry, null, 2);
+      document.getElementById('snippetModal').style.display = 'flex';
+    }
+
+    function closeSnippet() {
+      document.getElementById('snippetModal').style.display = 'none';
+    }
+
+    function copySnippet() {
+      const text = document.getElementById('snippetPre').textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        alert('Copied to clipboard! Ready to paste into tools.json');
+        closeSnippet();
+      });
+    }
+
+    // Init
+    initializeSeedData();
+    checkAuth();
+    updateKPIs();
+    renderTable();
+  </script>
+</body>
+</html>

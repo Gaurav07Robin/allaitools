@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free AI Image Generator (2026) — Flux.1 Schnell &amp; SDXL | All AI Tools</title>
+  <meta name="description" content="Generate high-resolution AI art, photorealistic images, and 3D renders with Cloudflare Workers AI and Flux.1 Schnell. 100% free with instant download." />
+  <meta name="keywords" content="ai image generator free, flux 1 schnell generator, cloudflare workers ai image, free text to image, ai art generator, midjourney free alternative, allaitools" />
+  <link rel="canonical" href="https://www.allaitools.online/tools/ai-image-generator/" />
+
+  <!-- OpenGraph -->
+  <meta property="og:title" content="Free AI Image Generator (2026) | All AI Tools" />
+  <meta property="og:description" content="Generate photorealistic AI artwork live with Cloudflare Workers AI and Flux.1 Schnell." />
+  <meta property="og:url" content="https://www.allaitools.online/tools/ai-image-generator/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="All AI Tools" />
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%234F46E5%22/><text y=%2268%22 x=%2250%22 font-family=%22system-ui,sans-serif%22 font-weight=%22800%22 font-size=%2254%22 fill=%22white%22 text-anchor=%22middle%22>AI</text></svg>" />
+
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Free AI Image Generator",
+  "url": "https://www.allaitools.online/tools/ai-image-generator/",
+  "applicationCategory": "MultimediaApplication",
+  "operatingSystem": "All",
+  "description": "Free web-based text-to-image generator powered by Cloudflare Workers AI and Flux.1 Schnell.",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  }
+}
+  </script>
+
+  <style>
+    :root {
+      --bg-dark: #0a0d14;
+      --bg-surface: #111827;
+      --bg-card: #182234;
+      --border: rgba(255, 255, 255, 0.08);
+      --text-main: #f9fafb;
+      --text-muted: #9ca3af;
+      --primary: #6366f1;
+      --primary-hover: #4f46e5;
+      --cf-orange: #f38020;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    body { background-color: var(--bg-dark); color: var(--text-main); min-height: 100vh; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+
+    .navbar { border-bottom: 1px solid var(--border); background: rgba(11, 15, 25, 0.85); backdrop-filter: blur(12px); position: sticky; top: 0; z-index: 100; }
+    .container { max-width: 1020px; margin: 0 auto; padding: 0 20px; }
+    .nav-inner { display: flex; justify-content: space-between; align-items: center; height: 68px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.15rem; letter-spacing: -0.025em; color: #fff; }
+    .brand-logo-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.25) 0%, rgba(168, 85, 247, 0.25) 50%, rgba(56, 189, 248, 0.2) 100%);
+      border: 1px solid rgba(129, 140, 248, 0.4);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px rgba(99, 102, 241, 0.35);
+      flex-shrink: 0;
+      transition: all 0.25s ease;
+    }
+    .brand:hover .brand-logo-icon {
+      transform: scale(1.05);
+      border-color: rgba(129, 140, 248, 0.7);
+      box-shadow: 0 6px 20px rgba(129, 140, 248, 0.55);
+    }
+    .nav-links { display: flex; align-items: center; gap: 16px; }
+    .nav-link { color: var(--text-muted); font-size: 0.9rem; transition: color 0.15s; }
+    .nav-link:hover { color: #fff; }
+    .nav-link.active { color: #818cf8; font-weight: 600; }
+
+    .header-section { text-align: center; padding: 48px 0 28px; }
+    .badge-bar { display: flex; justify-content: center; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+    .badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(99, 102, 241, 0.12); color: #818cf8; border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 9999px; padding: 4px 14px; font-size: 0.8rem; font-weight: 600; }
+    .badge-cf { background: rgba(243, 128, 32, 0.12); color: #fb923c; border-color: rgba(243, 128, 32, 0.3); }
+    .header-section h1 { font-size: 2.3rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 10px; }
+    .gradient-text { background: linear-gradient(135deg, #fff 30%, #818cf8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .header-section p { color: var(--text-muted); font-size: 1rem; max-width: 640px; margin: 0 auto; }
+
+    /* Studio Main Layout */
+    .studio-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 48px; }
+    .control-card, .preview-card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 16px; padding: 28px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); display: flex; flex-direction: column; }
+    
+    .form-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 18px; }
+    label { font-size: 0.88rem; font-weight: 700; color: #e5e7eb; display: flex; justify-content: space-between; }
+    label span { font-weight: 400; color: var(--text-muted); font-size: 0.8rem; }
+    textarea {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px;
+      color: #fff;
+      font-size: 0.95rem;
+      width: 100%;
+      resize: vertical;
+      min-height: 100px;
+    }
+    textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2); }
+
+    /* Quick Inspiration Chips */
+    .chips-label { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 6px; font-weight: 600; }
+    .chips-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
+    .chip {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      color: #cbd5e1;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .chip:hover { background: rgba(99, 102, 241, 0.2); border-color: rgba(99, 102, 241, 0.4); color: #fff; }
+
+    .options-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 22px; }
+    select {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 12px;
+      color: #fff;
+      font-size: 0.88rem;
+      width: 100%;
+    }
+    select option { background: #1f2937; color: #fff; }
+
+    .btn-generate {
+      background: linear-gradient(135deg, #f38020 0%, #fa541c 100%);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 14px 20px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      box-shadow: 0 4px 14px rgba(243, 128, 32, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: auto;
+    }
+    .btn-generate:hover { opacity: 0.95; transform: translateY(-1px); }
+    .btn-generate:disabled { opacity: 0.6; cursor: not-allowed; transform: none; background: #374151; box-shadow: none; }
+
+    /* Quota Indicator & Rate Limit Banner */
+    .quota-card {
+      background: rgba(99, 102, 241, 0.08);
+      border: 1px solid rgba(99, 102, 241, 0.22);
+      border-radius: 10px;
+      padding: 10px 14px;
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.84rem;
+    }
+    .quota-info { display: flex; align-items: center; gap: 8px; font-weight: 600; color: #cbd5e1; }
+    .quota-badge {
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+    .quota-badge.low {
+      background: rgba(245, 158, 11, 0.15);
+      color: #fbbf24;
+      border-color: rgba(245, 158, 11, 0.3);
+    }
+    .quota-badge.depleted {
+      background: rgba(239, 68, 68, 0.15);
+      color: #f87171;
+      border-color: rgba(239, 68, 68, 0.3);
+    }
+    .quota-reset-text { font-size: 0.78rem; color: #9ca3af; }
+
+    .rate-limit-banner {
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-bottom: 16px;
+      display: none;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.85rem;
+      color: #fca5a5;
+    }
+    .banner-icon { font-size: 1.2rem; flex-shrink: 0; }
+
+    /* Animated Progress Bar & Wait Timer */
+    .progress-box {
+      width: 100%;
+      max-width: 380px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 22px 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .progress-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .progress-pct {
+      color: #fb923c;
+      font-family: monospace;
+      font-size: 0.95rem;
+    }
+    .progress-track {
+      width: 100%;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 9999px;
+      overflow: hidden;
+      position: relative;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #f38020, #fa541c, #818cf8);
+      border-radius: 9999px;
+      transition: width 0.4s ease;
+    }
+    .progress-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      color: #9ca3af;
+      margin-top: 4px;
+    }
+    .progress-status { color: #cbd5e1; font-weight: 500; }
+    .progress-time { color: #fb923c; font-weight: 600; }
+
+    /* Preview Canvas Area */
+    .preview-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+    .provider-pill { background: rgba(243, 128, 32, 0.15); color: #fb923c; border-radius: 6px; padding: 2px 8px; font-size: 0.75rem; font-weight: 700; }
+    .canvas-frame {
+      background: #000;
+      border-radius: 10px;
+      overflow: hidden;
+      flex-grow: 1;
+      min-height: 380px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .canvas-frame img { max-width: 100%; height: auto; display: block; border-radius: 10px; }
+    .placeholder-state { text-align: center; color: var(--text-muted); padding: 40px 20px; }
+    .placeholder-icon { font-size: 3rem; margin-bottom: 12px; opacity: 0.6; }
+
+    .loading-state {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 40px 20px;
+      color: var(--text-muted);
+    }
+    .spinner {
+      width: 44px;
+      height: 44px;
+      border: 3px solid rgba(255, 255, 255, 0.1);
+      border-top-color: var(--cf-orange);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .preview-actions { display: none; justify-content: space-between; align-items: center; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); }
+    .btn-download {
+      background: #10b981;
+      color: #fff;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-download:hover { opacity: 0.9; }
+
+    /* Comparison Box */
+    .compare-section { margin-top: 48px; }
+    .compare-section h2 { font-size: 1.4rem; font-weight: 800; margin-bottom: 16px; }
+    .compare-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .compare-card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+    .compare-card h3 { font-size: 1.05rem; margin-bottom: 6px; color: #fff; }
+    .compare-card p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
+
+    @media (max-width: 800px) {
+      .studio-grid { grid-template-columns: 1fr; }
+      .compare-grid { grid-template-columns: 1fr; }
+      .header-section h1 { font-size: 1.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="/" class="brand" title="All AI Tools — Home">
+        <span class="brand-logo-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 1.5C12 1.5 13.5 7.5 15.5 9.5C17.5 11.5 23.5 12 23.5 12C23.5 12 17.5 12.5 15.5 14.5C13.5 16.5 12 22.5 12 22.5C12 22.5 10.5 16.5 8.5 14.5C6.5 12.5 0.5 12 0.5 12C0.5 12 6.5 11.5 8.5 9.5C10.5 7.5 12 1.5 12 1.5Z" fill="url(#aiBrandGradGen)"/>
+            <circle cx="19.5" cy="4.5" r="2" fill="#38bdf8"/>
+            <circle cx="4.5" cy="19.5" r="1.5" fill="#a855f7"/>
+            <defs>
+              <linearGradient id="aiBrandGradGen" x1="0.5" y1="1.5" x2="23.5" y2="22.5" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#818cf8"/>
+                <stop offset="0.45" stop-color="#c084fc"/>
+                <stop offset="1" stop-color="#38bdf8"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </span>
+        <span>All AI Tools</span>
+      </a>
+      <div class="nav-links">
+        <a href="/" class="nav-link">&larr; Directory</a>
+        <a href="/tools/ai-image-generator/" class="nav-link active">&#127912; Image Generator</a>
+        <a href="/tools/image-enhancer/" class="nav-link">&#10024; Image Enhancer</a>
+        <a href="/submit/" class="nav-link">+ Submit Tool</a>
+        <a href="/crm/" class="nav-link" style="color:#818cf8;">&#128274; CRM</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="header-section">
+      <div class="badge-bar">
+        <span class="badge">&#127912; 100% Free AI Generator</span>
+        <span class="badge badge-cf">&#9729;&#65039; Cloudflare Workers AI (Flux.1 Schnell)</span>
+      </div>
+      <h1>Free AI <span class="gradient-text">Image Generator</span></h1>
+      <p>Generate production-grade artwork, 3D assets, and photorealistic concept art in seconds powered by Cloudflare Workers AI.</p>
+    </div>
+
+    <div class="studio-grid">
+      <!-- Controls Column -->
+      <div class="control-card">
+        <!-- Quota Indicator -->
+        <div class="quota-card" id="quotaCard">
+          <div class="quota-info">
+            <span>⚡ Free Quota:</span>
+            <span class="quota-badge" id="quotaBadge">5/5 available</span>
+          </div>
+          <span class="quota-reset-text" id="quotaResetText">15-min rolling window</span>
+        </div>
+
+        <!-- Lockout / Cooldown Banner -->
+        <div class="rate-limit-banner" id="rateLimitBanner">
+          <span class="banner-icon">⏳</span>
+          <div>
+            <div style="font-weight:700;" id="bannerTitle">Cooldown Active</div>
+            <div id="bannerText" style="font-size:0.8rem; opacity:0.9;">Please wait before generating another image.</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="promptInput">Prompt Description * <span>(be as detailed as you like)</span></label>
+          <textarea id="promptInput" placeholder="Describe the image you want to create... e.g. An ancient cyberpunk temple hidden in misty Himalayan peaks, glowing blue runes, cinematic 8k photograph, Hasselblad lens."></textarea>
+        </div>
+
+        <div class="chips-label">Try popular prompt styles:</div>
+        <div class="chips-row">
+          <button class="chip" onclick="addStyle('photorealistic 8k Hasselblad portrait, cinematic studio lighting')">+ Photorealistic</button>
+          <button class="chip" onclick="addStyle('Studio Ghibli anime landscape, vibrant painterly skies')">+ Anime Style</button>
+          <button class="chip" onclick="addStyle('Unreal Engine 5 3D render, octane ray-traced reflections')">+ 3D Render</button>
+          <button class="chip" onclick="addStyle('Blade Runner cyberpunk neon noir, rain soaked street reflections')">+ Cyberpunk</button>
+          <button class="chip" onclick="addStyle('classical oil on canvas, Rembrandt dramatic chiaroscuro')">+ Oil Painting</button>
+        </div>
+
+        <div class="options-row">
+          <div class="form-group" style="margin-bottom:0;">
+            <label for="modelSelect">AI Model</label>
+            <select id="modelSelect">
+              <option value="@cf/black-forest-labs/flux-1-schnell">Flux.1 Schnell (Cloudflare Workers AI)</option>
+              <option value="@cf/bytedance/stable-diffusion-xl-lightning">SDXL Lightning (Cloudflare Workers AI)</option>
+              <option value="@cf/stabilityai/stable-diffusion-xl-base-1.0">SDXL Base 1.0 (Cloudflare Workers AI)</option>
+              <option value="aihorde">AI Horde (Distributed Cluster — Unlimited)</option>
+              <option value="pollinations">Pollinations AI (Flux High-Speed — Free &amp; Instant)</option>
+            </select>
+          </div>
+
+          <div class="form-group" style="margin-bottom:0;">
+            <label for="aspectSelect">Aspect Ratio</label>
+            <select id="aspectSelect">
+              <option value="1:1">Square (1:1)</option>
+              <option value="16:9">Widescreen (16:9)</option>
+              <option value="9:16">Portrait / Mobile (9:16)</option>
+            </select>
+          </div>
+        </div>
+
+        <button class="btn-generate" id="generateBtn" onclick="runGeneration()">
+          <span id="btnIcon">&#127912;</span>
+          <span id="btnText">Generate Image (Free)</span>
+        </button>
+      </div>
+
+      <!-- Preview Column -->
+      <div class="preview-card">
+        <div class="preview-header">
+          <span style="font-size:0.85rem; font-weight:700; color:#fff;">Live Image Canvas</span>
+          <span class="provider-pill" id="providerTag">Cloudflare Workers AI</span>
+        </div>
+
+        <div class="canvas-frame">
+          <div class="placeholder-state" id="placeholderState">
+            <div class="placeholder-icon">&#128444;&#65039;</div>
+            <div style="font-weight:600; color:#cbd5e1; margin-bottom:4px;">Ready to Generate</div>
+            <div style="font-size:0.85rem;">Enter a prompt on the left and click Generate Image.</div>
+          </div>
+
+          <div class="loading-state" id="loadingState">
+            <div class="progress-box">
+              <div class="progress-top">
+                <span id="progressTitle">Synthesizing Diffusion...</span>
+                <span class="progress-pct" id="progressPct">15%</span>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill" id="progressFill"></div>
+              </div>
+              <div class="progress-footer">
+                <span class="progress-status" id="progressStatus">Initializing GPU worker...</span>
+                <span class="progress-time" id="progressTimer">Est. ~8s (0s)</span>
+              </div>
+            </div>
+          </div>
+
+          <img id="generatedImg" style="display:none;" alt="Generated AI artwork" />
+        </div>
+
+        <div class="preview-actions" id="previewActions">
+          <span style="font-size:0.8rem; color:#9ca3af;" id="metaText">Flux.1 Schnell &bull; 1024x1024</span>
+          <button class="btn-download" onclick="downloadImage()">&#11015; Download PNG</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Related Alternatives Section -->
+    <div class="compare-section">
+      <h2>Compare Top AI Image Generators in our Directory</h2>
+      <div class="compare-grid">
+        <a href="/midjourney/" class="compare-card">
+          <h3>Midjourney v6 &rarr;</h3>
+          <p>Industry-standard photorealistic visual generation suite. Browse reviews, pricing tiers, and alternatives.</p>
+        </a>
+        <a href="/alternatives/midjourney/" class="compare-card">
+          <h3>Midjourney Alternatives &rarr;</h3>
+          <p>Top free and paid competitors to Midjourney including Flux, Ideogram, and Recraft.</p>
+        </a>
+        <a href="/tools/image-enhancer/" class="compare-card">
+          <h3>AI Image Enhancer &rarr;</h3>
+          <p>Already have an image? Unblur, sharpen details, and upscale resolution to 4K for free.</p>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Rate Limiting & Quota Management State
+    const QUOTA_LIMIT = 5;
+    const COOLDOWN_SECS = 12;
+    const WINDOW_SECS = 15 * 60; // 15 minutes = 900s
+    const STORAGE_KEY = 'allaitools_gen_rate_limit_v2';
+
+    let progressInterval = null;
+    let cooldownTimerInterval = null;
+    let lockoutTimerInterval = null;
+    let elapsedSeconds = 0;
+
+    function getStoredState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) return JSON.parse(raw);
+      } catch (e) {}
+      return {
+        count: 0,
+        windowStart: Date.now(),
+        lastRequestTime: 0,
+        lockUntil: 0
+      };
+    }
+
+    function saveStoredState(state) {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (e) {}
+    }
+
+    function formatTime(seconds) {
+      const m = Math.floor(seconds / 60);
+      const s = Math.floor(seconds % 60);
+      return `${m}:${s < 10 ? '0' : ''}${s}`;
+    }
+
+    function initQuotaDisplay() {
+      const state = getStoredState();
+      const now = Date.now();
+
+      // Reset window if 15 minutes passed
+      if (now - state.windowStart > WINDOW_SECS * 1000) {
+        state.count = 0;
+        state.windowStart = now;
+        state.lockUntil = 0;
+        saveStoredState(state);
+      }
+
+      const remaining = Math.max(0, QUOTA_LIMIT - state.count);
+      const resetInSecs = Math.max(0, Math.ceil((state.windowStart + WINDOW_SECS * 1000 - now) / 1000));
+
+      const badge = document.getElementById('quotaBadge');
+      const resetText = document.getElementById('quotaResetText');
+
+      badge.textContent = `${remaining}/${QUOTA_LIMIT} free remaining`;
+      badge.className = 'quota-badge';
+      if (remaining === 0) {
+        badge.classList.add('depleted');
+      } else if (remaining <= 2) {
+        badge.classList.add('low');
+      }
+
+      if (remaining < QUOTA_LIMIT) {
+        resetText.textContent = `Window resets in ${formatTime(resetInSecs)}`;
+      } else {
+        resetText.textContent = '15-min rolling window';
+      }
+
+      // Check if currently locked out
+      if (state.lockUntil && state.lockUntil > now) {
+        const remainingLock = Math.ceil((state.lockUntil - now) / 1000);
+        triggerLockout(remainingLock, 'Free quota limit reached (5 generations per 15 min).');
+        return;
+      }
+
+      // Check if consecutive cooldown active
+      const timeSinceLast = (now - state.lastRequestTime) / 1000;
+      if (state.lastRequestTime > 0 && timeSinceLast < COOLDOWN_SECS) {
+        const remainingCooldown = Math.ceil(COOLDOWN_SECS - timeSinceLast);
+        triggerCooldown(remainingCooldown);
+      }
+    }
+
+    function triggerCooldown(seconds) {
+      const btn = document.getElementById('generateBtn');
+      const btnText = document.getElementById('btnText');
+      const banner = document.getElementById('rateLimitBanner');
+      const bannerTitle = document.getElementById('bannerTitle');
+      const bannerText = document.getElementById('bannerText');
+
+      if (cooldownTimerInterval) clearInterval(cooldownTimerInterval);
+
+      let rem = seconds;
+      btn.disabled = true;
+      banner.style.display = 'flex';
+      bannerTitle.textContent = 'Generating Cooldown Active';
+
+      function tick() {
+        if (rem <= 0) {
+          clearInterval(cooldownTimerInterval);
+          cooldownTimerInterval = null;
+          btn.disabled = false;
+          btnText.textContent = 'Generate Image (Free)';
+          banner.style.display = 'none';
+          initQuotaDisplay();
+          return;
+        }
+        btnText.textContent = `⏳ Cooldown (${rem}s remaining)...`;
+        bannerText.textContent = `Anti-spam cooldown: Please wait ${rem}s before generating next image.`;
+        rem--;
+      }
+
+      tick();
+      cooldownTimerInterval = setInterval(tick, 1000);
+    }
+
+    function triggerLockout(seconds, message) {
+      const btn = document.getElementById('generateBtn');
+      const btnText = document.getElementById('btnText');
+      const banner = document.getElementById('rateLimitBanner');
+      const bannerTitle = document.getElementById('bannerTitle');
+      const bannerText = document.getElementById('bannerText');
+
+      if (lockoutTimerInterval) clearInterval(lockoutTimerInterval);
+      if (cooldownTimerInterval) clearInterval(cooldownTimerInterval);
+
+      let rem = seconds;
+      btn.disabled = true;
+      banner.style.display = 'flex';
+      bannerTitle.textContent = 'Usage Limit Reached';
+
+      function tick() {
+        if (rem <= 0) {
+          clearInterval(lockoutTimerInterval);
+          lockoutTimerInterval = null;
+          const state = getStoredState();
+          state.count = 0;
+          state.windowStart = Date.now();
+          state.lockUntil = 0;
+          saveStoredState(state);
+          btn.disabled = false;
+          btnText.textContent = 'Generate Image (Free)';
+          banner.style.display = 'none';
+          initQuotaDisplay();
+          return;
+        }
+        btnText.textContent = `⏳ Quota Resets in ${formatTime(rem)}`;
+        bannerText.textContent = `${message || 'Usage quota reached.'} Resets in ${formatTime(rem)}.`;
+        rem--;
+      }
+
+      tick();
+      lockoutTimerInterval = setInterval(tick, 1000);
+    }
+
+    function startProgress() {
+      const fill = document.getElementById('progressFill');
+      const pct = document.getElementById('progressPct');
+      const title = document.getElementById('progressTitle');
+      const status = document.getElementById('progressStatus');
+      const timer = document.getElementById('progressTimer');
+
+      elapsedSeconds = 0;
+      fill.style.width = '10%';
+      pct.textContent = '10%';
+      title.textContent = 'Initializing Neural Pipeline...';
+      status.textContent = 'Connecting to GPU node...';
+      timer.textContent = 'Est. ~8-12s (Elapsed: 0s)';
+
+      if (progressInterval) clearInterval(progressInterval);
+
+      progressInterval = setInterval(() => {
+        elapsedSeconds++;
+        timer.textContent = `Est. ~8-12s (Elapsed: ${elapsedSeconds}s)`;
+
+        if (elapsedSeconds <= 2) {
+          fill.style.width = '25%';
+          pct.textContent = '25%';
+          title.textContent = 'Allocating Model Latents...';
+          status.textContent = 'Streaming prompt tensors...';
+        } else if (elapsedSeconds <= 5) {
+          fill.style.width = '55%';
+          pct.textContent = '55%';
+          title.textContent = 'Sampling Diffusion Latents...';
+          status.textContent = 'Applying step denoising (1–10)...';
+        } else if (elapsedSeconds <= 8) {
+          fill.style.width = '80%';
+          pct.textContent = '80%';
+          title.textContent = 'Synthesizing Fine Details...';
+          status.textContent = 'Refining high-frequency textures...';
+        } else if (elapsedSeconds <= 12) {
+          fill.style.width = '92%';
+          pct.textContent = '92%';
+          title.textContent = 'Encoding Render Output...';
+          status.textContent = 'Finalizing 1024x1024 pixel canvas...';
+        } else {
+          fill.style.width = '96%';
+          pct.textContent = '96%';
+          title.textContent = 'Worker Finalizing...';
+          status.textContent = 'Packaging image response...';
+        }
+      }, 1000);
+    }
+
+    function stopProgress(success) {
+      if (progressInterval) {
+        clearInterval(progressInterval);
+        progressInterval = null;
+      }
+      if (success) {
+        const fill = document.getElementById('progressFill');
+        const pct = document.getElementById('progressPct');
+        if (fill) fill.style.width = '100%';
+        if (pct) pct.textContent = '100%';
+      }
+    }
+
+    function addStyle(token) {
+      const input = document.getElementById('promptInput');
+      const current = input.value.trim();
+      if (!current) {
+        input.value = token;
+      } else {
+        input.value = current + ', ' + token;
+      }
+      input.focus();
+    }
+
+    async function runGeneration() {
+      const prompt = document.getElementById('promptInput').value.trim();
+      if (!prompt) {
+        alert('Please enter a prompt to generate an image.');
+        document.getElementById('promptInput').focus();
+        return;
+      }
+
+      // Check local quota prior to network call
+      const state = getStoredState();
+      const now = Date.now();
+      if (state.lockUntil && state.lockUntil > now) {
+        const remainingLock = Math.ceil((state.lockUntil - now) / 1000);
+        triggerLockout(remainingLock, 'Free quota limit reached (5 generations per 15 min).');
+        return;
+      }
+      if (state.count >= QUOTA_LIMIT && now - state.windowStart < WINDOW_SECS * 1000) {
+        const resetInSecs = Math.ceil((state.windowStart + WINDOW_SECS * 1000 - now) / 1000);
+        state.lockUntil = now + resetInSecs * 1000;
+        saveStoredState(state);
+        triggerLockout(resetInSecs, 'Free quota limit reached.');
+        return;
+      }
+
+      const model = document.getElementById('modelSelect').value;
+      const placeholder = document.getElementById('placeholderState');
+      const loading = document.getElementById('loadingState');
+      const img = document.getElementById('generatedImg');
+      const actions = document.getElementById('previewActions');
+      const btn = document.getElementById('generateBtn');
+      const btnText = document.getElementById('btnText');
+      const providerTag = document.getElementById('providerTag');
+      const metaText = document.getElementById('metaText');
+
+      placeholder.style.display = 'none';
+      img.style.display = 'none';
+      actions.style.display = 'none';
+      loading.style.display = 'flex';
+      btn.disabled = true;
+      btnText.textContent = 'Generating...';
+
+      startProgress();
+
+      try {
+        const response = await fetch('/api/generate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ prompt, model })
+        });
+
+        // Handle Rate Limiting / 429 directly
+        if (response.status === 429) {
+          stopProgress(false);
+          const errData = await response.json();
+          const retrySec = errData.retryAfterSeconds || 60;
+          state.lockUntil = Date.now() + retrySec * 1000;
+          state.count = QUOTA_LIMIT;
+          saveStoredState(state);
+          initQuotaDisplay();
+          triggerLockout(retrySec, errData.error || 'Rate limit reached.');
+          loading.innerHTML = `<div style="color:#ef4444; font-weight:700; font-size:1.05rem;">Usage Limit Reached</div><div style="font-size:0.85rem; color:#9ca3af; margin-top:6px; max-width:320px; text-align:center;">${errData.error || 'Please wait before generating another image.'}</div>`;
+          return;
+        }
+
+        const data = await response.json();
+
+        if (data && data.image) {
+          stopProgress(true);
+
+          // Update local rate limit tracking
+          state.count = (state.count || 0) + 1;
+          state.lastRequestTime = Date.now();
+          if (data.quota) {
+            state.count = Math.max(state.count, QUOTA_LIMIT - (data.quota.remaining ?? (QUOTA_LIMIT - state.count)));
+            if (data.quota.resetInSeconds) {
+              state.windowStart = Date.now() - ((WINDOW_SECS - data.quota.resetInSeconds) * 1000);
+            }
+          }
+          saveStoredState(state);
+          initQuotaDisplay();
+
+          img.src = data.image;
+          img.onload = () => {
+            loading.style.display = 'none';
+            img.style.display = 'block';
+            actions.style.display = 'flex';
+
+            if (data.provider === 'cloudflare-workers-ai') {
+              providerTag.textContent = 'Cloudflare Workers AI';
+              providerTag.style.background = 'rgba(243, 128, 32, 0.15)';
+              providerTag.style.color = '#fb923c';
+              metaText.textContent = `${data.model} • High Resolution`;
+            } else if (data.provider === 'aihorde') {
+              providerTag.textContent = 'AI Horde (Distributed)';
+              providerTag.style.background = 'rgba(16, 185, 129, 0.15)';
+              providerTag.style.color = '#34d399';
+              metaText.textContent = `${data.model || 'Stable Diffusion'} • AI Horde`;
+            } else if (data.provider === 'pollinations') {
+              providerTag.textContent = 'Pollinations AI (Flux)';
+              providerTag.style.background = 'rgba(236, 72, 153, 0.15)';
+              providerTag.style.color = '#f472b6';
+              metaText.textContent = `${data.model || 'Flux'} • Instant Free`;
+            } else {
+              providerTag.textContent = 'Flux.1 Engine';
+              providerTag.style.background = 'rgba(99, 102, 241, 0.15)';
+              providerTag.style.color = '#818cf8';
+              metaText.textContent = 'High-Speed Flux Engine';
+            }
+            if (data.notice) {
+              metaText.textContent += ` (${data.notice})`;
+            }
+
+            // Start 12-second anti-spam cooldown
+            triggerCooldown(COOLDOWN_SECS);
+          };
+        } else {
+          throw new Error(data.error || 'Failed to generate image');
+        }
+      } catch (err) {
+        stopProgress(false);
+        console.error(err);
+        loading.innerHTML = `<div style="color:#ef4444; font-weight:700;">Generation Failed</div><div style="font-size:0.85rem; color:#9ca3af; margin-top:4px;">${err.message}</div>`;
+        btn.disabled = false;
+        btnText.textContent = 'Generate Image (Free)';
+      }
+    }
+
+    function downloadImage() {
+      const img = document.getElementById('generatedImg');
+      if (!img.src) return;
+      const a = document.createElement('a');
+      a.href = img.src;
+      a.download = `allaitools_gen_${Date.now()}.png`;
+      a.click();
+    }
+
+    // Run on startup
+    window.addEventListener('DOMContentLoaded', () => {
+      initQuotaDisplay();
+    });
+  </script>
+</body>
+</html>
