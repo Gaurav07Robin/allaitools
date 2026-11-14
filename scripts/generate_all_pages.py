@@ -37,6 +37,8 @@ def clean_slug(text):
     return text
 
 def get_base_slug(t):
+    if t.get('slug'):
+        return t['slug']
     src = t.get('source_url', '')
     if '/tool/' in src:
         slug = src.split('/tool/')[-1].strip('/').split('?')[0].lower()
@@ -44,8 +46,6 @@ def get_base_slug(t):
         if slug:
             return slug
     name = t.get('name', '')
-    if name.lower().startswith('chatgpt'):
-        return 'chatgpt'
     slug = clean_slug(name)
     return slug or 'ai-tool'
 
@@ -104,9 +104,9 @@ def get_domain(url):
     except Exception:
         return 'official website'
 
-# 2. Build Homepage Cards HTML
+# 2. Build Homepage Cards HTML (Top 80 pre-rendered in static HTML for instant initial paint)
 cards_html = []
-for t in tools:
+for t in tools[:80]:
     subcat = t.get('subcategory') or t.get('category_section') or t.get('category_pill') or 'AI Tool'
     desc = t.get('description', '')
     name = t.get('name', 'AI Platform')
@@ -152,6 +152,28 @@ for t in tools:
     cards_html.append(card)
 
 cards_block = "\n".join(cards_html)
+
+# Export compact tools JSON for instant client-side search across all 10,000 tools
+compact_tools = []
+for t in tools:
+    compact_tools.append({
+        'n': t.get('name', ''),
+        's': t.get('slug', ''),
+        'b': t.get('badge', ''),
+        'c': t.get('color', '#6366F1'),
+        'p': t.get('pricing', 'Freemium'),
+        'cs': t.get('category_slug', 'chat-reasoning'),
+        'cp': t.get('category_pill', 'Chat & Reasoning'),
+        'sc': t.get('subcategory') or t.get('category_section') or t.get('category_pill', ''),
+        'd': t.get('description', ''),
+        'u': t.get('url', '')
+    })
+
+with open("tools_compact.json", "w", encoding="utf-8") as f:
+    json.dump(compact_tools, f)
+with open("public/tools_compact.json", "w", encoding="utf-8") as f:
+    json.dump(compact_tools, f)
+print(f"Exported compact tools index with {len(compact_tools)} tools.")
 
 # Build Homepage Schema Items (Top 250)
 schema_items = []
@@ -847,6 +869,31 @@ index_html_content = f"""<!DOCTYPE html>
     }}
     .empty-state h3 {{ font-size: 1.3rem; color: #fff; margin-bottom: 8px; }}
     .empty-state p {{ color: var(--text-muted); margin-bottom: 20px; }}
+    .load-more-wrap {{
+      text-align: center;
+      margin-top: 36px;
+    }}
+    .btn-load-more {{
+      background: rgba(99, 102, 241, 0.12);
+      border: 1px solid rgba(99, 102, 241, 0.35);
+      color: #c7d2fe;
+      padding: 12px 28px;
+      border-radius: var(--radius-pill);
+      font-size: 0.92rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }}
+    .btn-load-more:hover {{
+      background: rgba(99, 102, 241, 0.25);
+      border-color: #818cf8;
+      color: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(99, 102, 241, 0.25);
+    }}
 
     /* Domain Showcase Cards */
     .cat-showcase-grid {{
@@ -1061,6 +1108,10 @@ index_html_content = f"""<!DOCTYPE html>
           <button class="btn-submit" id="resetFiltersBtn">Reset All Filters</button>
         </div>
       </div>
+
+      <div class="load-more-wrap" id="loadMoreWrap">
+        <button id="loadMoreBtn" class="btn-load-more">Load More AI Tools &darr;</button>
+      </div>
     </div>
   </section>
 
@@ -1229,26 +1280,37 @@ index_html_content = f"""<!DOCTYPE html>
       var clearBtn = document.getElementById('clearSearch');
       var filterPills = document.querySelectorAll('.filter-pill');
       var priceChips = document.querySelectorAll('.price-chip');
-      var cards = document.querySelectorAll('.tool-card');
       var emptyState = document.getElementById('emptyState');
       var resultsCounter = document.getElementById('resultsCounter');
       var resetBtn = document.getElementById('resetFiltersBtn');
       var showSavedBtn = document.getElementById('showSavedBtn');
       var savedCountBadge = document.getElementById('savedCountBadge');
-      var trendPills = document.querySelectorAll('.trend-pill');
+      var toolsGrid = document.getElementById('toolsGrid');
+      var loadMoreWrap = document.getElementById('loadMoreWrap');
+      var loadMoreBtn = document.getElementById('loadMoreBtn');
 
       var currentCat = 'all';
       var currentPricing = 'all';
       var filterOnlySaved = false;
+
+      var allToolsData = [];
+      var currentFiltered = [];
+      var pageSize = 48;
+      var currentPage = 1;
 
       var savedTools = [];
       try {{
         savedTools = JSON.parse(localStorage.getItem('saved_ai_tools') || '[]');
       }} catch (e) {{}}
 
+      function escapeHtml(str) {{
+        if (!str) return '';
+        return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      }}
+
       function updateSavedUI() {{
         document.querySelectorAll('.bookmark-btn').forEach(function (btn) {{
-          var toolName = btn.getAttribute('data-tool').toLowerCase();
+          var toolName = (btn.getAttribute('data-tool') || '').toLowerCase();
           if (savedTools.indexOf(toolName) !== -1) {{
             btn.classList.add('saved');
             btn.innerHTML = '&#9733;';
@@ -1262,6 +1324,113 @@ index_html_content = f"""<!DOCTYPE html>
           savedCountBadge.textContent = savedTools.length;
         }} else {{
           savedCountBadge.style.display = 'none';
+        }}
+      }}
+
+      function bindBookmarkEvents() {{
+        document.querySelectorAll('.bookmark-btn').forEach(function (btn) {{
+          if (btn.hasAttribute('data-bound')) return;
+          btn.setAttribute('data-bound', '1');
+          btn.addEventListener('click', function (e) {{
+            e.preventDefault();
+            e.stopPropagation();
+            var toolName = (btn.getAttribute('data-tool') || '').toLowerCase();
+            var idx = savedTools.indexOf(toolName);
+            if (idx === -1) {{
+              savedTools.push(toolName);
+            }} else {{
+              savedTools.splice(idx, 1);
+            }}
+            try {{
+              localStorage.setItem('saved_ai_tools', JSON.stringify(savedTools));
+            }} catch (err) {{}}
+            updateSavedUI();
+            if (filterOnlySaved) filterTools();
+          }});
+        }});
+      }}
+
+      // Event delegation for card clicks
+      if (toolsGrid) {{
+        toolsGrid.addEventListener('click', function (e) {{
+          if (e.target.closest('a') || e.target.closest('button')) return;
+          var card = e.target.closest('.tool-card');
+          if (card) {{
+            var slug = card.getAttribute('data-slug');
+            var path = card.getAttribute('data-tool-path');
+            if (slug) {{
+              window.location.href = '/' + slug + '/';
+            }} else if (path) {{
+              window.location.href = path;
+            }}
+          }}
+        }});
+      }}
+
+      function createCardHtml(t) {{
+        var pLower = (t.p || '').toLowerCase();
+        var priceClass = pLower === 'free' ? 'price-free' : (pLower === 'paid' ? 'price-paid' : 'price-freemium');
+        var isSaved = savedTools.indexOf(t.n.toLowerCase()) !== -1;
+        var subcat = t.sc || t.cp || 'AI Tools';
+        var toolPath = '/' + escapeHtml(t.s) + '/';
+        return '<article class="tool-card" data-slug="' + escapeHtml(t.s) + '" data-category="' + escapeHtml(t.cs) + '" data-pricing="' + escapeHtml(pLower) + '" data-name="' + escapeHtml(t.n.toLowerCase()) + '" data-tool-path="' + toolPath + '">' +
+          '<div class="card-top">' +
+            '<div class="tool-brand">' +
+              '<div class="tool-avatar" style="background: ' + escapeHtml(t.c) + ';">' + escapeHtml(t.b) + '</div>' +
+              '<div class="tool-title-wrap">' +
+                '<span class="tool-subcat">' + escapeHtml(subcat) + '</span>' +
+                '<h3 class="tool-name"><a href="' + toolPath + '" class="tool-card-title-link" title="' + escapeHtml(t.n) + '">' + escapeHtml(t.n) + '</a></h3>' +
+              '</div>' +
+            '</div>' +
+            '<div class="badge-row">' +
+              '<span class="price-badge ' + priceClass + '">' + escapeHtml(t.p) + '</span>' +
+              '<button class="bookmark-btn' + (isSaved ? ' saved' : '') + '" title="Bookmark ' + escapeHtml(t.n) + '" data-tool="' + escapeHtml(t.n) + '" aria-label="Bookmark ' + escapeHtml(t.n) + '">' + (isSaved ? '&#9733;' : '&#9734;') + '</button>' +
+            '</div>' +
+          '</div>' +
+          '<p class="tool-desc">' + escapeHtml(t.d) + '</p>' +
+          '<div class="card-bottom">' +
+            '<span class="cat-pill">' + escapeHtml(t.cp) + '</span>' +
+            '<div class="card-actions">' +
+              '<a href="' + toolPath + '" class="details-link">Details &rarr;</a>' +
+              '<a href="' + escapeHtml(t.u) + '" target="_blank" rel="noopener noreferrer nofollow" class="tool-link">Visit &rarr;</a>' +
+            '</div>' +
+          '</div>' +
+        '</article>';
+      }}
+
+      function renderBatch(append) {{
+        if (!append) {{
+          var empty = document.getElementById('emptyState');
+          toolsGrid.innerHTML = '';
+          if (empty) toolsGrid.appendChild(empty);
+        }}
+        var start = append ? (currentPage - 1) * pageSize : 0;
+        var end = currentPage * pageSize;
+        var slice = currentFiltered.slice(start, end);
+
+        var html = '';
+        for (var i = 0; i < slice.length; i++) {{
+          html += createCardHtml(slice[i]);
+        }}
+
+        var temp = document.createElement('div');
+        temp.innerHTML = html;
+        while (temp.firstChild) {{
+          toolsGrid.insertBefore(temp.firstChild, emptyState);
+        }}
+
+        bindBookmarkEvents();
+        updateSavedUI();
+
+        if (end < currentFiltered.length) {{
+          if (loadMoreWrap) {{
+            loadMoreWrap.style.display = 'block';
+            if (loadMoreBtn) {{
+              loadMoreBtn.textContent = 'Load More AI Tools (Showing ' + Math.min(end, currentFiltered.length).toLocaleString() + ' of ' + currentFiltered.length.toLocaleString() + ') ↓';
+            }}
+          }}
+        }} else {{
+          if (loadMoreWrap) loadMoreWrap.style.display = 'none';
         }}
       }}
 
@@ -1284,36 +1453,71 @@ index_html_content = f"""<!DOCTYPE html>
           clearBtn.style.display = 'none';
         }}
 
-        var visible = 0;
-        cards.forEach(function (card) {{
-          var cardCat = card.getAttribute('data-category');
-          var cardPrice = card.getAttribute('data-pricing');
-          var cardName = card.getAttribute('data-name');
-          var cardDesc = card.getAttribute('data-desc');
+        currentPage = 1;
 
-          var matchesCat = (currentCat === 'all' || cardCat === currentCat);
-          var matchesPrice = (currentPricing === 'all' || cardPrice === currentPricing);
-          var matchesQuery = (!q || cardName.indexOf(q) !== -1 || cardDesc.indexOf(q) !== -1);
-          var matchesSaved = (!filterOnlySaved || savedTools.indexOf(cardName) !== -1);
+        if (allToolsData.length === 0) {{
+          var visible = 0;
+          document.querySelectorAll('.tool-card').forEach(function (card) {{
+            var cardCat = card.getAttribute('data-category');
+            var cardPrice = card.getAttribute('data-pricing');
+            var cardName = (card.getAttribute('data-name') || '').toLowerCase();
+            var matchesCat = (currentCat === 'all' || cardCat === currentCat);
+            var matchesPrice = (currentPricing === 'all' || cardPrice === currentPricing);
+            var matchesQuery = (!q || cardName.indexOf(q) !== -1);
+            var matchesSaved = (!filterOnlySaved || savedTools.indexOf(cardName) !== -1);
 
-          if (matchesCat && matchesPrice && matchesQuery && matchesSaved) {{
-            card.style.display = '';
-            visible++;
-          }} else {{
-            card.style.display = 'none';
-          }}
+            if (matchesCat && matchesPrice && matchesQuery && matchesSaved) {{
+              card.style.display = '';
+              visible++;
+            }} else {{
+              card.style.display = 'none';
+            }}
+          }});
+          resultsCounter.textContent = 'Showing ' + visible.toLocaleString() + ' Verified AI Tools';
+          return;
+        }}
+
+        currentFiltered = allToolsData.filter(function (t) {{
+          var pLower = (t.p || '').toLowerCase();
+          var matchesCat = (currentCat === 'all' || t.cs === currentCat);
+          var matchesPrice = (currentPricing === 'all' || pLower === currentPricing);
+          var matchesQuery = (!q || t.n.toLowerCase().indexOf(q) !== -1 || (t.d && t.d.toLowerCase().indexOf(q) !== -1) || (t.sc && t.sc.toLowerCase().indexOf(q) !== -1));
+          var matchesSaved = (!filterOnlySaved || savedTools.indexOf(t.n.toLowerCase()) !== -1);
+          return matchesCat && matchesPrice && matchesQuery && matchesSaved;
         }});
 
-        if (visible === 0) {{
+        if (currentFiltered.length === 0) {{
           emptyState.style.display = 'block';
           resultsCounter.textContent = '0 AI Tools Found';
+          if (loadMoreWrap) loadMoreWrap.style.display = 'none';
+          document.querySelectorAll('.tool-card').forEach(function (c) {{ c.remove(); }});
         }} else {{
           emptyState.style.display = 'none';
-          resultsCounter.textContent = 'Showing ' + visible + ' Verified AI Tool' + (visible === 1 ? '' : 's');
+          resultsCounter.textContent = 'Showing ' + currentFiltered.length.toLocaleString() + ' Verified AI Tools';
+          renderBatch(false);
         }}
 
         updateUrlParams();
       }}
+
+      if (loadMoreBtn) {{
+        loadMoreBtn.addEventListener('click', function () {{
+          currentPage++;
+          renderBatch(true);
+        }});
+      }}
+
+      // Infinite scroll trigger
+      window.addEventListener('scroll', function () {{
+        if (!loadMoreWrap || loadMoreWrap.style.display === 'none') return;
+        var rect = loadMoreWrap.getBoundingClientRect();
+        if (rect.top <= window.innerHeight + 400) {{
+          if (currentPage * pageSize < currentFiltered.length) {{
+            currentPage++;
+            renderBatch(true);
+          }}
+        }}
+      }}, {{ passive: true }});
 
       // Keyboard shortcut '/'
       window.addEventListener('keydown', function (e) {{
@@ -1386,26 +1590,6 @@ index_html_content = f"""<!DOCTYPE html>
         filterTools();
       }});
 
-      // Bookmarking
-      document.querySelectorAll('.bookmark-btn').forEach(function (btn) {{
-        btn.addEventListener('click', function (e) {{
-          e.preventDefault();
-          e.stopPropagation();
-          var toolName = btn.getAttribute('data-tool').toLowerCase();
-          var idx = savedTools.indexOf(toolName);
-          if (idx === -1) {{
-            savedTools.push(toolName);
-          }} else {{
-            savedTools.splice(idx, 1);
-          }}
-          try {{
-            localStorage.setItem('saved_ai_tools', JSON.stringify(savedTools));
-          }} catch (err) {{}}
-          updateSavedUI();
-          if (filterOnlySaved) filterTools();
-        }});
-      }});
-
       // Saved Filter Toggle
       showSavedBtn.addEventListener('click', function () {{
         filterOnlySaved = !filterOnlySaved;
@@ -1426,6 +1610,9 @@ index_html_content = f"""<!DOCTYPE html>
           btn.parentElement.classList.toggle('open');
         }});
       }});
+
+      bindBookmarkEvents();
+      updateSavedUI();
 
       // Read initial URL query parameters
       var urlParams = new URLSearchParams(window.location.search);
@@ -1453,10 +1640,21 @@ index_html_content = f"""<!DOCTYPE html>
         }}
       }}
 
-      updateSavedUI();
-      if (qParam || catParam || pricingParam) {{
-        filterTools();
-      }}
+      // Fetch 10,000 tools compact JSON in the background
+      fetch('/tools_compact.json')
+        .then(function (res) {{ return res.json(); }})
+        .then(function (data) {{
+          allToolsData = data;
+          currentFiltered = data;
+          if (qParam || (catParam && catParam !== 'all') || (pricingParam && pricingParam !== 'all') || filterOnlySaved) {{
+            filterTools();
+          }} else {{
+            resultsCounter.textContent = 'Showing ' + data.length.toLocaleString() + ' Verified AI Tools';
+          }}
+        }})
+        .catch(function (err) {{
+          console.warn('Could not load tools_compact.json, using static cards', err);
+        }});
     }})();
   </script>
 </body>
@@ -1727,7 +1925,7 @@ with open("vercel.json", "w", encoding="utf-8") as f:
 print("Generated vercel.json with cleanUrls and security/caching headers.")
 
 # 8. Generate each tool page with rich SEO
-def render_tool_page(tool, all_tools):
+def render_tool_page(tool, all_tools, tools_by_cat=None):
     name = tool.get('name', 'AI Platform')
     slug = tool.get('slug', 'tool')
     path = tool.get('path', f"/{slug}/")
@@ -1749,7 +1947,11 @@ def render_tool_page(tool, all_tools):
         price_class = "price-paid"
 
     # Related tools / alternatives
-    related = [t for t in all_tools if t.get('category_slug') == cat_slug and t.get('slug') != slug][:6]
+    if tools_by_cat and cat_slug in tools_by_cat:
+        cat_candidates = tools_by_cat[cat_slug]
+        related = [t for t in cat_candidates if t.get('slug') != slug][:6]
+    else:
+        related = [t for t in all_tools if t.get('category_slug') == cat_slug and t.get('slug') != slug][:6]
     related_names = ", ".join([r.get('name', '') for r in related[:3]]) if related else "top AI tools"
 
     # Schema JSON-LD with AggregateRating for Google Star Snippets
@@ -2818,38 +3020,32 @@ def render_tool_page(tool, all_tools):
 </html>"""
     return page_html
 
-print(f"Generating static HTML pages for {len(tools)} tools...")
-generated_count = 0
-for idx, tool in enumerate(tools):
+print(f"Generating static HTML pages for {len(tools)} tools in parallel...")
+tools_by_cat = {}
+for t in tools:
+    c = t.get('category_slug', 'chat-reasoning')
+    if c not in tools_by_cat:
+        tools_by_cat[c] = []
+    tools_by_cat[c].append(t)
+
+def generate_one_tool_page(tool):
     slug = tool['slug']
-    html_page = render_tool_page(tool, tools)
+    html_page = render_tool_page(tool, tools, tools_by_cat)
 
     # 1. public/<slug>/index.html
     dir_path = os.path.join("public", slug)
     os.makedirs(dir_path, exist_ok=True)
     index_file = os.path.join(dir_path, "index.html")
-    for _ in range(5):
-        try:
-            with open(index_file, "w", encoding="utf-8") as f:
-                f.write(html_page)
-            break
-        except OSError:
-            import time
-            time.sleep(0.05)
+    with open(index_file, "w", encoding="utf-8") as f:
+        f.write(html_page)
 
-    # 2. public/<slug>.html (to prevent any trailing slash redirect issues!)
+    # 2. public/<slug>.html
     slug_file = os.path.join("public", f"{slug}.html")
-    for _ in range(5):
-        try:
-            with open(slug_file, "w", encoding="utf-8") as f:
-                f.write(html_page)
-            break
-        except OSError:
-            import time
-            time.sleep(0.05)
+    with open(slug_file, "w", encoding="utf-8") as f:
+        f.write(html_page)
 
-    generated_count += 1
-    if generated_count % 200 == 0 or generated_count == len(tools):
-        print(f"  Generated {generated_count}/{len(tools)} tool pages...")
+from concurrent.futures import ThreadPoolExecutor
+with ThreadPoolExecutor(max_workers=16) as executor:
+    list(executor.map(generate_one_tool_page, tools))
 
-print(f"Successfully generated all {generated_count} tool pages in public/<slug>/index.html and public/<slug>.html!")
+print(f"Successfully generated all {len(tools)} tool pages in public/<slug>/index.html and public/<slug>.html!")
