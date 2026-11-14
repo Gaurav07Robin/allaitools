@@ -3,8 +3,6 @@
 
 User-agent: *
 Allow: /
-Disallow: /crm/
-Disallow: /admin/
 
 # Google Search, Google Images, Googlebot News, and Gemini Crawlers
 User-agent: Googlebot
