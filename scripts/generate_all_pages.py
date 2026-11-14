@@ -126,31 +126,26 @@ for t in tools:
     elif pricing.lower() == "paid":
         price_class = "price-paid"
 
-    img_tag = ""
-    if img_url:
-        img_tag = f'<img src="{html.escape(img_url)}" alt="{html.escape(name)} preview" class="tool-preview-thumb" loading="lazy" onerror="this.style.display=\'none\'" />'
-
     card = f'''        <article class="tool-card" data-category="{html.escape(cat_slug)}" data-pricing="{html.escape(pricing.lower())}" data-name="{html.escape(name.lower())}" data-desc="{html.escape(desc.lower())}" data-tool-path="{html.escape(path)}" onclick="if(!event.target.closest('a') && !event.target.closest('button')) window.location.href='{html.escape(path)}'">
           <div class="card-top">
             <div class="tool-brand">
               <div class="tool-avatar" style="background: {color};">{html.escape(badge)}</div>
-              <div>
+              <div class="tool-title-wrap">
                 <span class="tool-subcat">{html.escape(subcat)}</span>
-                <h3 class="tool-name"><a href="{html.escape(path)}" class="tool-card-title-link">{html.escape(name)}</a></h3>
+                <h3 class="tool-name"><a href="{html.escape(path)}" class="tool-card-title-link" title="{html.escape(name)}">{html.escape(name)}</a></h3>
               </div>
             </div>
             <div class="badge-row">
               <span class="price-badge {price_class}">{html.escape(pricing)}</span>
-              <button class="bookmark-btn" title="Bookmark tool" data-tool="{html.escape(name)}" aria-label="Bookmark {html.escape(name)}" onclick="event.stopPropagation()">&#9734;</button>
+              <button class="bookmark-btn" title="Bookmark {html.escape(name)}" data-tool="{html.escape(name)}" aria-label="Bookmark {html.escape(name)}" onclick="event.stopPropagation()">&#9734;</button>
             </div>
           </div>
-          {img_tag}
           <p class="tool-desc">{html.escape(desc)}</p>
           <div class="card-bottom">
             <span class="cat-pill">{html.escape(pill)}</span>
             <div class="card-actions">
               <a href="{html.escape(path)}" class="details-link">Details &rarr;</a>
-              <a href="{html.escape(url)}" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Open Tool &rarr;</a>
+              <a href="{html.escape(url)}" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
             </div>
           </div>
         </article>'''
@@ -475,28 +470,14 @@ index_html_content = f"""<!DOCTYPE html>
       color: #ffffff;
     }}
 
-    /* Hero Section - Compact & Clean Redesign */
-    .hero {{ text-align: center; padding: 32px 0 18px; position: relative; }}
-    .hero-badge-pill {{
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(99, 102, 241, 0.1);
-      border: 1px solid rgba(99, 102, 241, 0.28);
-      color: #a5b4fc;
-      padding: 3px 12px;
-      border-radius: var(--radius-pill);
-      font-size: 0.76rem;
-      font-weight: 600;
-      margin-bottom: 10px;
-      letter-spacing: 0.02em;
-    }}
+    /* Hero Section - Clean & Uncluttered */
+    .hero {{ text-align: center; padding: 40px 0 24px; position: relative; }}
     .hero h1 {{
-      font-size: clamp(1.65rem, 3.2vw, 2.4rem);
+      font-size: clamp(1.85rem, 3.8vw, 2.75rem);
       font-weight: 800;
       letter-spacing: -0.03em;
       line-height: 1.2;
-      margin-bottom: 6px;
+      margin-bottom: 22px;
       color: #ffffff;
     }}
     .hero h1 .gradient-text {{
@@ -504,37 +485,30 @@ index_html_content = f"""<!DOCTYPE html>
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }}
-    .hero-sub {{
-      color: var(--text-muted);
-      font-size: 0.9rem;
-      max-width: 580px;
-      margin: 0 auto 16px;
-      line-height: 1.4;
-    }}
 
     /* Streamlined Global Search Bar */
     .search-box-wrap {{
-      max-width: 620px;
-      margin: 0 auto 10px;
+      max-width: 640px;
+      margin: 0 auto 20px;
       position: relative;
       display: flex;
       align-items: center;
     }}
     .search-icon {{
       position: absolute;
-      left: 16px;
-      font-size: 1.05rem;
+      left: 18px;
+      font-size: 1.1rem;
       color: var(--text-sub);
       pointer-events: none;
     }}
     .search-box {{
       width: 100%;
-      padding: 12px 42px 12px 46px;
+      padding: 14px 44px 14px 50px;
       background: rgba(15, 22, 38, 0.92);
       border: 1px solid rgba(99, 102, 241, 0.25);
-      border-radius: 12px;
+      border-radius: 14px;
       color: #ffffff;
-      font-size: 0.94rem;
+      font-size: 0.96rem;
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(99, 102, 241, 0.12);
       transition: all 0.2s ease;
       outline: none;
@@ -544,7 +518,7 @@ index_html_content = f"""<!DOCTYPE html>
       box-shadow: 0 8px 26px rgba(0, 0, 0, 0.45), 0 0 0 3px rgba(99, 102, 241, 0.28);
       background: #111a30;
     }}
-    .search-box::placeholder {{ color: #64748b; font-size: 0.88rem; }}
+    .search-box::placeholder {{ color: #64748b; font-size: 0.9rem; }}
     .search-hint {{
       position: absolute;
       right: 14px;
@@ -570,87 +544,12 @@ index_html_content = f"""<!DOCTYPE html>
     }}
     .clear-search:hover {{ color: #ffffff; }}
 
-    /* Compact & Subtle Trending Searches */
-    .trending-row {{
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      flex-wrap: wrap;
-      margin-bottom: 14px;
-      font-size: 0.76rem;
-      min-height: 28px;
-    }}
-    .trending-label {{
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      color: #94a3b8;
-      font-weight: 600;
-      font-size: 0.74rem;
-    }}
-    .trending-live-dot {{
-      display: inline-block;
-      width: 6px;
-      height: 6px;
-      background: #10b981;
-      border-radius: 50%;
-      box-shadow: 0 0 0 rgba(16, 185, 129, 0.7);
-      animation: livePulse 1.8s infinite;
-      margin-right: 2px;
-    }}
-    @keyframes livePulse {{
-      0% {{ box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }}
-      70% {{ box-shadow: 0 0 0 5px rgba(16, 185, 129, 0); }}
-      100% {{ box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }}
-    }}
-    .trending-pills-wrap {{
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      flex-wrap: wrap;
-      justify-content: center;
-      transition: opacity 0.25s ease;
-    }}
-    .trend-pill {{
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      color: #94a3b8;
-      padding: 3px 9px;
-      border-radius: var(--radius-pill);
-      font-size: 0.74rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      white-space: nowrap;
-    }}
-    .trend-pill:hover {{
-      background: rgba(99, 102, 241, 0.18);
-      border-color: rgba(99, 102, 241, 0.4);
-      color: #ffffff;
-      transform: translateY(-1px);
-    }}
-    .trend-pill.active {{
-      background: #6366f1;
-      border-color: #818cf8;
-      color: #ffffff;
-      box-shadow: 0 0 10px rgba(99, 102, 241, 0.45);
-    }}
-    .trend-pill.new-trend {{
-      border-color: #38bdf8;
-      animation: trendPop 0.4s ease-out;
-    }}
-    @keyframes trendPop {{
-      0% {{ transform: scale(0.85); opacity: 0; }}
-      100% {{ transform: scale(1); opacity: 1; }}
-    }}
-
     /* Streamlined Filter Toolbar */
     .filter-toolbar {{
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
       margin-top: 4px;
     }}
 
@@ -752,74 +651,115 @@ index_html_content = f"""<!DOCTYPE html>
       font-size: 0.82rem;
       font-weight: 600;
     }}
-      border-radius: var(--radius-pill);
-      font-size: 0.82rem;
-      font-weight: 700;
-    }}
-
-    /* Tools Grid */
+    /* Tools Grid - Sleek 4-Column Responsive Grid */
     .tools-grid {{
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-      gap: 22px;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }}
+    @media (max-width: 640px) {{
+      .tools-grid {{
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }}
     }}
 
-    /* Tool Card */
+    /* Tool Card - Compact, Balanced & Modern */
     .tool-card {{
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 22px;
+      border-radius: 14px;
+      padding: 16px 16px 14px 16px;
       display: flex;
       flex-direction: column;
+      justify-content: space-between;
       position: relative;
       cursor: pointer;
-      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
     }}
     .tool-card:hover {{
       transform: translateY(-3px);
-      border-color: rgba(99, 102, 241, 0.4);
+      border-color: rgba(99, 102, 241, 0.45);
       background: var(--bg-card-hover);
-      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45), 0 0 20px rgba(99, 102, 241, 0.15);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45), 0 0 20px rgba(99, 102, 241, 0.18);
     }}
     .card-top {{
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
-      margin-bottom: 14px;
-      gap: 12px;
+      margin-bottom: 10px;
+      gap: 10px;
     }}
-    .tool-brand {{ display: flex; align-items: center; gap: 14px; }}
+    .tool-brand {{
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+      flex: 1;
+    }}
     .tool-avatar {{
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
       color: #ffffff;
-      font-weight: 800;
-      font-size: 1.05rem;
+      font-weight: 700;
+      font-size: 0.85rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+      flex-shrink: 0;
+      letter-spacing: -0.02em;
+    }}
+    .tool-title-wrap {{
+      min-width: 0;
+      flex: 1;
+    }}
+    .tool-subcat {{
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #818cf8;
+      margin-bottom: 2px;
+      display: block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }}
+    .tool-name {{
+      font-size: 0.96rem;
+      font-weight: 700;
+      margin: 0;
+      color: #ffffff;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.3;
+    }}
+    .tool-card-title-link {{
+      color: inherit;
+      text-decoration: none;
+    }}
+    .tool-card-title-link:hover {{
+      color: #818cf8;
+    }}
+    .badge-row {{
+      display: flex;
+      align-items: center;
+      gap: 6px;
       flex-shrink: 0;
     }}
-    .tool-preview-thumb {{
-      width: 100%;
-      height: 140px;
-      object-fit: cover;
-      border-radius: var(--radius-sm);
-      margin-bottom: 14px;
-      border: 1px solid var(--border);
-      background: rgba(0,0,0,0.2);
-    }}
-    .badge-row {{ display: flex; align-items: center; gap: 8px; }}
     .price-badge {{
-      font-size: 0.74rem;
+      font-size: 0.68rem;
       font-weight: 700;
-      padding: 4px 10px;
+      padding: 3px 8px;
       border-radius: var(--radius-pill);
       text-transform: uppercase;
       letter-spacing: 0.04em;
+      line-height: 1;
     }}
     .price-freemium {{ background: rgba(99, 102, 241, 0.15); color: #a5b4fc; border: 1px solid rgba(99, 102, 241, 0.3); }}
     .price-free {{ background: rgba(16, 185, 129, 0.15); color: #6ee7b7; border: 1px solid rgba(16, 185, 129, 0.3); }}
@@ -828,7 +768,7 @@ index_html_content = f"""<!DOCTYPE html>
       background: none;
       border: none;
       color: var(--text-sub);
-      font-size: 1.25rem;
+      font-size: 1.15rem;
       cursor: pointer;
       line-height: 1;
       padding: 2px 4px;
@@ -836,59 +776,61 @@ index_html_content = f"""<!DOCTYPE html>
       transition: color 0.15s;
     }}
     .bookmark-btn:hover, .bookmark-btn.saved {{ color: #fbbf24; }}
-    .tool-subcat {{
-      font-size: 0.74rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: #818cf8;
-      margin-bottom: 6px;
-      display: inline-block;
-    }}
-    .tool-name {{ font-size: 1.16rem; font-weight: 700; margin-bottom: 8px; color: #ffffff; letter-spacing: -0.01em; }}
-    .tool-card-title-link {{ color: inherit; text-decoration: none; }}
-    .tool-card-title-link:hover {{ color: #818cf8; }}
     .tool-desc {{
-      font-size: 0.9rem;
+      font-size: 0.82rem;
       color: var(--text-muted);
-      line-height: 1.55;
-      margin-bottom: 22px;
+      line-height: 1.45;
+      margin-bottom: 12px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
       flex-grow: 1;
+      min-height: 2.9em;
     }}
     .card-bottom {{
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding-top: 14px;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding-top: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      gap: 8px;
+    }}
+    .cat-pill {{
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: #94a3b8;
+      background: rgba(255, 255, 255, 0.04);
+      padding: 3px 8px;
+      border-radius: 6px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 140px;
     }}
     .card-actions {{
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
+      flex-shrink: 0;
     }}
     .details-link {{
-      font-size: 0.82rem;
+      font-size: 0.78rem;
       color: var(--text-sub);
       font-weight: 600;
       transition: color 0.15s;
+      text-decoration: none;
     }}
-    .details-link:hover {{ color: #fff; }}
-    .cat-pill {{
-      font-size: 0.76rem;
-      font-weight: 600;
-      color: #94a3b8;
-      background: rgba(255, 255, 255, 0.04);
-      padding: 4px 10px;
-      border-radius: 8px;
-    }}
+    .details-link:hover {{ color: #ffffff; }}
     .tool-link {{
-      font-size: 0.86rem;
+      font-size: 0.78rem;
       font-weight: 600;
       color: #818cf8;
       display: inline-flex;
       align-items: center;
-      gap: 4px;
+      gap: 3px;
+      text-decoration: none;
       transition: color 0.15s;
     }}
     .tool-link:hover {{ color: #c084fc; text-decoration: underline; }}
@@ -1045,9 +987,7 @@ index_html_content = f"""<!DOCTYPE html>
   <!-- Hero Section -->
   <header class="hero">
     <div class="container">
-      <div class="hero-badge-pill">&#10024; Complete AI Directory 2026</div>
       <h1>Complete <span class="gradient-text">All AI Tools</span> Directory</h1>
-      <p class="hero-sub">Search, benchmark, and compare {total_tools}+ verified artificial intelligence software, models, and free alternatives.</p>
 
       <!-- Search Box with Query Param Support -->
       <div class="search-box-wrap">
@@ -1055,22 +995,6 @@ index_html_content = f"""<!DOCTYPE html>
         <input type="text" id="searchInput" class="search-box" placeholder="Search by name, category, pricing, or keyword... (Press '/' to focus)" autofocus autocomplete="off" />
         <button id="clearSearch" class="clear-search" aria-label="Clear Search">&times;</button>
         <span class="search-hint">/</span>
-      </div>
-
-      <!-- Dynamic Trending High-Volume Search Keywords -->
-      <div class="trending-row" id="trendingRow">
-        <span class="trending-label"><span class="trending-live-dot" title="Live Auto-Updating Searches"></span>&#128293; Top:</span>
-        <div class="trending-pills-wrap" id="trendingPillsWrap">
-          <button type="button" class="trend-pill" data-query="alternatives">Alternatives</button>
-          <button type="button" class="trend-pill" data-query="airbrush image enhancer">Airbrush</button>
-          <button type="button" class="trend-pill" data-query="free">Free Tools</button>
-          <button type="button" class="trend-pill" data-query="video">Video</button>
-          <button type="button" class="trend-pill" data-query="xeve ai">Xeve AI</button>
-          <button type="button" class="trend-pill" data-query="image">Image</button>
-          <button type="button" class="trend-pill" data-query="chat">Chatbots</button>
-          <button type="button" class="trend-pill" data-query="writer">Writers</button>
-          <button type="button" class="trend-pill" data-query="coding">Coding</button>
-        </div>
       </div>
 
       <!-- Unified Filter Toolbar -->
@@ -1404,171 +1328,15 @@ index_html_content = f"""<!DOCTYPE html>
         }}
       }});
 
-      // Dynamic & Auto-Updating Top Searches
-      var trendingWrap = document.getElementById('trendingPillsWrap');
-      var trendingRow = document.getElementById('trendingRow');
-      var baseTrending = [
-        {{ label: 'AI Alternatives', query: 'alternatives' }},
-        {{ label: 'Airbrush Enhancer', query: 'airbrush image enhancer' }},
-        {{ label: 'Free AI Tools', query: 'free' }},
-        {{ label: 'Video Creators', query: 'video' }},
-        {{ label: 'Xeve AI', query: 'xeve ai' }},
-        {{ label: 'Image Generators', query: 'image' }},
-        {{ label: 'Chatbots & LLMs', query: 'chat' }},
-        {{ label: 'AI Writers', query: 'writer' }},
-        {{ label: 'Coding Dev', query: 'coding' }},
-        {{ label: 'WayinVideo', query: 'wayinvideo' }},
-        {{ label: 'Inkle AI', query: 'inkle' }},
-        {{ label: 'ColdIQ', query: 'coldiq' }},
-        {{ label: 'Casetext', query: 'casetext' }},
-        {{ label: 'FreeMaker AI', query: 'freemaker' }},
-        {{ label: 'Runway Gen-3', query: 'runway' }},
-        {{ label: 'DeepSeek R1', query: 'deepseek' }},
-        {{ label: 'Claude 3.7', query: 'claude' }},
-        {{ label: 'Midjourney Free', query: 'midjourney' }},
-        {{ label: 'ChatGPT 4o', query: 'chatgpt' }},
-        {{ label: 'ElevenLabs', query: 'elevenlabs' }},
-        {{ label: 'Face Swap', query: 'face swap' }},
-        {{ label: 'Voice & Speech', query: 'voice' }}
-      ];
-
-      var userSearches = [];
-      try {{
-        userSearches = JSON.parse(localStorage.getItem('allaitools_user_searches') || '[]');
-      }} catch (e) {{}}
-
-      var trendOffset = 0;
-      var isHoveringTrending = false;
-
-      function getAllTrendingPool() {{
-        var pool = [];
-        var seenQueries = {{}};
-        userSearches.forEach(function (term) {{
-          var qLower = term.toLowerCase().trim();
-          if (qLower && !seenQueries[qLower]) {{
-            seenQueries[qLower] = true;
-            pool.push({{ label: term, query: term, isUser: true }});
-          }}
-        }});
-        baseTrending.forEach(function (item) {{
-          var qLower = item.query.toLowerCase().trim();
-          if (!seenQueries[qLower]) {{
-            seenQueries[qLower] = true;
-            pool.push(item);
-          }}
-        }});
-        return pool;
-      }}
-
-      function renderTrendingPills(highlightFirst) {{
-        if (!trendingWrap) return;
-        var pool = getAllTrendingPool();
-        var maxVisible = 9;
-        var visibleItems = [];
-
-        var startIndex = trendOffset % pool.length;
-        for (var i = 0; i < maxVisible && i < pool.length; i++) {{
-          var item = pool[(startIndex + i) % pool.length];
-          visibleItems.push(item);
-        }}
-
-        var currentSearchVal = (searchInput ? searchInput.value.trim().toLowerCase() : '');
-        var html = '';
-        visibleItems.forEach(function (item, idx) {{
-          var isActive = currentSearchVal && item.query.toLowerCase() === currentSearchVal;
-          var classes = 'trend-pill' + (isActive ? ' active' : '') + (highlightFirst && idx === 0 ? ' new-trend' : '');
-          var prefix = item.isUser ? '&#128269; ' : '';
-          html += '<button type="button" class="' + classes + '" data-query="' + item.query.replace(/"/g, '&quot;') + '">' + prefix + item.label + '</button>';
-        }});
-        trendingWrap.innerHTML = html;
-        bindTrendingClickEvents();
-      }}
-
-      function bindTrendingClickEvents() {{
-        if (!trendingWrap) return;
-        var buttons = trendingWrap.querySelectorAll('.trend-pill');
-        buttons.forEach(function (btn) {{
-          btn.addEventListener('click', function () {{
-            var qVal = btn.getAttribute('data-query');
-            if (!searchInput) return;
-            searchInput.value = qVal;
-            filterTools();
-            buttons.forEach(function (b) {{ b.classList.remove('active'); }});
-            btn.classList.add('active');
-            var featuredSec = document.getElementById('featured');
-            if (featuredSec) {{
-              featuredSec.scrollIntoView({{ behavior: 'smooth' }});
-            }}
-          }});
-        }});
-      }}
-
-      // Auto-update / cycle top searches smoothly every 5.5s
-      setInterval(function () {{
-        if (isHoveringTrending) return;
-        trendOffset = (trendOffset + 2) % 30;
-        renderTrendingPills(false);
-      }}, 5500);
-
-      if (trendingRow) {{
-        trendingRow.addEventListener('mouseenter', function () {{ isHoveringTrending = true; }});
-        trendingRow.addEventListener('mouseleave', function () {{ isHoveringTrending = false; }});
-      }}
-
-      function recordVisitorSearch(query) {{
-        query = query.trim();
-        if (!query || query.length < 2) return;
-        var existingIdx = -1;
-        for (var i = 0; i < userSearches.length; i++) {{
-          if (userSearches[i].toLowerCase() === query.toLowerCase()) {{
-            existingIdx = i;
-            break;
-          }}
-        }}
-        if (existingIdx !== -1) {{
-          userSearches.splice(existingIdx, 1);
-        }}
-        userSearches.unshift(query);
-        if (userSearches.length > 25) userSearches.pop();
-        try {{
-          localStorage.setItem('allaitools_user_searches', JSON.stringify(userSearches));
-        }} catch (e) {{}}
-        trendOffset = 0;
-        renderTrendingPills(true);
-      }}
-
-      var searchDebounceTimer = null;
       searchInput.addEventListener('input', function () {{
         filterTools();
-        clearTimeout(searchDebounceTimer);
-        var val = searchInput.value.trim();
-        if (val.length >= 2) {{
-          searchDebounceTimer = setTimeout(function () {{
-            recordVisitorSearch(val);
-          }}, 1800);
-        }}
-      }});
-      searchInput.addEventListener('keydown', function (e) {{
-        if (e.key === 'Enter') {{
-          var val = searchInput.value.trim();
-          if (val.length >= 2) {{
-            recordVisitorSearch(val);
-          }}
-        }}
       }});
 
       clearBtn.addEventListener('click', function () {{
         searchInput.value = '';
         filterTools();
         searchInput.focus();
-        if (trendingWrap) {{
-          trendingWrap.querySelectorAll('.trend-pill').forEach(function (b) {{ b.classList.remove('active'); }});
-        }}
       }});
-
-      // Initial bind & render
-      bindTrendingClickEvents();
-      renderTrendingPills(false);
 
       // Category Pill Click
       filterPills.forEach(function (pill) {{
