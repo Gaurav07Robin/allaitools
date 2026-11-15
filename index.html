@@ -1984,64 +1984,71 @@
       font-size: 0.82rem;
       font-weight: 600;
     }
-    /* Tools Grid - Sleek 4-Column Responsive Grid */
+    /* Tools Grid - Clean 3-Column Responsive Grid */
     .tools-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 16px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+    }
+    @media (max-width: 1024px) {
+      .tools-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+      }
     }
     @media (max-width: 640px) {
       .tools-grid {
         grid-template-columns: 1fr;
-        gap: 12px;
+        gap: 14px;
       }
     }
 
-    /* Tool Card - Compact, Balanced & Modern */
+    /* Tool Card - Spacious, Clean & Modern */
     .tool-card {
       background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 16px 16px 14px 16px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 22px 24px 20px 24px;
+      min-height: 205px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       position: relative;
       cursor: pointer;
-      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
     }
     .tool-card:hover {
-      transform: translateY(-3px);
-      border-color: rgba(99, 102, 241, 0.45);
+      transform: translateY(-4px);
+      border-color: rgba(99, 102, 241, 0.5);
       background: var(--bg-card-hover);
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45), 0 0 20px rgba(99, 102, 241, 0.18);
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.45), 0 0 24px rgba(99, 102, 241, 0.16);
     }
     .card-top {
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
-      margin-bottom: 10px;
-      gap: 10px;
+      margin-bottom: 14px;
+      gap: 12px;
     }
     .tool-brand {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
       min-width: 0;
       flex: 1;
     }
     .tool-avatar {
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
       color: #ffffff;
       font-weight: 700;
-      font-size: 0.85rem;
+      font-size: 0.95rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
       flex-shrink: 0;
       letter-spacing: -0.02em;
     }
@@ -2050,19 +2057,19 @@
       flex: 1;
     }
     .tool-subcat {
-      font-size: 0.68rem;
+      font-size: 0.72rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.06em;
       color: #818cf8;
-      margin-bottom: 2px;
+      margin-bottom: 4px;
       display: block;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
     .tool-name {
-      font-size: 0.96rem;
+      font-size: 1.05rem;
       font-weight: 700;
       margin: 0;
       color: #ffffff;
@@ -2070,7 +2077,7 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      line-height: 1.3;
+      line-height: 1.35;
     }
     .tool-card-title-link {
       color: inherit;
@@ -2082,13 +2089,13 @@
     .badge-row {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
       flex-shrink: 0;
     }
     .price-badge {
-      font-size: 0.68rem;
+      font-size: 0.7rem;
       font-weight: 700;
-      padding: 3px 8px;
+      padding: 4px 9px;
       border-radius: var(--radius-pill);
       text-transform: uppercase;
       letter-spacing: 0.04em;
@@ -2101,7 +2108,7 @@
       background: none;
       border: none;
       color: var(--text-sub);
-      font-size: 1.15rem;
+      font-size: 1.25rem;
       cursor: pointer;
       line-height: 1;
       padding: 2px 4px;
@@ -2110,46 +2117,47 @@
     }
     .bookmark-btn:hover, .bookmark-btn.saved { color: #fbbf24; }
     .tool-desc {
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      line-height: 1.45;
-      margin-bottom: 12px;
+      font-size: 0.88rem;
+      color: #94a3b8;
+      line-height: 1.55;
+      margin-bottom: 16px;
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
       text-overflow: ellipsis;
       flex-grow: 1;
-      min-height: 2.9em;
+      min-height: 2.8em;
     }
     .card-bottom {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding-top: 10px;
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
-      gap: 8px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      gap: 12px;
     }
     .cat-pill {
-      font-size: 0.72rem;
+      font-size: 0.74rem;
       font-weight: 600;
       color: #94a3b8;
       background: rgba(255, 255, 255, 0.04);
-      padding: 3px 8px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 4px 10px;
       border-radius: 6px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      max-width: 140px;
+      max-width: 190px;
     }
     .card-actions {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
       flex-shrink: 0;
     }
     .details-link {
-      font-size: 0.78rem;
+      font-size: 0.82rem;
       color: var(--text-sub);
       font-weight: 600;
       transition: color 0.15s;
@@ -2157,13 +2165,16 @@
     }
     .details-link:hover { color: #ffffff; }
     .tool-link {
-      font-size: 0.78rem;
+      font-size: 0.82rem;
       font-weight: 600;
       color: #818cf8;
       display: inline-flex;
       align-items: center;
-      gap: 3px;
+      gap: 4px;
       text-decoration: none;
+      transition: color 0.15s;
+    }
+    .tool-link:hover { color: #c084fc; text-decoration: underline; }
       transition: color 0.15s;
     }
     .tool-link:hover { color: #c084fc; text-decoration: underline; }
