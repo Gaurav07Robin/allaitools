@@ -1847,20 +1847,57 @@ with open("public/robots.txt", "w", encoding="utf-8") as f:
     f.write(robots_txt_content)
 print("Generated robots.txt allowing all agents with canonical sitemap URL.")
 
-# 6. Generate sitemap.xml with all tool pages
+# 6. Generate sitemap.xml with whole website (homepage, utility tools, all tool pages, and alternatives)
 sitemap_urls = [
     f"""  <url>
     <loc>{BASE_URL}/</loc>
     <lastmod>{TODAY}</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
+  </url>""",
+    f"""  <url>
+    <loc>{BASE_URL}/submit/</loc>
+    <lastmod>{TODAY}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>""",
+    f"""  <url>
+    <loc>{BASE_URL}/tools/prompt-enhancer/</loc>
+    <lastmod>{TODAY}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>""",
+    f"""  <url>
+    <loc>{BASE_URL}/tools/ai-image-generator/</loc>
+    <lastmod>{TODAY}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>""",
+    f"""  <url>
+    <loc>{BASE_URL}/tools/image-enhancer/</loc>
+    <lastmod>{TODAY}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>"""
 ]
 
-for t in tools:
-    path = t.get('path', f"/{t['slug']}/")
+# All tool pages
+all_tool_slugs = [t.get('slug') for t in tools]
+if 'xeveai-live-ai-girlfriend-video-chat-in-your-browser' not in all_tool_slugs:
+    all_tool_slugs.append('xeveai-live-ai-girlfriend-video-chat-in-your-browser')
+
+for s in all_tool_slugs:
     sitemap_urls.append(f"""  <url>
-    <loc>{BASE_URL}{path}</loc>
+    <loc>{BASE_URL}/{s}/</loc>
+    <lastmod>{TODAY}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>""")
+
+# All alternatives pages
+for s in all_tool_slugs:
+    sitemap_urls.append(f"""  <url>
+    <loc>{BASE_URL}/alternatives/{s}/</loc>
     <lastmod>{TODAY}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -1879,7 +1916,10 @@ with open("sitemap.xml", "w", encoding="utf-8") as f:
     f.write(sitemap_content)
 with open("public/sitemap.xml", "w", encoding="utf-8") as f:
     f.write(sitemap_content)
-print(f"Generated sitemap.xml with {len(sitemap_urls)} URLs (1 home + {len(tools)} tool pages).")
+if os.path.exists("dist"):
+    with open("dist/sitemap.xml", "w", encoding="utf-8") as f:
+        f.write(sitemap_content)
+print(f"Generated comprehensive sitemap.xml with {len(sitemap_urls)} URLs for whole website.")
 
 # 7. Generate vercel.json
 vercel_json_content = {
