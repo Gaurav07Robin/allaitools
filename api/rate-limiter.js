@@ -8,7 +8,7 @@ const clientStore = new Map();
 // Periodic cleanup of stale clients (older than 1 hour)
 if (!globalThis.__rateLimitCleanupRegistered) {
   globalThis.__rateLimitCleanupRegistered = true;
-  setInterval(() => {
+  const cleanupTimer = setInterval(() => {
     const now = Date.now();
     for (const [key, record] of clientStore.entries()) {
       if (now - record.windowStart > 60 * 60 * 1000) {
@@ -16,6 +16,9 @@ if (!globalThis.__rateLimitCleanupRegistered) {
       }
     }
   }, 10 * 60 * 1000);
+  if (cleanupTimer && typeof cleanupTimer.unref === 'function') {
+    cleanupTimer.unref();
+  }
 }
 
 /**
