@@ -211,6 +211,22 @@ schema_json = json.dumps({
                 },
                 {
                     "@type": "Question",
+                    "name": "Does All AI Tools offer a free AI image generator and AI photo enhancer?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Yes! All AI Tools includes a 100% free online AI Image Generator powered by Flux.1 Schnell and a neural AI Image Enhancer & 4K Photo Upscaler for unblurring, sharpening, and enhancing photos with zero registration required."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "What is the best free alternative to Airbrush image enhancer?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "All AI Tools provides a dedicated free AI Image Enhancer and 4K photo upscaler that serves as a direct, no-cost alternative to Airbrush image enhancer, Remini, and Topaz Gigapixel, allowing users to restore old or blurry pictures with instant split before/after comparison."
+                    }
+                },
+                {
+                    "@type": "Question",
                     "name": "Are there free AI tools and alternatives available on All AI Tools?",
                     "acceptedAnswer": {
                         "@type": "Answer",
@@ -234,6 +250,34 @@ schema_json = json.dumps({
                     }
                 }
             ]
+        },
+        {
+            "@type": "WebApplication",
+            "@id": f"{BASE_URL}/tools/ai-image-generator/#app",
+            "name": "Free AI Image Generator (Flux.1 & SDXL)",
+            "url": f"{BASE_URL}/tools/ai-image-generator/",
+            "applicationCategory": "MultimediaApplication",
+            "operatingSystem": "All",
+            "description": "Generate high-resolution AI art, photorealistic portraits, and 3D concept graphics using Cloudflare Workers AI and Flux.1 Schnell.",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            }
+        },
+        {
+            "@type": "WebApplication",
+            "@id": f"{BASE_URL}/tools/image-enhancer/#app",
+            "name": "Free AI Image Enhancer & 4K Photo Upscaler",
+            "url": f"{BASE_URL}/tools/image-enhancer/",
+            "applicationCategory": "MultimediaApplication",
+            "operatingSystem": "All",
+            "description": "Free AI photo enhancer and resolution upscaler. Unblur faces, restore compressed photos, and upscale images up to 4K resolution online.",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            }
         }
     ]
 }, indent=2)
@@ -244,27 +288,27 @@ index_html_content = f"""<!DOCTYPE html>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>All AI Tools (allaitools) — Complete AI Tools List &amp; Directory of {total_tools}+ AI Tools in One Website (2026)</title>
-  <meta name="description" content="Discover {total_tools}+ verified AI tools across all categories on All AI Tools (allaitools.online). Complete all AI tools list in one website: find top AI software, free tools, custom GPTs, and verified alternatives with instant search." />
-  <meta name="keywords" content="allaitools, all ai tools, all ai tools list, all tools website, list all ai tools, ai all tools, ai tool list, all ai, aitoolslist, aitools, tools ai, list of all ai tools, ai tool directory, all ai tools in one website, ai tools by category, all tools ai, ai software directory, all ai list, ai tools all, ai tools collection, 1000 ai tools, every ai tool, best ai tools 2026, free ai tools list, ai tools database, aitools list, altftools alternatives, aitoolradar alternatives, artificial intelligence tools, all ai websites, complete ai directory, all the ai tools available, free online tools directory, every single ai, al tools, allaitool, aitolls, aitols, all tool ai" />
+  <title>All AI Tools (allaitools) — Free AI Image Generator, 4K Image Enhancer &amp; {total_tools}+ AI Tools Directory (2026)</title>
+  <meta name="description" content="Discover {total_tools}+ verified AI tools on All AI Tools (allaitools.online). Free built-in AI Image Generator (Flux.1 Schnell) &amp; AI Image Enhancer (4K photo upscaler, unblur &amp; sharpen). Complete all AI tools list with instant search and alternatives." />
+  <meta name="keywords" content="allaitools, all ai tools, free ai image generator, ai image generator, ai image enhancer, airbrush image enhancer, airbrush photo enhancer, photo upscaler 4k, unblur image ai, image enhancer airbrush, airbrush enhancer, upscale image airbrush, ai photo enhancer, flux ai generator, text to image ai, all ai tools list, all tools website, list all ai tools, ai all tools, ai tool list, all ai, aitoolslist, aitools, tools ai, list of all ai tools, ai tool directory, all ai tools in one website, ai tools by category, all tools ai, ai software directory, all ai list, ai tools all, ai tools collection, 1000 ai tools, every ai tool, best ai tools 2026, free ai tools list, ai tools database, aitools list, altftools alternatives, aitoolradar alternatives, artificial intelligence tools, all ai websites, complete ai directory, all the ai tools available, free online tools directory, every single ai, al tools, allaitool, aitolls, aitols, all tool ai" />
   <meta name="author" content="All AI Tools" />
-  <meta name="subject" content="Complete List and Directory of All AI Tools ({total_tools}+ Tools)" />
-  <meta name="topic" content="Artificial Intelligence Tools, AI Software &amp; Machine Learning Directory" />
-  <meta name="classification" content="Artificial Intelligence Directory, AI Tools List" />
+  <meta name="subject" content="Complete List and Directory of All AI Tools ({total_tools}+ Tools) with Free Image Generator &amp; Image Enhancer" />
+  <meta name="topic" content="Artificial Intelligence Tools, AI Software, AI Image Generator &amp; Photo Enhancer Directory" />
+  <meta name="classification" content="Artificial Intelligence Directory, AI Tools List, AI Multimedia Utilities" />
   <meta name="revisit-after" content="2 days" />
   <link rel="canonical" href="{BASE_URL}/" />
 
   <!-- OpenGraph -->
-  <meta property="og:title" content="All AI Tools (allaitools) — Complete AI Tools List &amp; {total_tools}+ Directory" />
-  <meta property="og:description" content="The complete list of all AI tools in one website ({total_tools}+ platforms). Search by category, filter by Free or Freemium, and discover the best AI software &amp; alternatives." />
+  <meta property="og:title" content="All AI Tools — Free AI Image Generator, 4K Image Enhancer &amp; {total_tools}+ AI Directory" />
+  <meta property="og:description" content="Explore {total_tools}+ verified AI tools in one website. Create stunning art with our free AI Image Generator (Flux.1) and enhance/unblur photos to 4K with our free AI Image Enhancer." />
   <meta property="og:url" content="{BASE_URL}/" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="All AI Tools" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="All AI Tools (allaitools) | Exhaustive All AI Tools List ({total_tools}+ Tools)" />
-  <meta name="twitter:description" content="Browse the ultimate all AI tools directory and complete AI software list in one website with lightning-fast instant search." />
+  <meta name="twitter:title" content="All AI Tools | Free AI Image Generator, 4K Image Enhancer &amp; {total_tools}+ AI Tools" />
+  <meta name="twitter:description" content="Complete directory of {total_tools}+ AI tools plus free online AI Image Generator and 4K Image Enhancer / Photo Upscaler with zero registration." />
 
   <!-- Favicon SVG -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%234F46E5%22/><text y=%2268%22 x=%2250%22 font-family=%22system-ui,sans-serif%22 font-weight=%22800%22 font-size=%2254%22 fill=%22white%22 text-anchor=%22middle%22>AI</text></svg>" />
