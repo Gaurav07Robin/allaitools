@@ -1348,13 +1348,12 @@ index_html_content = f"""<!DOCTYPE html>
             </defs>
           </svg>
         </span>
-        <span class="brand-text">All AI Tools</span>
       </a>
 
       <div class="nav-links">
         <a href="#categories" class="nav-link">Categories</a>
         <a href="/tools/ai-image-generator/" class="nav-link nav-link-special">
-          <span class="nav-sparkle">&#10024;</span> AI Generator
+          <span class="nav-sparkle">&#10024;</span> Image Generator
         </a>
         <a href="/tools/image-enhancer/" class="nav-link nav-link-special">
           <span class="nav-sparkle">&#9889;</span> 4K Enhancer
@@ -1377,7 +1376,7 @@ index_html_content = f"""<!DOCTYPE html>
     <div class="container mobile-tools-inner">
       <a href="/tools/ai-image-generator/" class="mobile-tool-pill" title="Free Live AI Image Generator">
         <span class="mobile-tool-icon">&#10024;</span>
-        <span>AI Generator</span>
+        <span>Image Generator</span>
         <span class="mobile-tool-badge">Free</span>
       </a>
       <a href="/tools/image-enhancer/" class="mobile-tool-pill" title="Real AI 4K Upscaler">
@@ -3257,7 +3256,6 @@ def render_tool_page(tool, all_tools, tools_by_cat=None):
             </defs>
           </svg>
         </span>
-        <span class="brand-text">All AI Tools</span>
       </a>
 
       <div class="nav-search-wrap">
