@@ -4951,14 +4951,30 @@
       }
 
       function filterTools() {
-        var q = searchInput.value.trim().toLowerCase();
-        if (q.length > 0) {
+        var rawQ = searchInput.value.trim().toLowerCase();
+        if (rawQ.length > 0) {
           clearBtn.style.display = 'block';
         } else {
           clearBtn.style.display = 'none';
         }
 
         currentPage = 1;
+
+        var qWords = rawQ.split(/[\s+&,]+/).filter(function (w) { return w.length > 0; });
+
+        function matchItem(name, desc, subcat, cat) {
+          if (qWords.length === 0) return true;
+          var text = (name + ' ' + (desc || '') + ' ' + (subcat || '') + ' ' + (cat || '')).toLowerCase();
+          if (qWords.length <= 2) {
+            return qWords.every(function (w) { return text.indexOf(w) !== -1; });
+          }
+          if (text.indexOf(rawQ) !== -1) return true;
+          var count = 0;
+          for (var i = 0; i < qWords.length; i++) {
+            if (text.indexOf(qWords[i]) !== -1) count++;
+          }
+          return count >= 2 || (name && name.toLowerCase().indexOf(qWords[0]) !== -1);
+        }
 
         if (allToolsData.length === 0) {
           var visible = 0;
@@ -4968,7 +4984,7 @@
             var cardName = (card.getAttribute('data-name') || '').toLowerCase();
             var matchesCat = (currentCat === 'all' || cardCat === currentCat);
             var matchesPrice = (currentPricing === 'all' || cardPrice === currentPricing);
-            var matchesQuery = (!q || cardName.indexOf(q) !== -1);
+            var matchesQuery = matchItem(cardName, '', '', '');
             var matchesSaved = (!filterOnlySaved || savedTools.indexOf(cardName) !== -1);
 
             if (matchesCat && matchesPrice && matchesQuery && matchesSaved) {
@@ -4986,7 +5002,7 @@
           var pLower = (t.p || '').toLowerCase();
           var matchesCat = (currentCat === 'all' || t.cs === currentCat);
           var matchesPrice = (currentPricing === 'all' || pLower === currentPricing);
-          var matchesQuery = (!q || t.n.toLowerCase().indexOf(q) !== -1 || (t.d && t.d.toLowerCase().indexOf(q) !== -1) || (t.sc && t.sc.toLowerCase().indexOf(q) !== -1));
+          var matchesQuery = matchItem(t.n, t.d, t.sc, t.c);
           var matchesSaved = (!filterOnlySaved || savedTools.indexOf(t.n.toLowerCase()) !== -1);
           return matchesCat && matchesPrice && matchesQuery && matchesSaved;
         });

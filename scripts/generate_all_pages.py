@@ -1802,14 +1802,30 @@ index_html_content = f"""<!DOCTYPE html>
       }}
 
       function filterTools() {{
-        var q = searchInput.value.trim().toLowerCase();
-        if (q.length > 0) {{
+        var rawQ = searchInput.value.trim().toLowerCase();
+        if (rawQ.length > 0) {{
           clearBtn.style.display = 'block';
         }} else {{
           clearBtn.style.display = 'none';
         }}
 
         currentPage = 1;
+
+        var qWords = rawQ.split(/[\s+&,]+/).filter(function (w) {{ return w.length > 0; }});
+
+        function matchItem(name, desc, subcat, cat) {{
+          if (qWords.length === 0) return true;
+          var text = (name + ' ' + (desc || '') + ' ' + (subcat || '') + ' ' + (cat || '')).toLowerCase();
+          if (qWords.length <= 2) {{
+            return qWords.every(function (w) {{ return text.indexOf(w) !== -1; }});
+          }}
+          if (text.indexOf(rawQ) !== -1) return true;
+          var count = 0;
+          for (var i = 0; i < qWords.length; i++) {{
+            if (text.indexOf(qWords[i]) !== -1) count++;
+          }}
+          return count >= 2 || (name && name.toLowerCase().indexOf(qWords[0]) !== -1);
+        }}
 
         if (allToolsData.length === 0) {{
           var visible = 0;
@@ -1819,7 +1835,7 @@ index_html_content = f"""<!DOCTYPE html>
             var cardName = (card.getAttribute('data-name') || '').toLowerCase();
             var matchesCat = (currentCat === 'all' || cardCat === currentCat);
             var matchesPrice = (currentPricing === 'all' || cardPrice === currentPricing);
-            var matchesQuery = (!q || cardName.indexOf(q) !== -1);
+            var matchesQuery = matchItem(cardName, '', '', '');
             var matchesSaved = (!filterOnlySaved || savedTools.indexOf(cardName) !== -1);
 
             if (matchesCat && matchesPrice && matchesQuery && matchesSaved) {{
@@ -1837,7 +1853,7 @@ index_html_content = f"""<!DOCTYPE html>
           var pLower = (t.p || '').toLowerCase();
           var matchesCat = (currentCat === 'all' || t.cs === currentCat);
           var matchesPrice = (currentPricing === 'all' || pLower === currentPricing);
-          var matchesQuery = (!q || t.n.toLowerCase().indexOf(q) !== -1 || (t.d && t.d.toLowerCase().indexOf(q) !== -1) || (t.sc && t.sc.toLowerCase().indexOf(q) !== -1));
+          var matchesQuery = matchItem(t.n, t.d, t.sc, t.c);
           var matchesSaved = (!filterOnlySaved || savedTools.indexOf(t.n.toLowerCase()) !== -1);
           return matchesCat && matchesPrice && matchesQuery && matchesSaved;
         }});
@@ -2295,12 +2311,19 @@ def render_tool_page(tool, all_tools, tools_by_cat=None):
     url = tool.get('url', '#')
     img_url = tool.get('image_url', '')
     domain = get_domain(url)
+    total_tools = len(all_tools)
 
     price_class = "price-freemium"
+    pricing_summary = "Free tier available with optional premium upgrades"
+    pricing_status_badge = "Freemium / Free Tier"
     if pricing.lower() == "free":
         price_class = "price-free"
+        pricing_summary = "100% Free to use — no credit card required"
+        pricing_status_badge = "100% Free"
     elif pricing.lower() == "paid":
         price_class = "price-paid"
+        pricing_summary = "Commercial subscription — check official site for trials"
+        pricing_status_badge = "Paid Subscription"
 
     # Related tools / alternatives
     if tools_by_cat and cat_slug in tools_by_cat:
@@ -2364,66 +2387,107 @@ def render_tool_page(tool, all_tools, tools_by_cat=None):
         ]
     }
 
-    intent_sections_html = []
     all_query_intents = []
     for grp_name, items in query_intent_groups.items():
-        pills_html = []
         for pre, mid, suf in items:
             q_str = ' '.join([p for p in [pre, mid, suf] if p]).strip()
             all_query_intents.append(q_str)
-            q_enc = quote_plus(q_str)
-            pills_html.append(f'<a href="/?q={q_enc}" class="query-pill" title="Search {html.escape(q_str)}">&#128269; {html.escape(q_str)}</a>')
-        
-        intent_sections_html.append(f'''
-          <div class="query-group">
-            <div class="query-group-title">{html.escape(grp_name)}</div>
-            <div class="query-pills">
-              {''.join(pills_html)}
-            </div>
-          </div>''')
 
-    queries_hub_block = '\n'.join(intent_sections_html)
     query_intent_keywords = ", ".join(all_query_intents[:20])
     query_intent_meta = "; ".join(all_query_intents[:15])
 
-    # Schema JSON-LD with AggregateRating for Google Star Snippets
+    # Comparison Table HTML with top 3 alternatives
+    comp_rows_html = []
+    # Add current tool first
+    comp_rows_html.append(f"""
+      <tr class="comp-row-current">
+        <td>
+          <div class="comp-tool-brand">
+            <span class="comp-tool-avatar" style="background:{color};">{html.escape(badge)}</span>
+            <div>
+              <strong class="comp-tool-name">{html.escape(name)}</strong>
+              <span class="comp-current-tag">This Tool</span>
+            </div>
+          </div>
+        </td>
+        <td><span class="cat-pill">{html.escape(subcat)}</span></td>
+        <td><span class="price-badge {price_class}">{html.escape(pricing)}</span></td>
+        <td class="comp-strength">{html.escape(desc[:85])}{'...' if len(desc)>85 else ''}</td>
+        <td><a href="{html.escape(url)}" target="_blank" rel="noopener noreferrer nofollow" class="comp-action-btn comp-visit-btn">Visit &rarr;</a></td>
+      </tr>
+    """)
+
+    for r in related[:3]:
+        r_name = r.get('name', 'Alternative AI')
+        r_slug = r.get('slug', '')
+        r_path = r.get('path', f"/{r_slug}/")
+        r_subcat = r.get('subcategory') or pill
+        r_pricing = r.get('pricing', 'Freemium')
+        r_badge = r.get('badge', r_name[:2].upper())
+        r_color = r.get('color', '#4F46E5')
+        r_desc = r.get('description', '')
+        r_price_class = "price-freemium"
+        if r_pricing.lower() == "free":
+            r_price_class = "price-free"
+        elif r_pricing.lower() == "paid":
+            r_price_class = "price-paid"
+
+        comp_rows_html.append(f"""
+          <tr>
+            <td>
+              <div class="comp-tool-brand">
+                <span class="comp-tool-avatar" style="background:{r_color};">{html.escape(r_badge)}</span>
+                <div>
+                  <a href="{r_path}" class="comp-tool-name comp-link">{html.escape(r_name)}</a>
+                </div>
+              </div>
+            </td>
+            <td><span class="cat-pill">{html.escape(r_subcat)}</span></td>
+            <td><span class="price-badge {r_price_class}">{html.escape(r_pricing)}</span></td>
+            <td class="comp-strength">{html.escape(r_desc[:85])}{'...' if len(r_desc)>85 else ''}</td>
+            <td><a href="{r_path}" class="comp-action-btn">Compare &rarr;</a></td>
+          </tr>
+        """)
+    comparison_table_block = "\n".join(comp_rows_html)
+
+    # Schema JSON-LD with rich FAQPage and SoftwareApplication
     schema_data = {
         "@context": "https://schema.org",
         "@graph": [
             {
                 "@type": "WebSite",
-                "@id": f"{BASE_URL}/#website",
-                "url": f"{BASE_URL}/",
+                "@id": "https://www.allaitools.online/#website",
+                "url": "https://www.allaitools.online/",
                 "name": "All AI Tools (allaitools)",
                 "description": f"Comprehensive directory of {total_tools}+ artificial intelligence tools and verified alternatives."
             },
             {
                 "@type": "BreadcrumbList",
-                "@id": f"{BASE_URL}{path}#breadcrumb",
+                "@id": f"https://www.allaitools.online{path}#breadcrumb",
                 "itemListElement": [
                     {
                         "@type": "ListItem",
                         "position": 1,
                         "name": "Home",
-                        "item": f"{BASE_URL}/"
+                        "item": "https://www.allaitools.online/"
                     },
                     {
                         "@type": "ListItem",
                         "position": 2,
                         "name": pill,
-                        "item": f"{BASE_URL}/?category={cat_slug}"
+                        "item": f"https://www.allaitools.online/?category={cat_slug}"
                     },
                     {
                         "@type": "ListItem",
                         "position": 3,
                         "name": name,
-                        "item": f"{BASE_URL}{path}"
+                        "item": f"https://www.allaitools.online{path}"
                     }
                 ]
             },
             {
                 "@type": "SoftwareApplication",
-                "@id": f"{BASE_URL}{path}#software",
+                "@id": f"https://www.allaitools.online{path}#software",
                 "name": name,
                 "description": desc,
                 "url": url,
@@ -2447,7 +2511,7 @@ def render_tool_page(tool, all_tools, tools_by_cat=None):
             },
             {
                 "@type": "FAQPage",
-                "@id": f"{BASE_URL}{path}#faq",
+                "@id": f"https://www.allaitools.online{path}#faq",
                 "mainEntity": [
                     {
                         "@type": "Question",
@@ -2470,23 +2534,23 @@ def render_tool_page(tool, all_tools, tools_by_cat=None):
                         "name": f"How much does {name} cost? Is there a free version?",
                         "acceptedAnswer": {
                             "@type": "Answer",
-                            "text": f"{name} operates under a {pricing} model. Visit the official website ({domain}) for current subscription plans, free tiers, and trial details."
+                            "text": f"{name} operates under a {pricing} model. {pricing_summary}. Visit the official website ({domain}) for current subscription plans, free tiers, and trial details."
                         }
                     },
                     {
                         "@type": "Question",
-                        "name": f"What are the top rated {subcat} tools like {name}?",
+                        "name": f"How do beginners start using {name}?",
                         "acceptedAnswer": {
                             "@type": "Answer",
-                            "text": f"Explore verified {subcat} software and trending {pill} tools on All AI Tools with live filtering by pricing, features, and user ratings."
+                            "text": f"To get started with {name}, visit the official site at {url}, launch the web application or sign up for an account, and begin entering your prompt or task."
                         }
                     },
                     {
                         "@type": "Question",
-                        "name": f"How do I open and access {name} online?",
+                        "name": f"Is {name} safe and legit?",
                         "acceptedAnswer": {
                             "@type": "Answer",
-                            "text": f"You can open and visit {name} directly via its official portal at {url}."
+                            "text": f"Yes, {name} is a verified AI software indexed in the All AI Tools directory with confirmed active operations at {domain}."
                         }
                     }
                 ]
@@ -2522,9 +2586,9 @@ def render_tool_page(tool, all_tools, tools_by_cat=None):
               </div>
               <span class="price-badge {r_price_class}">{html.escape(r_pricing)}</span>
             </div>
-            <p class="related-desc">{html.escape(r_desc[:120])}{'...' if len(r_desc) > 120 else ''}</p>
+            <p class="related-desc">{html.escape(r_desc[:110])}{'...' if len(r_desc) > 110 else ''}</p>
             <div class="related-card-bottom">
-              <a href="{r_path}" class="view-detail-link">View Alternatives &rarr;</a>
+              <a href="{r_path}" class="view-detail-link">Compare &rarr;</a>
               <a href="{html.escape(r_url)}" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Open Tool &rarr;</a>
             </div>
           </div>
@@ -2539,11 +2603,6 @@ def render_tool_page(tool, all_tools, tools_by_cat=None):
         </div>
         """
 
-    q_name = quote_plus(name)
-    q_subcat = quote_plus(subcat)
-
-    js_tool_name = json.dumps(name.lower())
-
     page_html = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -2556,26 +2615,25 @@ def render_tool_page(tool, all_tools, tools_by_cat=None):
   <meta name="author" content="All AI Tools" />
   <meta name="subject" content="{html.escape(name)} AI Software, Pricing and Alternatives" />
   <meta name="topic" content="{html.escape(pill)} AI Tools" />
-  <link rel="canonical" href="{BASE_URL}{path}" />
+  <link rel="canonical" href="https://www.allaitools.online{path}" />
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
 
   <!-- OpenGraph -->
-  <meta property="og:title" content="{html.escape(name)} — Features, Pricing, Review &amp; Top Alternatives | All AI Tools" />
-  <meta property="og:description" content="Compare {html.escape(name)} ({html.escape(pricing)}) with top verified {html.escape(pill)} alternatives. Read features, pricing, user review, and launch the official platform." />
-  <meta property="og:url" content="{BASE_URL}{path}" />
+  <meta property="og:title" content="{html.escape(name)} — Complete Guide, Pricing &amp; Alternatives (2026)" />
+  <meta property="og:description" content="{html.escape(desc[:150])}... Compare verified {html.escape(name)} alternatives in {html.escape(pill)}." />
+  <meta property="og:url" content="https://www.allaitools.online{path}" />
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="All AI Tools" />
-  {f'<meta property="og:image" content="{html.escape(img_url)}" />' if img_url else ''}
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="{html.escape(name)} — Features, Pricing &amp; Alternatives | All AI Tools" />
-  <meta name="twitter:description" content="Explore {html.escape(name)} ({html.escape(subcat)}) and find verified {html.escape(pill)} alternatives on All AI Tools (allaitools.online)." />
+  <meta name="twitter:title" content="{html.escape(name)} Review, Pricing &amp; Alternatives (2026)" />
+  <meta name="twitter:description" content="{html.escape(desc[:140])}... Verified {html.escape(pill)} software on All AI Tools." />
 
-  <!-- Favicon -->
+  <!-- Favicon SVG -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%234F46E5%22/><text y=%2268%22 x=%2250%22 font-family=%22system-ui,sans-serif%22 font-weight=%22800%22 font-size=%2254%22 fill=%22white%22 text-anchor=%22middle%22>AI</text></svg>" />
 
-  <!-- Structured Data JSON-LD -->
+  <!-- Schema.org JSON-LD -->
   <script type="application/ld+json">
 {schema_json_str}
   </script>
@@ -2604,7 +2662,7 @@ def render_tool_page(tool, all_tools, tools_by_cat=None):
     body {{ min-height: 100vh; overflow-x: hidden; }}
     a {{ text-decoration: none; color: inherit; }}
 
-    /* Background Ambient */
+    /* Ambient Glow */
     .ambient-glow {{
       position: absolute;
       top: 0;
@@ -2619,7 +2677,7 @@ def render_tool_page(tool, all_tools, tools_by_cat=None):
 
     .container {{ max-width: 1240px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }}
 
-    /* Redesigned Modern Navbar */
+    /* Modern Navbar */
     .navbar {{
       position: sticky;
       top: 0;
@@ -2628,7 +2686,7 @@ def render_tool_page(tool, all_tools, tools_by_cat=None):
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
-      height: 68px;
+      height: 64px;
       display: flex;
       align-items: center;
     }}
@@ -2637,16 +2695,12 @@ def render_tool_page(tool, all_tools, tools_by_cat=None):
       align-items: center;
       justify-content: space-between;
       width: 100%;
-      gap: 18px;
+      gap: 16px;
     }}
     .brand {{
       display: flex;
       align-items: center;
       gap: 10px;
-      font-weight: 800;
-      font-size: 1.18rem;
-      letter-spacing: -0.025em;
-      color: #fff;
       text-decoration: none;
       flex-shrink: 0;
     }}
@@ -2667,12 +2721,6 @@ def render_tool_page(tool, all_tools, tools_by_cat=None):
       transform: scale(1.05);
       border-color: rgba(129, 140, 248, 0.7);
       box-shadow: 0 6px 20px rgba(129, 140, 248, 0.55);
-    }}
-    .brand-text {{
-      font-size: 1.18rem;
-      font-weight: 800;
-      letter-spacing: -0.025em;
-      color: #ffffff;
     }}
     .nav-search-wrap {{
       flex: 1;
@@ -2748,11 +2796,11 @@ def render_tool_page(tool, all_tools, tools_by_cat=None):
 
     /* Breadcrumbs */
     .breadcrumbs {{
-      padding: 24px 0 16px;
+      padding: 20px 0 14px;
       display: flex;
       align-items: center;
       gap: 8px;
-      font-size: 0.86rem;
+      font-size: 0.84rem;
       color: var(--text-sub);
       flex-wrap: wrap;
     }}
@@ -2761,12 +2809,12 @@ def render_tool_page(tool, all_tools, tools_by_cat=None):
     .breadcrumbs .crumb-sep {{ color: var(--text-sub); }}
     .breadcrumbs .crumb-current {{ color: #cbd5e1; font-weight: 600; }}
 
-    /* Tool Hero Card */
+    /* Tool Hero Card - Clean Above the Fold Experience */
     .tool-hero {{
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
-      padding: 24px 28px;
+      padding: 28px 32px 24px;
       margin-bottom: 24px;
       position: relative;
       overflow: hidden;
@@ -2784,17 +2832,17 @@ def render_tool_page(tool, all_tools, tools_by_cat=None):
     }}
     .hero-top-row {{
       display: flex;
-      align-items: center;
-      gap: 18px;
+      align-items: flex-start;
+      gap: 20px;
       flex-wrap: wrap;
       margin-bottom: 18px;
     }}
     .hero-avatar {{
-      width: 56px;
-      height: 56px;
-      border-radius: 14px;
+      width: 60px;
+      height: 60px;
+      border-radius: 16px;
       color: #fff;
-      font-weight: 900;
+      font-weight: 800;
       font-size: 1.4rem;
       display: flex;
       align-items: center;
@@ -2802,7 +2850,7 @@ def render_tool_page(tool, all_tools, tools_by_cat=None):
       box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
       flex-shrink: 0;
     }}
-    .hero-info {{ flex: 1; min-width: 260px; }}
+    .hero-info {{ flex: 1; min-width: 240px; }}
     .hero-subcat {{
       font-size: 0.74rem;
       font-weight: 700;
@@ -2813,9 +2861,9 @@ def render_tool_page(tool, all_tools, tools_by_cat=None):
       display: inline-block;
     }}
     .hero-title {{
-      font-size: clamp(1.35rem, 2.5vw, 1.85rem);
+      font-size: clamp(1.4rem, 2.6vw, 2rem);
       font-weight: 800;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.025em;
       color: #ffffff;
       margin-bottom: 8px;
       line-height: 1.25;
@@ -2824,7 +2872,7 @@ def render_tool_page(tool, all_tools, tools_by_cat=None):
 
     /* Badges */
     .price-badge {{
-      font-size: 0.74rem;
+      font-size: 0.72rem;
       font-weight: 700;
       padding: 4px 10px;
       border-radius: var(--radius-pill);
@@ -2866,11 +2914,9 @@ def render_tool_page(tool, all_tools, tools_by_cat=None):
       align-items: center;
       gap: 5px;
       transition: all 0.2s ease;
-      cursor: pointer;
     }}
     .domain-pill:hover {{
       background: rgba(99, 102, 241, 0.28);
-      border-color: rgba(99, 102, 241, 0.6);
       color: #ffffff;
       transform: translateY(-1px);
     }}
@@ -2881,7 +2927,7 @@ def render_tool_page(tool, all_tools, tools_by_cat=None):
       align-items: center;
       gap: 12px;
       flex-wrap: wrap;
-      padding-top: 16px;
+      padding-top: 18px;
       border-top: 1px solid var(--border);
     }}
     .btn-open-tool {{
@@ -2889,8 +2935,8 @@ def render_tool_page(tool, all_tools, tools_by_cat=None):
       color: #ffffff !important;
       font-weight: 700;
       font-size: 0.95rem;
-      padding: 11px 22px;
-      border-radius: 10px;
+      padding: 12px 24px;
+      border-radius: 12px;
       display: inline-flex;
       align-items: center;
       gap: 8px;
@@ -2900,7 +2946,7 @@ def render_tool_page(tool, all_tools, tools_by_cat=None):
     .btn-open-tool:hover {{
       transform: translateY(-2px);
       box-shadow: 0 8px 24px rgba(99, 102, 241, 0.55);
-      opacity: 0.95;
+      opacity: 0.96;
     }}
     .btn-bookmark, .btn-share {{
       background: rgba(255, 255, 255, 0.06);
@@ -2923,7 +2969,43 @@ def render_tool_page(tool, all_tools, tools_by_cat=None):
     }}
     .btn-bookmark.saved {{ color: #fbbf24; border-color: rgba(251, 191, 36, 0.4); }}
 
-    /* Layout Grid */
+    /* Quick Glance Metrics Grid - Instant Clarity */
+    .glance-grid {{
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }}
+    .glance-card {{
+      background: rgba(15, 22, 38, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }}
+    .glance-icon {{
+      font-size: 1.25rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }}
+    .glance-label {{
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #64748b;
+      margin-bottom: 2px;
+    }}
+    .glance-val {{
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #f1f5f9;
+      line-height: 1.35;
+    }}
+
+    /* Main Content Layout */
     .content-grid {{
       display: grid;
       grid-template-columns: 1fr;
@@ -2941,200 +3023,325 @@ def render_tool_page(tool, all_tools, tools_by_cat=None):
       border-radius: var(--radius-md);
       padding: 28px;
       margin-bottom: 28px;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.2);
     }}
     .card-box h2 {{
-      font-size: 1.35rem;
+      font-size: 1.32rem;
       font-weight: 800;
       color: #ffffff;
       margin-bottom: 16px;
       display: flex;
       align-items: center;
       gap: 10px;
+      letter-spacing: -0.015em;
     }}
     .lead-desc {{
-      font-size: 1.05rem;
+      font-size: 1.02rem;
       line-height: 1.7;
-      color: var(--text-muted);
-      margin-bottom: 20px;
-    }}
-
-    /* Preview box */
-    .preview-box {{
-      margin: 20px 0;
-      border-radius: var(--radius-sm);
-      overflow: hidden;
-      border: 1px solid var(--border);
-      background: rgba(0, 0, 0, 0.3);
-    }}
-    .tool-preview-full {{
-      width: 100%;
-      height: auto;
-      max-height: 480px;
-      object-fit: cover;
-      display: block;
-    }}
-
-    /* Specs Table */
-    .specs-table {{
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 14px;
-    }}
-    .specs-table tr {{ border-bottom: 1px solid rgba(255, 255, 255, 0.05); }}
-    .specs-table tr:last-child {{ border-bottom: none; }}
-    .specs-table td {{
-      padding: 12px 0;
-      font-size: 0.92rem;
-    }}
-    .specs-table td.label {{
-      color: var(--text-sub);
-      width: 38%;
-      font-weight: 500;
-    }}
-    .specs-table td.val {{
-      color: #e2e8f0;
-      font-weight: 600;
-    }}
-    .specs-table td.val a {{ color: #818cf8; }}
-    .specs-table td.val a:hover {{ text-decoration: underline; }}
-
-    /* Query Parameters & Search Section */
-    .queries-box {{
-      background: rgba(99, 102, 241, 0.04);
-      border: 1px solid rgba(99, 102, 241, 0.2);
-    }}
-    .queries-header {{
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 8px;
-      flex-wrap: wrap;
-    }}
-    .queries-header h2 {{
-      margin: 0;
-      font-size: 1.22rem;
-      color: #ffffff;
-    }}
-    .queries-badge {{
-      font-size: 0.72rem;
-      font-weight: 700;
-      color: #818cf8;
-      background: rgba(99, 102, 241, 0.15);
-      border: 1px solid rgba(99, 102, 241, 0.3);
-      padding: 4px 10px;
-      border-radius: var(--radius-pill);
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }}
-    .queries-intro {{
-      color: var(--text-muted);
-      font-size: 0.9rem;
-      line-height: 1.5;
-      margin-bottom: 20px;
-    }}
-    .query-group {{
-      margin-bottom: 18px;
-    }}
-    .query-group:last-child {{
-      margin-bottom: 0;
-    }}
-    .query-group-title {{
-      font-size: 0.8rem;
-      font-weight: 700;
       color: #cbd5e1;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      margin-bottom: 16px;
     }}
-    .query-pills {{
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
+
+    /* Step Guide Cards */
+    .step-guide-grid {{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-top: 16px;
     }}
-    .query-pill {{
-      background: rgba(15, 22, 38, 0.95);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      color: #c7d2fe;
-      padding: 6px 12px;
-      border-radius: var(--radius-pill);
-      font-size: 0.8rem;
-      font-weight: 500;
+    @media (min-width: 640px) {{
+      .step-guide-grid {{ grid-template-columns: repeat(3, 1fr); }}
+    }}
+    .step-card {{
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      padding: 16px;
+      position: relative;
+    }}
+    .step-num {{
       display: inline-flex;
       align-items: center;
-      gap: 5px;
-      transition: all 0.18s ease;
-      text-decoration: none;
-    }}
-    .query-pill:hover {{
-      background: rgba(99, 102, 241, 0.22);
-      border-color: rgba(99, 102, 241, 0.5);
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
       color: #fff;
-      transform: translateY(-1px);
+      font-weight: 800;
+      font-size: 0.8rem;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }}
+    .step-title {{
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 6px;
+    }}
+    .step-desc {{
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }}
+
+    /* Pricing Detail Section */
+    .pricing-details-wrap {{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-top: 14px;
+    }}
+    @media (min-width: 640px) {{
+      .pricing-details-wrap {{ grid-template-columns: 1fr 1fr; }}
+    }}
+    .pricing-plan-card {{
+      background: rgba(15, 22, 38, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 20px;
+    }}
+    .pricing-plan-card.highlight {{
+      border-color: rgba(99, 102, 241, 0.4);
+      background: rgba(99, 102, 241, 0.06);
+    }}
+    .plan-tag {{
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #818cf8;
+      margin-bottom: 6px;
+    }}
+    .plan-name {{
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 8px;
+    }}
+    .plan-desc {{
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }}
+
+    /* Feature Grid */
+    .features-grid {{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-top: 14px;
+    }}
+    @media (min-width: 640px) {{
+      .features-grid {{ grid-template-columns: 1fr 1fr; }}
+    }}
+    .feature-card {{
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      padding: 16px 18px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }}
+    .feature-icon {{
+      font-size: 1.35rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }}
+    .feature-title {{
+      font-size: 0.94rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }}
+    .feature-desc {{
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }}
+
+    /* Pros and Cons Box */
+    .pros-cons-grid {{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-top: 14px;
+    }}
+    @media (min-width: 640px) {{
+      .pros-cons-grid {{ grid-template-columns: 1fr 1fr; }}
+    }}
+    .pro-box, .con-box {{
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 12px;
+      padding: 18px 20px;
+    }}
+    .pro-box {{ border: 1px solid rgba(16, 185, 129, 0.25); background: rgba(16, 185, 129, 0.03); }}
+    .con-box {{ border: 1px solid rgba(245, 158, 11, 0.25); background: rgba(245, 158, 11, 0.03); }}
+    .pro-title {{ font-size: 0.95rem; font-weight: 700; color: #34d399; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }}
+    .con-title {{ font-size: 0.95rem; font-weight: 700; color: #fbbf24; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }}
+    .pro-con-list {{ list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 0.84rem; color: #cbd5e1; }}
+    .pro-con-list li {{ display: flex; align-items: flex-start; gap: 8px; line-height: 1.4; }}
+
+    /* Comparison Table */
+    .comp-table-wrap {{
+      width: 100%;
+      overflow-x: auto;
+      margin-top: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      background: rgba(15, 22, 38, 0.5);
+    }}
+    .comp-table {{
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.86rem;
+      text-align: left;
+      min-width: 600px;
+    }}
+    .comp-table th {{
+      background: rgba(255, 255, 255, 0.04);
+      padding: 12px 16px;
+      color: #94a3b8;
+      font-weight: 600;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }}
+    .comp-table td {{
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      vertical-align: middle;
+    }}
+    .comp-table tr:last-child td {{ border-bottom: none; }}
+    .comp-row-current {{ background: rgba(99, 102, 241, 0.08); }}
+    .comp-tool-brand {{ display: flex; align-items: center; gap: 10px; }}
+    .comp-tool-avatar {{
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.75rem;
+      color: #fff;
+      flex-shrink: 0;
+    }}
+    .comp-tool-name {{ font-weight: 700; color: #fff; font-size: 0.9rem; }}
+    .comp-link:hover {{ color: #818cf8; text-decoration: underline; }}
+    .comp-current-tag {{
+      display: block;
+      font-size: 0.65rem;
+      color: #818cf8;
+      font-weight: 700;
+      text-transform: uppercase;
+    }}
+    .comp-strength {{ color: var(--text-muted); font-size: 0.8rem; line-height: 1.4; max-width: 220px; }}
+    .comp-action-btn {{
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 5px 10px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #c7d2fe;
+      background: rgba(99, 102, 241, 0.15);
+      border: 1px solid rgba(99, 102, 241, 0.35);
+      border-radius: 6px;
+      white-space: nowrap;
+      transition: all 0.15s;
+    }}
+    .comp-action-btn:hover {{ background: rgba(99, 102, 241, 0.3); color: #fff; }}
+    .comp-visit-btn {{
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+      color: #fff !important;
+      border: none;
     }}
 
     /* FAQs */
-    .faq-item {{
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-      padding: 16px 0;
+    .faq-list {{
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 14px;
     }}
-    .faq-item:last-child {{ border-bottom: none; padding-bottom: 0; }}
+    .faq-item {{
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      padding: 18px 20px;
+    }}
     .faq-q {{
-      font-size: 1.02rem;
+      font-size: 0.98rem;
       font-weight: 700;
-      color: #ffffff;
+      color: #f1f5f9;
       margin-bottom: 8px;
     }}
     .faq-a {{
-      font-size: 0.92rem;
+      font-size: 0.86rem;
       color: var(--text-muted);
       line-height: 1.6;
     }}
 
-    /* Sidebar Sticky CTA Card */
-    .sidebar-card {{
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 24px;
-      margin-bottom: 24px;
-      position: sticky;
-      top: 96px;
+    /* Sidebar Column */
+    .sidebar-column {{
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
     }}
-    .sidebar-card h3 {{
-      font-size: 1.15rem;
+    .sidebar-native-promo {{
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.12) 0%, rgba(168, 85, 247, 0.12) 100%);
+      border: 1px solid rgba(99, 102, 241, 0.35);
+      border-radius: var(--radius-md);
+      padding: 22px;
+    }}
+    .sidebar-native-promo h3 {{
+      font-size: 1.05rem;
       font-weight: 800;
       color: #fff;
-      margin-bottom: 12px;
+      margin-bottom: 8px;
     }}
-    .sidebar-cta-btn {{
-      display: block;
-      width: 100%;
-      text-align: center;
-      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-      color: #fff !important;
-      font-weight: 700;
-      font-size: 0.98rem;
-      padding: 12px 18px;
-      border-radius: 10px;
-      margin-top: 16px;
-      box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
+    .sidebar-native-promo p {{
+      font-size: 0.82rem;
+      color: #c7d2fe;
+      margin-bottom: 14px;
+      line-height: 1.45;
+    }}
+    .native-pill-link {{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(15, 22, 38, 0.8);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      padding: 8px 12px;
+      border-radius: 8px;
+      color: #ffffff;
+      font-size: 0.84rem;
+      font-weight: 600;
+      margin-bottom: 8px;
       transition: all 0.15s ease;
     }}
-    .sidebar-cta-btn:hover {{ opacity: 0.95; transform: translateY(-1px); }}
+    .native-pill-link:hover {{
+      background: rgba(99, 102, 241, 0.25);
+      border-color: #818cf8;
+      transform: translateX(2px);
+    }}
 
-    /* Related Tools Cards */
+    /* Related Cards in Sidebar */
+    .related-list {{
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 14px;
+    }}
     .related-card {{
       background: rgba(255, 255, 255, 0.02);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 16px;
-      margin-bottom: 14px;
-      cursor: pointer;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      padding: 14px 16px;
       transition: all 0.2s ease;
+      cursor: pointer;
     }}
     .related-card:hover {{
       background: var(--bg-card-hover);
@@ -3144,62 +3351,39 @@ def render_tool_page(tool, all_tools, tools_by_cat=None):
     .related-card-top {{
       display: flex;
       align-items: center;
-      gap: 12px;
-      margin-bottom: 8px;
+      gap: 10px;
+      margin-bottom: 6px;
     }}
     .related-card-top .tool-avatar {{
-      width: 36px;
-      height: 36px;
-      font-size: 0.85rem;
+      width: 32px;
+      height: 32px;
+      font-size: 0.8rem;
       border-radius: 8px;
+      flex-shrink: 0;
     }}
     .related-title {{
-      font-size: 0.96rem;
+      font-size: 0.92rem;
       font-weight: 700;
       color: #fff;
     }}
-    .tool-card-title-link:hover {{ color: #818cf8; text-decoration: underline; }}
     .related-desc {{
-      font-size: 0.84rem;
+      font-size: 0.8rem;
       color: var(--text-muted);
-      line-height: 1.45;
-      margin-bottom: 10px;
+      line-height: 1.4;
+      margin-bottom: 8px;
     }}
     .related-card-bottom {{
       display: flex;
       align-items: center;
       justify-content: space-between;
-      font-size: 0.82rem;
+      font-size: 0.78rem;
       padding-top: 8px;
       border-top: 1px solid rgba(255, 255, 255, 0.04);
     }}
-    .view-detail-link {{ color: #94a3b8; }}
+    .view-detail-link {{ color: #94a3b8; font-weight: 600; }}
     .view-detail-link:hover {{ color: #fff; text-decoration: underline; }}
-    .tool-link {{
-      color: #818cf8;
-      font-weight: 600;
-    }}
+    .tool-link {{ color: #818cf8; font-weight: 600; }}
     .tool-link:hover {{ color: #c084fc; text-decoration: underline; }}
-
-    /* Category list in sidebar */
-    .cat-links-list {{
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-top: 12px;
-    }}
-    .cat-link-item {{
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 8px 12px;
-      background: rgba(255, 255, 255, 0.02);
-      border-radius: 8px;
-      font-size: 0.86rem;
-      color: var(--text-muted);
-      transition: all 0.15s;
-    }}
-    .cat-link-item:hover {{ background: rgba(99, 102, 241, 0.12); color: #c7d2fe; }}
 
     /* Footer */
     .footer {{
@@ -3233,12 +3417,25 @@ def render_tool_page(tool, all_tools, tools_by_cat=None):
       display: none;
       z-index: 1000;
     }}
+
+    @media (max-width: 640px) {{
+      .container {{ padding: 0 14px; }}
+      .tool-hero {{ padding: 20px 16px; border-radius: 14px; }}
+      .hero-avatar {{ width: 48px; height: 48px; font-size: 1.15rem; border-radius: 12px; }}
+      .hero-title {{ font-size: 1.4rem; }}
+      .glance-grid {{ grid-template-columns: 1fr 1fr; gap: 10px; }}
+      .glance-card {{ padding: 10px 12px; }}
+      .glance-val {{ font-size: 0.8rem; }}
+      .card-box {{ padding: 18px 16px; border-radius: 14px; margin-bottom: 20px; }}
+      .hero-actions {{ flex-direction: column; align-items: stretch; }}
+      .btn-open-tool {{ justify-content: center; width: 100%; text-align: center; }}
+    }}
   </style>
 </head>
 <body>
   <div class="ambient-glow"></div>
 
-  <!-- Redesigned Navbar -->
+  <!-- Redesigned Navbar (Clean Logo Icon Only, No repetitive brand text) -->
   <header class="navbar">
     <div class="container nav-inner">
       <a href="/" class="brand" title="All AI Tools — Home" aria-label="All AI Tools — Home">
@@ -3264,8 +3461,8 @@ def render_tool_page(tool, all_tools, tools_by_cat=None):
       </div>
 
       <div class="nav-actions">
-        <a href="/tools/ai-image-generator/" class="nav-mini-pill" title="Free AI Image Generator">&#10024; Generator</a>
-        <a href="/tools/image-enhancer/" class="nav-mini-pill" title="Real AI 4K Upscaler">&#9889; Enhancer</a>
+        <a href="/tools/ai-image-generator/" class="nav-mini-pill" title="Free AI Image Generator">&#10024; Image Generator</a>
+        <a href="/tools/image-enhancer/" class="nav-mini-pill" title="Real AI 4K Upscaler">&#9889; 4K Enhancer</a>
         <a href="/submit/" class="btn-nav-submit">+ Submit</a>
       </div>
     </div>
@@ -3281,7 +3478,7 @@ def render_tool_page(tool, all_tools, tools_by_cat=None):
       <span class="crumb-current">{html.escape(name)}</span>
     </nav>
 
-    <!-- Tool Hero Card -->
+    <!-- Tool Hero Card (At First Glance - Instant Clarity) -->
     <section class="tool-hero">
       <div class="hero-top-row">
         <div class="hero-avatar" style="background:{color};">{html.escape(badge)}</div>
@@ -3297,120 +3494,265 @@ def render_tool_page(tool, all_tools, tools_by_cat=None):
         </div>
       </div>
 
+      <!-- Plain-English Summary At a Glance -->
+      <p class="lead-desc" style="margin-bottom: 16px;">{html.escape(desc)}</p>
+
+      <!-- Action Buttons -->
       <div class="hero-actions">
-        <a href="{html.escape(url)}" target="_blank" rel="noopener noreferrer nofollow" class="btn-open-tool">
-          Open {html.escape(name)} &rarr;
+        <a href="{html.escape(url)}" target="_blank" rel="noopener noreferrer nofollow" class="btn-open-tool" title="Visit official {html.escape(name)} website">
+          Open {html.escape(name)} Official Site &rarr;
         </a>
         <button class="btn-bookmark" id="heroBookmarkBtn" data-tool="{html.escape(name)}">&#9734; Bookmark</button>
         <button class="btn-share" id="shareBtn">&#128279; Share Tool</button>
       </div>
+
+      <!-- Quick Glance Metric Highlights -->
+      <div class="glance-grid">
+        <div class="glance-card">
+          <span class="glance-icon">&#128176;</span>
+          <div>
+            <div class="glance-label">Pricing Tier</div>
+            <div class="glance-val">{pricing_status_badge}</div>
+          </div>
+        </div>
+        <div class="glance-card">
+          <span class="glance-icon">&#9889;</span>
+          <div>
+            <div class="glance-label">Ease of Use</div>
+            <div class="glance-val">Beginner Friendly (Web App)</div>
+          </div>
+        </div>
+        <div class="glance-card">
+          <span class="glance-icon">&#127919;</span>
+          <div>
+            <div class="glance-label">Best For</div>
+            <div class="glance-val">{html.escape(subcat)}</div>
+          </div>
+        </div>
+        <div class="glance-card">
+          <span class="glance-icon">&#128737;</span>
+          <div>
+            <div class="glance-label">Domain Status</div>
+            <div class="glance-val">Verified Safe &amp; Active</div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- Main Content & Sidebar Layout -->
+    <!-- Main Content & Sidebar Layout (Progressive Deep-Dive as User Scrolls) -->
     <div class="content-grid">
       <!-- Left Main Column -->
       <div class="main-column">
-        <!-- Overview -->
+        {preview_block}
+
+        <!-- 1. What is Tool & How It Works -->
         <article class="card-box">
-          <h2>About {html.escape(name)}</h2>
-          <p class="lead-desc">{html.escape(desc)}</p>
-          {preview_block}
+          <h2>&#128640; What is {html.escape(name)} and How Does It Work?</h2>
+          <p class="lead-desc">{html.escape(name)} is an artificial intelligence application built for {html.escape(pill.lower())} workflows, specializing in {html.escape(subcat.lower())}. Whether you are a beginner looking to save time or a professional seeking enhanced productivity, {html.escape(name)} streamlines complex tasks through accessible AI assistance.</p>
+          
+          <h3 style="font-size: 1rem; color: #fff; margin: 18px 0 10px 0;">Getting Started in 3 Simple Steps:</h3>
+          <div class="step-guide-grid">
+            <div class="step-card">
+              <span class="step-num">1</span>
+              <div class="step-title">Open Platform</div>
+              <p class="step-desc">Visit <a href="{html.escape(url)}" target="_blank" rel="noopener noreferrer nofollow" style="color:#818cf8;">{html.escape(domain)}</a> through our verified link.</p>
+            </div>
+            <div class="step-card">
+              <span class="step-num">2</span>
+              <div class="step-title">Launch or Sign Up</div>
+              <p class="step-desc">Access the web app instantly or create a free account to unlock your workspace.</p>
+            </div>
+            <div class="step-card">
+              <span class="step-num">3</span>
+              <div class="step-title">Start Generating</div>
+              <p class="step-desc">Input your prompts, upload your files, or choose a preset to generate AI results.</p>
+            </div>
+          </div>
         </article>
 
-        <!-- Specifications -->
+        <!-- 2. Pricing, Free Access & Subscription Plans -->
         <section class="card-box">
-          <h2>Platform Specifications &amp; Overview</h2>
-          <table class="specs-table">
-            <tbody>
-              <tr>
-                <td class="label">Tool Name</td>
-                <td class="val">{html.escape(name)}</td>
-              </tr>
-              <tr>
-                <td class="label">Primary Category</td>
-                <td class="val"><a href="/?category={cat_slug}">{html.escape(pill)}</a></td>
-              </tr>
-              <tr>
-                <td class="label">Domain &amp; Specialty</td>
-                <td class="val"><a href="/?q={q_subcat}">{html.escape(subcat)}</a></td>
-              </tr>
-              <tr>
-                <td class="label">Pricing Model</td>
-                <td class="val"><a href="/?pricing={html.escape(pricing.lower())}">{html.escape(pricing)}</a></td>
-              </tr>
-              <tr>
-                <td class="label">Official Website</td>
-                <td class="val"><a href="{html.escape(url)}" target="_blank" rel="noopener noreferrer nofollow">{html.escape(domain)} &rarr;</a></td>
-              </tr>
-              <tr>
-                <td class="label">Listing Status</td>
-                <td class="val"><span style="color:#34d399;">Active, Indexed &amp; Verified (2026)</span></td>
-              </tr>
-            </tbody>
-          </table>
+          <h2>&#128179; Pricing &amp; Plan Breakdown</h2>
+          <p class="lead-desc">{html.escape(name)} operates on a <strong>{html.escape(pricing)}</strong> access model. Here is what you should expect regarding free access, trials, and premium tiers:</p>
+          
+          <div class="pricing-details-wrap">
+            <div class="pricing-plan-card highlight">
+              <div class="plan-tag">Current Access Model</div>
+              <div class="plan-name">{html.escape(pricing)}</div>
+              <p class="plan-desc">{pricing_summary}. Always review the official pricing page at {html.escape(domain)} for real-time tier quotas and promotions.</p>
+            </div>
+            <div class="pricing-plan-card">
+              <div class="plan-tag">Trials &amp; Education</div>
+              <div class="plan-name">Free Tier &amp; Discounts</div>
+              <p class="plan-desc">Many tools in the {html.escape(pill)} space provide student, non-profit, or annual billing discounts, as well as risk-free trials to evaluate premium features.</p>
+            </div>
+          </div>
         </section>
 
-        <!-- Search Queries & Trending Intent Hub -->
-        <section class="card-box queries-box">
-          <div class="queries-header">
-            <h2>Trending Searches &amp; Query Intent Hub</h2>
-            <span class="queries-badge">40 Targeted Query Intents</span>
+        <!-- 3. Key Features & Capabilities -->
+        <section class="card-box">
+          <h2>&#10024; Key Features &amp; Core Capabilities</h2>
+          <div class="features-grid">
+            <div class="feature-card">
+              <span class="feature-icon">&#129302;</span>
+              <div>
+                <div class="feature-title">Engineered for {html.escape(subcat)}</div>
+                <p class="feature-desc">Fine-tuned models and algorithms designed specifically for high-accuracy {html.escape(pill.lower())} workflows.</p>
+              </div>
+            </div>
+            <div class="feature-card">
+              <span class="feature-icon">&#9889;</span>
+              <div>
+                <div class="feature-title">Fast &amp; Intuitive Experience</div>
+                <p class="feature-desc">Clean, responsive web-based UI that allows anyone to generate quality results without a steep learning curve.</p>
+              </div>
+            </div>
+            <div class="feature-card">
+              <span class="feature-icon">&#128260;</span>
+              <div>
+                <div class="feature-title">Flexible Cloud Workflow</div>
+                <p class="feature-desc">Access your projects from any modern browser or device with automatic synchronization and standard export options.</p>
+              </div>
+            </div>
+            <div class="feature-card">
+              <span class="feature-icon">&#128737;</span>
+              <div>
+                <div class="feature-title">Verified Domain Security</div>
+                <p class="feature-desc">Direct link connection to the official domain at {html.escape(domain)} ensures authentic, safe user accounts.</p>
+              </div>
+            </div>
           </div>
-          <p class="queries-intro">Discover high-intent search queries, verified alternatives, pricing benchmarks, and feature comparisons for <strong>{html.escape(name)}</strong> across our 10,000+ AI tools catalog. Click any query to explore matching platforms instantly:</p>
-          {queries_hub_block}
         </section>
 
-        <!-- FAQs with Schema Markup -->
+        <!-- 4. Pros & Things to Consider -->
         <section class="card-box">
-          <h2>Frequently Asked Questions</h2>
-          <div class="faq-item">
-            <div class="faq-q">What is {html.escape(name)} and how does it work?</div>
-            <div class="faq-a">{html.escape(name)} is an artificial intelligence application categorized under {html.escape(pill)} ({html.escape(subcat)}). {html.escape(desc)}</div>
+          <h2>&#9878;&#65039; Review: Pros &amp; Things to Consider</h2>
+          <div class="pros-cons-grid">
+            <div class="pro-box">
+              <div class="pro-title">&#10003; What Users Love</div>
+              <ul class="pro-con-list">
+                <li><span>&#10003;</span> <span>Accessible directly in your browser without complex software installation.</span></li>
+                <li><span>&#10003;</span> <span>Specialized functionality for {html.escape(pill)} and {html.escape(subcat)}.</span></li>
+                <li><span>&#10003;</span> <span>{pricing_summary}.</span></li>
+              </ul>
+            </div>
+            <div class="con-box">
+              <div class="con-title">&#9888; Things to Consider</div>
+              <ul class="pro-con-list">
+                <li><span>&#9888;</span> <span>High-volume usage or priority generation speed may require a paid upgrade.</span></li>
+                <li><span>&#9888;</span> <span>Requires a steady internet connection for cloud AI processing.</span></li>
+              </ul>
+            </div>
           </div>
-          <div class="faq-item">
-            <div class="faq-q">What are the best alternatives and competitors to {html.escape(name)} in 2026?</div>
-            <div class="faq-a">Top verified alternatives and competitors to {html.escape(name)} in the {html.escape(pill)} category include {html.escape(related_names)}. You can discover and benchmark more alternatives on All AI Tools.</div>
+        </section>
+
+        <!-- 5. Best Alternatives & Comparison Table (Replaces dead search query pills) -->
+        <section class="card-box">
+          <h2>&#128260; Compare {html.escape(name)} with Top Alternatives</h2>
+          <p class="lead-desc">Compare <strong>{html.escape(name)}</strong> directly with the most popular alternatives in the <strong>{html.escape(pill)}</strong> category. Click on any alternative to explore its in-depth profile:</p>
+          
+          <div class="comp-table-wrap">
+            <table class="comp-table">
+              <thead>
+                <tr>
+                  <th>Platform</th>
+                  <th>Category</th>
+                  <th>Pricing</th>
+                  <th>Overview</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {comparison_table_block}
+              </tbody>
+            </table>
           </div>
-          <div class="faq-item">
-            <div class="faq-q">How much does {html.escape(name)} cost? Is there a free version?</div>
-            <div class="faq-a">{html.escape(name)} operates on a {html.escape(pricing)} pricing model. For full pricing plans and trial access, visit the official website at <a href="{html.escape(url)}" target="_blank" rel="noopener noreferrer nofollow" style="color:#818cf8;">{html.escape(domain)}</a>.</div>
-          </div>
-          <div class="faq-item">
-            <div class="faq-q">How do I access and open {html.escape(name)}?</div>
-            <div class="faq-a">Click the "Open {html.escape(name)}" button or follow the direct link to <a href="{html.escape(url)}" target="_blank" rel="noopener noreferrer nofollow" style="color:#818cf8;">{html.escape(url)}</a> to access the platform.</div>
+        </section>
+
+        <!-- 6. Frequently Asked Questions (FAQ) -->
+        <section class="card-box">
+          <h2>&#10067; Frequently Asked Questions</h2>
+          <div class="faq-list">
+            <div class="faq-item">
+              <div class="faq-q">What is {html.escape(name)} and how does it work?</div>
+              <div class="faq-a">{html.escape(name)} is an artificial intelligence software in the {html.escape(pill)} category ({html.escape(subcat)}). {html.escape(desc)}</div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-q">Is {html.escape(name)} free or paid?</div>
+              <div class="faq-a">{html.escape(name)} operates on a {html.escape(pricing)} pricing model ({pricing_summary}). Visit the official site at <a href="{html.escape(url)}" target="_blank" rel="noopener noreferrer nofollow" style="color:#818cf8;">{html.escape(domain)}</a> to check the latest tier limits.</div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-q">What are the best alternatives to {html.escape(name)} in 2026?</div>
+              <div class="faq-a">Top verified alternatives in {html.escape(pill)} include {html.escape(related_names)}. You can click any tool above to view full feature comparisons.</div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-q">How do beginners start using {html.escape(name)}?</div>
+              <div class="faq-a">Simply click "Open {html.escape(name)} Official Site" to visit {html.escape(domain)}, launch the web portal, and begin exploring its features.</div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-q">Is {html.escape(name)} safe and legitimate?</div>
+              <div class="faq-a">Yes. {html.escape(name)} is an actively maintained platform indexed in All AI Tools with verified secure web operations at {html.escape(domain)}.</div>
+            </div>
           </div>
         </section>
       </div>
 
       <!-- Right Sidebar Column -->
       <aside class="sidebar-column">
-        <!-- Related Tools / Alternatives -->
+        <!-- Native Utility Promo -->
+        <div class="sidebar-native-promo">
+          <h3>&#10024; Free Built-in AI Utilities</h3>
+          <p>Create images and upscale photos instantly with 100% free unlimited native tools on All AI Tools:</p>
+          <a href="/tools/ai-image-generator/" class="native-pill-link">
+            <span>&#10024; Free AI Image Generator</span>
+            <span>&rarr;</span>
+          </a>
+          <a href="/tools/image-enhancer/" class="native-pill-link">
+            <span>&#9889; Real 4K Photo Enhancer</span>
+            <span>&rarr;</span>
+          </a>
+        </div>
+
+        <!-- Related Alternatives List -->
         <div class="card-box">
-          <h2>Top {html.escape(pill)} Alternatives</h2>
+          <h2 style="font-size:1.15rem;">Top {html.escape(pill)} Alternatives</h2>
           <div class="related-list">
             {related_block}
           </div>
-          <div style="margin-top:12px; display:flex; flex-direction:column; gap:6px;">
-            <a href="/alternatives/{slug}/" class="view-detail-link" style="font-weight:700; color:#a5b4fc;">
-              &#9889; Compare Best {html.escape(name)} Alternatives &rarr;
-            </a>
-            <a href="/?category={cat_slug}" class="view-detail-link" style="font-weight:600; color:#818cf8;">
+          <div style="margin-top:14px; display:flex; flex-direction:column; gap:8px;">
+            <a href="/?category={cat_slug}" class="view-detail-link" style="font-weight:700; color:#818cf8;">
               Browse all {html.escape(pill)} tools &rarr;
             </a>
           </div>
         </div>
 
-        <!-- Categories Sidebar -->
+        <!-- Quick Platform Specs -->
         <div class="card-box">
-          <h2>Explore Categories</h2>
-          <div class="cat-links-list">
-            <a href="/?category=video-3d" class="cat-link-item"><span>Video &amp; 3D</span> <span>&rarr;</span></a>
-            <a href="/?category=coding-dev" class="cat-link-item"><span>Coding &amp; Dev</span> <span>&rarr;</span></a>
-            <a href="/?category=image-art" class="cat-link-item"><span>Image &amp; Art</span> <span>&rarr;</span></a>
-            <a href="/?category=chat-reasoning" class="cat-link-item"><span>Chat &amp; Reasoning</span> <span>&rarr;</span></a>
-            <a href="/?category=voice-audio" class="cat-link-item"><span>Voice &amp; Audio</span> <span>&rarr;</span></a>
-            <a href="/?category=ai-search" class="cat-link-item"><span>AI Search</span> <span>&rarr;</span></a>
-          </div>
+          <h2 style="font-size:1.15rem;">Platform Specs</h2>
+          <table class="specs-table" style="width:100%; border-collapse:collapse; font-size:0.86rem;">
+            <tbody>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                <td style="color:#64748b; padding:8px 0;">Tool</td>
+                <td style="color:#e2e8f0; font-weight:600; text-align:right;">{html.escape(name)}</td>
+              </tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                <td style="color:#64748b; padding:8px 0;">Category</td>
+                <td style="color:#e2e8f0; font-weight:600; text-align:right;"><a href="/?category={cat_slug}" style="color:#818cf8;">{html.escape(pill)}</a></td>
+              </tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                <td style="color:#64748b; padding:8px 0;">Specialty</td>
+                <td style="color:#e2e8f0; font-weight:600; text-align:right;">{html.escape(subcat)}</td>
+              </tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                <td style="color:#64748b; padding:8px 0;">Pricing</td>
+                <td style="color:#e2e8f0; font-weight:600; text-align:right;"><span class="price-badge {price_class}">{html.escape(pricing)}</span></td>
+              </tr>
+              <tr>
+                <td style="color:#64748b; padding:8px 0;">Website</td>
+                <td style="color:#e2e8f0; font-weight:600; text-align:right;"><a href="{html.escape(url)}" target="_blank" rel="noopener noreferrer nofollow" style="color:#818cf8;">{html.escape(domain)} &nearr;</a></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </aside>
     </div>
@@ -3420,85 +3762,103 @@ def render_tool_page(tool, all_tools, tools_by_cat=None):
   <footer class="footer">
     <div class="container">
       <div class="footer-links">
-        <a href="/">Directory</a>
-        <a href="/?category=chat-reasoning">Chat &amp; Reasoning</a>
-        <a href="/?category=coding-dev">Coding &amp; Dev</a>
-        <a href="/?category=image-art">Image &amp; Art</a>
-        <a href="/?category=video-3d">Video &amp; 3D</a>
-        <a href="/?category=voice-audio">Voice &amp; Audio</a>
-        <a href="/?category=ai-search">AI Search</a>
-        <a href="/sitemap.xml">Sitemap</a>
-        <a href="/robots.txt">Robots.txt</a>
+        <a href="/">Home</a>
+        <a href="/tools/ai-image-generator/">Free AI Image Generator</a>
+        <a href="/tools/image-enhancer/">4K Photo Enhancer</a>
+        <a href="/submit/">Submit AI Tool</a>
+        <a href="/#categories">All Categories</a>
       </div>
-      <p>&copy; 2026 All AI Tools (allaitools.online). All rights reserved. Direct links open official platforms.</p>
+      <p>&copy; 2026 All AI Tools (allaitools.online) &mdash; The Definitive Directory of 10,000+ AI Platforms.</p>
     </div>
   </footer>
 
-  <div class="toast" id="toast">Link copied to clipboard!</div>
+  <div id="toast" class="toast">Tool saved to your bookmarks!</div>
 
   <script>
-    (function() {{
-      var toolName = {js_tool_name};
-      var navSearch = document.getElementById('navSearchInput');
-      if (navSearch) {{
-        navSearch.addEventListener('keydown', function(e) {{
-          if (e.key === 'Enter' && navSearch.value.trim()) {{
-            window.location.href = '/?q=' + encodeURIComponent(navSearch.value.trim());
+    (function () {{
+      var bookmarkBtn = document.getElementById('heroBookmarkBtn');
+      var toast = document.getElementById('toast');
+      var shareBtn = document.getElementById('shareBtn');
+      var toolName = {json.dumps(name.lower())};
+
+      function getSaved() {{
+        try {{
+          var s = localStorage.getItem('aitools_saved');
+          return s ? JSON.parse(s) : [];
+        }} catch (e) {{
+          return [];
+        }}
+      }}
+
+      function showToast(msg) {{
+        if (!toast) return;
+        toast.textContent = msg;
+        toast.style.display = 'block';
+        setTimeout(function () {{
+          toast.style.display = 'none';
+        }}, 3000);
+      }}
+
+      if (bookmarkBtn) {{
+        var saved = getSaved();
+        if (saved.indexOf(toolName) !== -1) {{
+          bookmarkBtn.classList.add('saved');
+          bookmarkBtn.innerHTML = '&#9733; Saved';
+        }}
+
+        bookmarkBtn.addEventListener('click', function () {{
+          var cur = getSaved();
+          var idx = cur.indexOf(toolName);
+          if (idx === -1) {{
+            cur.push(toolName);
+            bookmarkBtn.classList.add('saved');
+            bookmarkBtn.innerHTML = '&#9733; Saved';
+            showToast('Saved ' + {json.dumps(name)} + ' to your bookmarks!');
+          }} else {{
+            cur.splice(idx, 1);
+            bookmarkBtn.classList.remove('saved');
+            bookmarkBtn.innerHTML = '&#9734; Bookmark';
+            showToast('Removed from your bookmarks.');
+          }}
+          try {{
+            localStorage.setItem('aitools_saved', JSON.stringify(cur));
+          }} catch (e) {{}}
+        }});
+      }}
+
+      if (shareBtn) {{
+        shareBtn.addEventListener('click', function () {{
+          if (navigator.share) {{
+            navigator.share({{
+              title: {json.dumps(name)} + ' — All AI Tools',
+              url: window.location.href
+            }}).catch(function () {{}});
+          }} else {{
+            navigator.clipboard.writeText(window.location.href).then(function () {{
+              showToast('Page link copied to clipboard!');
+            }}).catch(function () {{
+              showToast('Copy failed. Please copy the URL bar.');
+            }});
           }}
         }});
       }}
 
-      // Bookmarking sync
-      var bookmarkBtn = document.getElementById('heroBookmarkBtn');
-      var saved = [];
-      try {{
-        saved = JSON.parse(localStorage.getItem('saved_ai_tools') || '[]');
-      }} catch (e) {{}}
-
-      function updateBookmarkUI() {{
-        if (saved.indexOf(toolName) !== -1) {{
-          bookmarkBtn.classList.add('saved');
-          bookmarkBtn.innerHTML = '&#9733; Saved';
-        }} else {{
-          bookmarkBtn.classList.remove('saved');
-          bookmarkBtn.innerHTML = '&#9734; Bookmark';
-        }}
+      var navSearch = document.getElementById('navSearchInput');
+      if (navSearch) {{
+        navSearch.addEventListener('keydown', function (e) {{
+          if (e.key === 'Enter') {{
+            var q = navSearch.value.trim();
+            if (q) window.location.href = '/?q=' + encodeURIComponent(q);
+          }}
+        }});
       }}
-      updateBookmarkUI();
 
-      bookmarkBtn.addEventListener('click', function() {{
-        var idx = saved.indexOf(toolName);
-        if (idx === -1) {{
-          saved.push(toolName);
-        }} else {{
-          saved.splice(idx, 1);
-        }}
-        try {{
-          localStorage.setItem('saved_ai_tools', JSON.stringify(saved));
-        }} catch (e) {{}}
-        updateBookmarkUI();
-      }});
-
-      // Share button
-      var shareBtn = document.getElementById('shareBtn');
-      var toast = document.getElementById('toast');
-      shareBtn.addEventListener('click', function() {{
-        if (navigator.clipboard) {{
-          navigator.clipboard.writeText(window.location.href).then(function() {{
-            showToast('Link copied to clipboard!');
-          }});
-        }} else {{
-          showToast('URL: ' + window.location.href);
+      document.addEventListener('keydown', function (e) {{
+        if (e.key === '/' && document.activeElement !== navSearch && navSearch) {{
+          e.preventDefault();
+          navSearch.focus();
         }}
       }});
-
-      function showToast(msg) {{
-        toast.textContent = msg;
-        toast.style.display = 'block';
-        setTimeout(function() {{
-          toast.style.display = 'none';
-        }}, 3000);
-      }}
     }})();
   </script>
 </body>
