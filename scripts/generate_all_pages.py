@@ -136,14 +136,14 @@ for t in tools[:80]:
                 <h3 class="tool-name"><a href="{html.escape(path)}" class="tool-card-title-link" title="{html.escape(name)}">{html.escape(name)}</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge {price_class}">{html.escape(pricing)}</span>
-              <button class="bookmark-btn" title="Bookmark {html.escape(name)}" data-tool="{html.escape(name)}" aria-label="Bookmark {html.escape(name)}" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark {html.escape(name)}" data-tool="{html.escape(name)}" aria-label="Bookmark {html.escape(name)}" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">{html.escape(desc)}</p>
           <div class="card-bottom">
-            <span class="cat-pill">{html.escape(pill)}</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">{html.escape(pill)}</span>
+              <span class="price-badge {price_class}">{html.escape(pricing)}</span>
+            </div>
             <div class="card-actions">
               <a href="{html.escape(path)}" class="details-link">Details &rarr;</a>
               <a href="{html.escape(url)}" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -330,6 +330,61 @@ index_html_content = f"""<!DOCTYPE html>
     }}
 
     .container {{ max-width: 1280px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }}
+
+    /* Mobile Quick-Access Tools Strip */
+    .mobile-tools-bar {{
+      display: none;
+      background: rgba(15, 22, 38, 0.95);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 8px 0;
+      position: sticky;
+      top: 60px;
+      z-index: 99;
+    }}
+    @media (max-width: 899px) {{
+      .mobile-tools-bar {{
+        display: block;
+      }}
+    }}
+    .mobile-tools-inner {{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }}
+    .mobile-tool-pill {{
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(99, 102, 241, 0.12);
+      border: 1px solid rgba(99, 102, 241, 0.35);
+      color: #c7d2fe;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      text-decoration: none;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }}
+    .mobile-tool-pill:hover, .mobile-tool-pill:active {{
+      background: rgba(99, 102, 241, 0.25);
+      color: #ffffff;
+      border-color: #818cf8;
+    }}
+    .mobile-tool-icon {{
+      font-size: 0.85rem;
+    }}
+    .mobile-tool-badge {{
+      background: rgba(16, 185, 129, 0.2);
+      color: #6ee7b7;
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }}
 
     /* Redesigned Modern Navbar */
     .navbar {{
@@ -679,6 +734,8 @@ index_html_content = f"""<!DOCTYPE html>
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 22px;
+      width: 100%;
+      min-width: 0;
     }}
     @media (max-width: 1024px) {{
       .tools-grid {{
@@ -686,10 +743,11 @@ index_html_content = f"""<!DOCTYPE html>
         gap: 18px;
       }}
     }}
-    @media (max-width: 640px) {{
+    @media (max-width: 768px) {{
       .tools-grid {{
-        grid-template-columns: 1fr;
-        gap: 14px;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 12px;
+        width: 100%;
       }}
     }}
 
@@ -700,6 +758,9 @@ index_html_content = f"""<!DOCTYPE html>
       border-radius: 16px;
       padding: 22px 24px 20px 24px;
       min-height: 205px;
+      min-width: 0;
+      width: 100%;
+      box-sizing: border-box;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -720,6 +781,8 @@ index_html_content = f"""<!DOCTYPE html>
       justify-content: space-between;
       margin-bottom: 14px;
       gap: 12px;
+      min-width: 0;
+      width: 100%;
     }}
     .tool-brand {{
       display: flex;
@@ -727,6 +790,7 @@ index_html_content = f"""<!DOCTYPE html>
       gap: 12px;
       min-width: 0;
       flex: 1;
+      overflow: hidden;
     }}
     .tool-avatar {{
       width: 44px;
@@ -745,6 +809,7 @@ index_html_content = f"""<!DOCTYPE html>
     .tool-title-wrap {{
       min-width: 0;
       flex: 1;
+      overflow: hidden;
     }}
     .tool-subcat {{
       font-size: 0.72rem;
@@ -764,10 +829,14 @@ index_html_content = f"""<!DOCTYPE html>
       margin: 0;
       color: #ffffff;
       letter-spacing: -0.01em;
-      white-space: nowrap;
+      line-height: 1.3;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
       overflow: hidden;
       text-overflow: ellipsis;
-      line-height: 1.35;
+      word-break: break-word;
+      white-space: normal;
     }}
     .tool-card-title-link {{
       color: inherit;
@@ -827,6 +896,13 @@ index_html_content = f"""<!DOCTYPE html>
       border-top: 1px solid rgba(255, 255, 255, 0.06);
       gap: 12px;
     }}
+    .card-bottom-pills {{
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      min-width: 0;
+    }}
     .cat-pill {{
       font-size: 0.74rem;
       font-weight: 600;
@@ -865,9 +941,261 @@ index_html_content = f"""<!DOCTYPE html>
       transition: color 0.15s;
     }}
     .tool-link:hover {{ color: #c084fc; text-decoration: underline; }}
-      transition: color 0.15s;
+
+    /* Mobile Responsive Overhaul (Screens <= 768px and <= 420px) */
+    @media (max-width: 768px) {{
+      .container {{
+        padding: 0 16px;
+      }}
+      .navbar {{
+        height: 60px;
+      }}
+      .nav-inner {{
+        gap: 8px;
+      }}
+      .brand {{
+        gap: 8px;
+      }}
+      .brand-logo-icon {{
+        width: 32px;
+        height: 32px;
+      }}
+      .brand-text {{
+        display: inline-block;
+        font-size: 1.05rem;
+        font-weight: 800;
+        color: #ffffff;
+      }}
+      .nav-actions {{
+        gap: 6px;
+      }}
+      .btn-saved {{
+        padding: 6px 10px;
+        font-size: 0.8rem;
+        border-radius: 8px;
+      }}
+      .btn-submit {{
+        padding: 6px 11px;
+        font-size: 0.8rem;
+        white-space: nowrap;
+        border-radius: 9999px;
+      }}
+      .hero {{
+        padding: 26px 0 16px;
+      }}
+      .hero h1 {{
+        font-size: 1.65rem;
+        margin-bottom: 14px;
+        line-height: 1.25;
+      }}
+      .search-box-wrap {{
+        margin-bottom: 14px;
+      }}
+      .search-box {{
+        padding: 12px 36px 12px 42px;
+        font-size: 0.88rem;
+        border-radius: 12px;
+      }}
+      .search-hint {{
+        display: none; /* Hide keyboard shortcut key on mobile touch screens */
+      }}
+
+      /* Horizontal Swipeable Category Bar on Mobile */
+      .filter-toolbar {{
+        gap: 10px;
+        width: 100%;
+      }}
+      .filter-pills-row {{
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        padding: 4px 16px 8px 16px;
+        margin: 0 -16px;
+        width: calc(100% + 32px);
+        gap: 8px;
+      }}
+      .filter-pills-row::-webkit-scrollbar {{
+        display: none;
+      }}
+      .filter-pill {{
+        flex-shrink: 0;
+        white-space: nowrap;
+        padding: 7px 13px;
+        font-size: 0.78rem;
+      }}
+
+      /* Compact Pricing Control on Mobile */
+      .filter-pricing-row {{
+        display: flex;
+        overflow-x: auto;
+        max-width: 100%;
+        justify-content: center;
+        gap: 2px;
+        padding: 3px 6px;
+      }}
+      .pricing-prefix {{
+        display: none; /* Hide prefix to save space on mobile */
+      }}
+      .price-chip {{
+        padding: 4px 8px;
+        font-size: 0.72rem;
+        white-space: nowrap;
+      }}
+
+      /* Section Header on Mobile */
+      .section {{
+        padding: 20px 0 60px;
+      }}
+      .section-header {{
+        margin-bottom: 14px;
+        gap: 8px;
+      }}
+      .section-title {{
+        font-size: 1.35rem;
+      }}
+      .results-badge {{
+        font-size: 0.75rem;
+        padding: 4px 10px;
+      }}
+
+      /* 1-Column Clean Tool Cards on Mobile */
+      .tools-grid {{
+        grid-template-columns: minmax(0, 1fr) !important;
+        gap: 12px;
+        width: 100%;
+        max-width: 100%;
+      }}
+      .tool-card {{
+        padding: 16px 16px 14px 16px;
+        min-height: auto;
+        min-width: 0;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        border-radius: 14px;
+      }}
+      .card-top {{
+        margin-bottom: 10px;
+        gap: 10px;
+        min-width: 0;
+        width: 100%;
+      }}
+      .tool-brand {{
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-width: 0;
+        flex: 1;
+        overflow: hidden;
+      }}
+      .tool-avatar {{
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        font-size: 0.88rem;
+        flex-shrink: 0;
+      }}
+      .tool-title-wrap {{
+        min-width: 0;
+        flex: 1;
+        overflow: hidden;
+      }}
+      .tool-name {{
+        font-size: 0.98rem;
+        line-height: 1.3;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-break: break-word;
+        white-space: normal;
+      }}
+      .badge-row {{
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }}
+      .price-badge {{
+        font-size: 0.65rem;
+        padding: 3px 7px;
+      }}
+      .bookmark-btn {{
+        font-size: 1.15rem;
+      }}
+      .tool-desc {{
+        font-size: 0.84rem;
+        line-height: 1.45;
+        margin: 10px 0 12px 0;
+        min-height: auto;
+        -webkit-line-clamp: 2;
+      }}
+      .card-bottom {{
+        padding-top: 10px;
+        gap: 8px;
+        min-width: 0;
+        width: 100%;
+      }}
+      .cat-pill {{
+        max-width: 130px;
+        font-size: 0.7rem;
+        padding: 3px 8px;
+      }}
+      .card-actions {{
+        gap: 8px;
+      }}
+      .details-link, .tool-link {{
+        font-size: 0.78rem;
+      }}
     }}
-    .tool-link:hover {{ color: #c084fc; text-decoration: underline; }}
+
+    @media (max-width: 420px) {{
+      .container {{
+        padding: 0 12px;
+      }}
+      .navbar {{
+        height: 56px;
+      }}
+      .brand {{
+        gap: 6px;
+      }}
+      .brand-logo-icon {{
+        width: 28px;
+        height: 28px;
+      }}
+      .brand-text {{
+        font-size: 0.95rem;
+      }}
+      .nav-actions {{
+        gap: 5px;
+      }}
+      .btn-saved {{
+        padding: 5px 7px;
+        font-size: 0.75rem;
+      }}
+      .btn-submit {{
+        padding: 5px 9px;
+        font-size: 0.75rem;
+      }}
+      .hero h1 {{
+        font-size: 1.45rem;
+      }}
+      .tool-card {{
+        padding: 16px 14px 14px 14px;
+      }}
+      .mobile-tools-bar {{
+        top: 56px;
+        padding: 6px 0;
+      }}
+      .mobile-tool-pill {{
+        padding: 5px 10px;
+        font-size: 0.74rem;
+      }}
+    }}
 
     /* Empty state */
     .empty-state {{
@@ -1020,6 +1348,7 @@ index_html_content = f"""<!DOCTYPE html>
             </defs>
           </svg>
         </span>
+        <span class="brand-text">All AI Tools</span>
       </a>
 
       <div class="nav-links">
@@ -1043,6 +1372,22 @@ index_html_content = f"""<!DOCTYPE html>
     </div>
   </nav>
 
+  <!-- Mobile Quick-Access Tools Strip (Sticky underneath navbar on mobile) -->
+  <div class="mobile-tools-bar">
+    <div class="container mobile-tools-inner">
+      <a href="/tools/ai-image-generator/" class="mobile-tool-pill" title="Free Live AI Image Generator">
+        <span class="mobile-tool-icon">&#10024;</span>
+        <span>AI Generator</span>
+        <span class="mobile-tool-badge">Free</span>
+      </a>
+      <a href="/tools/image-enhancer/" class="mobile-tool-pill" title="Real AI 4K Upscaler">
+        <span class="mobile-tool-icon">&#9889;</span>
+        <span>4K Enhancer</span>
+        <span class="mobile-tool-badge">Free</span>
+      </a>
+    </div>
+  </div>
+
   <!-- Hero Section -->
   <header class="hero">
     <div class="container">
@@ -1051,7 +1396,7 @@ index_html_content = f"""<!DOCTYPE html>
       <!-- Search Box with Query Param Support -->
       <div class="search-box-wrap">
         <span class="search-icon">&#128269;</span>
-        <input type="text" id="searchInput" class="search-box" placeholder="Search by name, category, pricing, or keyword... (Press '/' to focus)" autofocus autocomplete="off" />
+        <input type="text" id="searchInput" class="search-box" placeholder="Search 10,000+ AI tools by name, category, or task..." autofocus autocomplete="off" />
         <button id="clearSearch" class="clear-search" aria-label="Clear Search">&times;</button>
         <span class="search-hint">/</span>
       </div>
@@ -1394,14 +1739,14 @@ index_html_content = f"""<!DOCTYPE html>
                 '<h3 class="tool-name"><a href="' + toolPath + '" class="tool-card-title-link" title="' + escapeHtml(t.n) + '">' + escapeHtml(t.n) + '</a></h3>' +
               '</div>' +
             '</div>' +
-            '<div class="badge-row">' +
-              '<span class="price-badge ' + priceClass + '">' + escapeHtml(t.p) + '</span>' +
-              '<button class="bookmark-btn' + (isSaved ? ' saved' : '') + '" title="Bookmark ' + escapeHtml(t.n) + '" data-tool="' + escapeHtml(t.n) + '" aria-label="Bookmark ' + escapeHtml(t.n) + '">' + (isSaved ? '&#9733;' : '&#9734;') + '</button>' +
-            '</div>' +
+            '<button class="bookmark-btn' + (isSaved ? ' saved' : '') + '" title="Bookmark ' + escapeHtml(t.n) + '" data-tool="' + escapeHtml(t.n) + '" aria-label="Bookmark ' + escapeHtml(t.n) + '">' + (isSaved ? '&#9733;' : '&#9734;') + '</button>' +
           '</div>' +
           '<p class="tool-desc">' + escapeHtml(t.d) + '</p>' +
           '<div class="card-bottom">' +
-            '<span class="cat-pill">' + escapeHtml(t.cp) + '</span>' +
+            '<div class="card-bottom-pills">' +
+              '<span class="cat-pill">' + escapeHtml(t.cp) + '</span>' +
+              '<span class="price-badge ' + priceClass + '">' + escapeHtml(t.p) + '</span>' +
+            '</div>' +
             '<div class="card-actions">' +
               '<a href="' + toolPath + '" class="details-link">Details &rarr;</a>' +
               '<a href="' + escapeHtml(t.u) + '" target="_blank" rel="noopener noreferrer nofollow" class="tool-link">Visit &rarr;</a>' +
@@ -1966,6 +2311,82 @@ def render_tool_page(tool, all_tools, tools_by_cat=None):
         related = [t for t in all_tools if t.get('category_slug') == cat_slug and t.get('slug') != slug][:6]
     related_names = ", ".join([r.get('name', '') for r in related[:3]]) if related else "top AI tools"
 
+    # 40 Programmatic Query Intent Templates using [prefix] + main word + [suffix]
+    query_intent_groups = {
+        'Trending & Alternative Searches': [
+            ('best', name, 'alternatives'),
+            ('free', name, 'alternatives'),
+            ('top', name, 'alternatives 2026'),
+            ('open source', name, 'alternatives'),
+            ('cheapest', name, 'alternatives'),
+            ('tools like', name, ''),
+            ('', name, 'vs top alternatives'),
+            ('best alternative to', name, ''),
+            ('top rated', name, 'alternatives'),
+            ('', name, 'competitors list')
+        ],
+        'Pricing & Free Access Searches': [
+            ('', name, 'pricing & plans'),
+            ('is', name, 'free'),
+            ('free', name, 'tier & trial'),
+            ('', name, 'cost per month'),
+            ('', name, 'lifetime deal & discount'),
+            ('', name, 'subscription pricing 2026'),
+            ('cheap', name, 'alternative for students')
+        ],
+        'Reviews, Benchmarks & Reputation': [
+            ('', name, 'review & rating 2026'),
+            ('is', name, 'worth it'),
+            ('', name, 'pros and cons'),
+            ('', name, 'features & benchmark'),
+            ('', name, 'user review & score'),
+            ('viral', name, 'ai tool'),
+            ('', name, 'honest user review')
+        ],
+        'How-To & Guides': [
+            ('what is', name, 'and how it works'),
+            ('how to use', name, 'step by step'),
+            ('how to start with', name, ''),
+            ('', name, 'tutorial & guide'),
+            ('', name, 'official website & login portal'),
+            ('latest', name, 'updates & features')
+        ],
+        'Category & Solution Searches': [
+            ('best', subcat, 'ai tools'),
+            ('top', subcat, 'software 2026'),
+            ('free', subcat, 'alternatives'),
+            ('open source', subcat, 'ai software'),
+            ('best ai for', subcat, ''),
+            ('trending', pill, 'tools'),
+            ('top trending', name, 'alternatives'),
+            ('most popular', subcat, 'platforms'),
+            ('trending', subcat, 'software'),
+            ('top rated', subcat, 'platforms')
+        ]
+    }
+
+    intent_sections_html = []
+    all_query_intents = []
+    for grp_name, items in query_intent_groups.items():
+        pills_html = []
+        for pre, mid, suf in items:
+            q_str = ' '.join([p for p in [pre, mid, suf] if p]).strip()
+            all_query_intents.append(q_str)
+            q_enc = quote_plus(q_str)
+            pills_html.append(f'<a href="/?q={q_enc}" class="query-pill" title="Search {html.escape(q_str)}">&#128269; {html.escape(q_str)}</a>')
+        
+        intent_sections_html.append(f'''
+          <div class="query-group">
+            <div class="query-group-title">{html.escape(grp_name)}</div>
+            <div class="query-pills">
+              {''.join(pills_html)}
+            </div>
+          </div>''')
+
+    queries_hub_block = '\n'.join(intent_sections_html)
+    query_intent_keywords = ", ".join(all_query_intents[:20])
+    query_intent_meta = "; ".join(all_query_intents[:15])
+
     # Schema JSON-LD with AggregateRating for Google Star Snippets
     schema_data = {
         "@context": "https://schema.org",
@@ -2022,7 +2443,8 @@ def render_tool_page(tool, all_tools, tools_by_cat=None):
                     "reviewCount": "128",
                     "bestRating": "5",
                     "worstRating": "1"
-                }
+                },
+                "keywords": all_query_intents[:25]
             },
             {
                 "@type": "FAQPage",
@@ -2054,7 +2476,15 @@ def render_tool_page(tool, all_tools, tools_by_cat=None):
                     },
                     {
                         "@type": "Question",
-                        "name": f"How do I open and access {name}?",
+                        "name": f"What are the top rated {subcat} tools like {name}?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": f"Explore verified {subcat} software and trending {pill} tools on All AI Tools with live filtering by pricing, features, and user ratings."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": f"How do I open and access {name} online?",
                         "acceptedAnswer": {
                             "@type": "Answer",
                             "text": f"You can open and visit {name} directly via its official portal at {url}."
@@ -2122,7 +2552,8 @@ def render_tool_page(tool, all_tools, tools_by_cat=None):
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{html.escape(name)} — AI Features, Pricing, Review &amp; Verified Alternatives (2026) | All AI Tools</title>
   <meta name="description" content="Explore {html.escape(name)} ({html.escape(subcat)}): {html.escape(desc[:130])}... Check {html.escape(pricing)} pricing, key features, user reviews, and top verified {html.escape(name)} alternatives in {html.escape(pill)} on All AI Tools (allaitools.online)." />
-  <meta name="keywords" content="{html.escape(name)}, {html.escape(name)} ai, {html.escape(name)} alternatives, {html.escape(name)} competitors, {html.escape(name)} review, {html.escape(name)} pricing, {html.escape(name)} free, {html.escape(name)} online, {html.escape(subcat)}, best {html.escape(pill)} tools, all ai tools, allaitools, ai tool list, list of all ai tools, all ai tools in one website" />
+  <meta name="keywords" content="{html.escape(name)}, {html.escape(name)} ai, {html.escape(name)} alternatives, {html.escape(query_intent_keywords)}, {html.escape(subcat)}, best {html.escape(pill)} tools, all ai tools, allaitools, ai tool list, list of all ai tools, all ai tools in one website" />
+  <meta name="search:query_intent" content="{html.escape(query_intent_meta)}" />
   <meta name="author" content="All AI Tools" />
   <meta name="subject" content="{html.escape(name)} AI Software, Pricing and Alternatives" />
   <meta name="topic" content="{html.escape(pill)} AI Tools" />
@@ -2570,31 +3001,78 @@ def render_tool_page(tool, all_tools, tools_by_cat=None):
 
     /* Query Parameters & Search Section */
     .queries-box {{
-      background: rgba(99, 102, 241, 0.05);
+      background: rgba(99, 102, 241, 0.04);
       border: 1px solid rgba(99, 102, 241, 0.2);
+    }}
+    .queries-header {{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }}
+    .queries-header h2 {{
+      margin: 0;
+      font-size: 1.22rem;
+      color: #ffffff;
+    }}
+    .queries-badge {{
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #818cf8;
+      background: rgba(99, 102, 241, 0.15);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }}
+    .queries-intro {{
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }}
+    .query-group {{
+      margin-bottom: 18px;
+    }}
+    .query-group:last-child {{
+      margin-bottom: 0;
+    }}
+    .query-group-title {{
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #cbd5e1;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }}
     .query-pills {{
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 14px;
+      gap: 8px;
     }}
     .query-pill {{
-      background: rgba(15, 22, 38, 0.9);
-      border: 1px solid rgba(99, 102, 241, 0.3);
+      background: rgba(15, 22, 38, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       color: #c7d2fe;
-      padding: 8px 14px;
+      padding: 6px 12px;
       border-radius: var(--radius-pill);
-      font-size: 0.84rem;
-      font-weight: 600;
+      font-size: 0.8rem;
+      font-weight: 500;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      transition: all 0.15s ease;
+      gap: 5px;
+      transition: all 0.18s ease;
+      text-decoration: none;
     }}
     .query-pill:hover {{
-      background: rgba(99, 102, 241, 0.2);
-      border-color: rgba(99, 102, 241, 0.6);
+      background: rgba(99, 102, 241, 0.22);
+      border-color: rgba(99, 102, 241, 0.5);
       color: #fff;
       transform: translateY(-1px);
     }}
@@ -2779,6 +3257,7 @@ def render_tool_page(tool, all_tools, tools_by_cat=None):
             </defs>
           </svg>
         </span>
+        <span class="brand-text">All AI Tools</span>
       </a>
 
       <div class="nav-search-wrap">
@@ -2873,18 +3352,14 @@ def render_tool_page(tool, all_tools, tools_by_cat=None):
           </table>
         </section>
 
-        <!-- Search Queries & URL Parameters Hub -->
+        <!-- Search Queries & Trending Intent Hub -->
         <section class="card-box queries-box">
-          <h2>Explore Search Queries &amp; Parameters</h2>
-          <p style="color:var(--text-muted); font-size:0.92rem;">Quick search queries and targeted filter parameters to discover matching AI software and alternatives:</p>
-          <div class="query-pills">
-            <a href="/?q={q_name}+alternatives" class="query-pill">&#128269; {html.escape(name)} alternatives</a>
-            <a href="/?q={q_name}+pricing" class="query-pill">&#128269; {html.escape(name)} pricing &amp; free tiers</a>
-            <a href="/?category={cat_slug}" class="query-pill">&#128269; Best {html.escape(pill)} AI tools</a>
-            <a href="/?category={cat_slug}&pricing={html.escape(pricing.lower())}" class="query-pill">&#128269; {html.escape(pricing)} {html.escape(pill)}</a>
-            <a href="/?q={q_subcat}" class="query-pill">&#128269; Top {html.escape(subcat)}</a>
-            <a href="/?q={q_name}+competitors" class="query-pill">&#128269; {html.escape(name)} competitors</a>
+          <div class="queries-header">
+            <h2>Trending Searches &amp; Query Intent Hub</h2>
+            <span class="queries-badge">40 Targeted Query Intents</span>
           </div>
+          <p class="queries-intro">Discover high-intent search queries, verified alternatives, pricing benchmarks, and feature comparisons for <strong>{html.escape(name)}</strong> across our 10,000+ AI tools catalog. Click any query to explore matching platforms instantly:</p>
+          {queries_hub_block}
         </section>
 
         <!-- FAQs with Schema Markup -->

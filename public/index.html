@@ -1641,6 +1641,61 @@
 
     .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
 
+    /* Mobile Quick-Access Tools Strip */
+    .mobile-tools-bar {
+      display: none;
+      background: rgba(15, 22, 38, 0.95);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 8px 0;
+      position: sticky;
+      top: 60px;
+      z-index: 99;
+    }
+    @media (max-width: 899px) {
+      .mobile-tools-bar {
+        display: block;
+      }
+    }
+    .mobile-tools-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .mobile-tool-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(99, 102, 241, 0.12);
+      border: 1px solid rgba(99, 102, 241, 0.35);
+      color: #c7d2fe;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      text-decoration: none;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+    .mobile-tool-pill:hover, .mobile-tool-pill:active {
+      background: rgba(99, 102, 241, 0.25);
+      color: #ffffff;
+      border-color: #818cf8;
+    }
+    .mobile-tool-icon {
+      font-size: 0.85rem;
+    }
+    .mobile-tool-badge {
+      background: rgba(16, 185, 129, 0.2);
+      color: #6ee7b7;
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
     /* Redesigned Modern Navbar */
     .navbar {
       position: sticky;
@@ -1989,6 +2044,8 @@
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 22px;
+      width: 100%;
+      min-width: 0;
     }
     @media (max-width: 1024px) {
       .tools-grid {
@@ -1996,10 +2053,11 @@
         gap: 18px;
       }
     }
-    @media (max-width: 640px) {
+    @media (max-width: 768px) {
       .tools-grid {
-        grid-template-columns: 1fr;
-        gap: 14px;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 12px;
+        width: 100%;
       }
     }
 
@@ -2010,6 +2068,9 @@
       border-radius: 16px;
       padding: 22px 24px 20px 24px;
       min-height: 205px;
+      min-width: 0;
+      width: 100%;
+      box-sizing: border-box;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -2030,6 +2091,8 @@
       justify-content: space-between;
       margin-bottom: 14px;
       gap: 12px;
+      min-width: 0;
+      width: 100%;
     }
     .tool-brand {
       display: flex;
@@ -2037,6 +2100,7 @@
       gap: 12px;
       min-width: 0;
       flex: 1;
+      overflow: hidden;
     }
     .tool-avatar {
       width: 44px;
@@ -2055,6 +2119,7 @@
     .tool-title-wrap {
       min-width: 0;
       flex: 1;
+      overflow: hidden;
     }
     .tool-subcat {
       font-size: 0.72rem;
@@ -2074,10 +2139,14 @@
       margin: 0;
       color: #ffffff;
       letter-spacing: -0.01em;
-      white-space: nowrap;
+      line-height: 1.3;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
       overflow: hidden;
       text-overflow: ellipsis;
-      line-height: 1.35;
+      word-break: break-word;
+      white-space: normal;
     }
     .tool-card-title-link {
       color: inherit;
@@ -2137,6 +2206,13 @@
       border-top: 1px solid rgba(255, 255, 255, 0.06);
       gap: 12px;
     }
+    .card-bottom-pills {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      min-width: 0;
+    }
     .cat-pill {
       font-size: 0.74rem;
       font-weight: 600;
@@ -2175,9 +2251,261 @@
       transition: color 0.15s;
     }
     .tool-link:hover { color: #c084fc; text-decoration: underline; }
-      transition: color 0.15s;
+
+    /* Mobile Responsive Overhaul (Screens <= 768px and <= 420px) */
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 16px;
+      }
+      .navbar {
+        height: 60px;
+      }
+      .nav-inner {
+        gap: 8px;
+      }
+      .brand {
+        gap: 8px;
+      }
+      .brand-logo-icon {
+        width: 32px;
+        height: 32px;
+      }
+      .brand-text {
+        display: inline-block;
+        font-size: 1.05rem;
+        font-weight: 800;
+        color: #ffffff;
+      }
+      .nav-actions {
+        gap: 6px;
+      }
+      .btn-saved {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+        border-radius: 8px;
+      }
+      .btn-submit {
+        padding: 6px 11px;
+        font-size: 0.8rem;
+        white-space: nowrap;
+        border-radius: 9999px;
+      }
+      .hero {
+        padding: 26px 0 16px;
+      }
+      .hero h1 {
+        font-size: 1.65rem;
+        margin-bottom: 14px;
+        line-height: 1.25;
+      }
+      .search-box-wrap {
+        margin-bottom: 14px;
+      }
+      .search-box {
+        padding: 12px 36px 12px 42px;
+        font-size: 0.88rem;
+        border-radius: 12px;
+      }
+      .search-hint {
+        display: none; /* Hide keyboard shortcut key on mobile touch screens */
+      }
+
+      /* Horizontal Swipeable Category Bar on Mobile */
+      .filter-toolbar {
+        gap: 10px;
+        width: 100%;
+      }
+      .filter-pills-row {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        padding: 4px 16px 8px 16px;
+        margin: 0 -16px;
+        width: calc(100% + 32px);
+        gap: 8px;
+      }
+      .filter-pills-row::-webkit-scrollbar {
+        display: none;
+      }
+      .filter-pill {
+        flex-shrink: 0;
+        white-space: nowrap;
+        padding: 7px 13px;
+        font-size: 0.78rem;
+      }
+
+      /* Compact Pricing Control on Mobile */
+      .filter-pricing-row {
+        display: flex;
+        overflow-x: auto;
+        max-width: 100%;
+        justify-content: center;
+        gap: 2px;
+        padding: 3px 6px;
+      }
+      .pricing-prefix {
+        display: none; /* Hide prefix to save space on mobile */
+      }
+      .price-chip {
+        padding: 4px 8px;
+        font-size: 0.72rem;
+        white-space: nowrap;
+      }
+
+      /* Section Header on Mobile */
+      .section {
+        padding: 20px 0 60px;
+      }
+      .section-header {
+        margin-bottom: 14px;
+        gap: 8px;
+      }
+      .section-title {
+        font-size: 1.35rem;
+      }
+      .results-badge {
+        font-size: 0.75rem;
+        padding: 4px 10px;
+      }
+
+      /* 1-Column Clean Tool Cards on Mobile */
+      .tools-grid {
+        grid-template-columns: minmax(0, 1fr) !important;
+        gap: 12px;
+        width: 100%;
+        max-width: 100%;
+      }
+      .tool-card {
+        padding: 16px 16px 14px 16px;
+        min-height: auto;
+        min-width: 0;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        border-radius: 14px;
+      }
+      .card-top {
+        margin-bottom: 10px;
+        gap: 10px;
+        min-width: 0;
+        width: 100%;
+      }
+      .tool-brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-width: 0;
+        flex: 1;
+        overflow: hidden;
+      }
+      .tool-avatar {
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        font-size: 0.88rem;
+        flex-shrink: 0;
+      }
+      .tool-title-wrap {
+        min-width: 0;
+        flex: 1;
+        overflow: hidden;
+      }
+      .tool-name {
+        font-size: 0.98rem;
+        line-height: 1.3;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-break: break-word;
+        white-space: normal;
+      }
+      .badge-row {
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .price-badge {
+        font-size: 0.65rem;
+        padding: 3px 7px;
+      }
+      .bookmark-btn {
+        font-size: 1.15rem;
+      }
+      .tool-desc {
+        font-size: 0.84rem;
+        line-height: 1.45;
+        margin: 10px 0 12px 0;
+        min-height: auto;
+        -webkit-line-clamp: 2;
+      }
+      .card-bottom {
+        padding-top: 10px;
+        gap: 8px;
+        min-width: 0;
+        width: 100%;
+      }
+      .cat-pill {
+        max-width: 130px;
+        font-size: 0.7rem;
+        padding: 3px 8px;
+      }
+      .card-actions {
+        gap: 8px;
+      }
+      .details-link, .tool-link {
+        font-size: 0.78rem;
+      }
     }
-    .tool-link:hover { color: #c084fc; text-decoration: underline; }
+
+    @media (max-width: 420px) {
+      .container {
+        padding: 0 12px;
+      }
+      .navbar {
+        height: 56px;
+      }
+      .brand {
+        gap: 6px;
+      }
+      .brand-logo-icon {
+        width: 28px;
+        height: 28px;
+      }
+      .brand-text {
+        font-size: 0.95rem;
+      }
+      .nav-actions {
+        gap: 5px;
+      }
+      .btn-saved {
+        padding: 5px 7px;
+        font-size: 0.75rem;
+      }
+      .btn-submit {
+        padding: 5px 9px;
+        font-size: 0.75rem;
+      }
+      .hero h1 {
+        font-size: 1.45rem;
+      }
+      .tool-card {
+        padding: 16px 14px 14px 14px;
+      }
+      .mobile-tools-bar {
+        top: 56px;
+        padding: 6px 0;
+      }
+      .mobile-tool-pill {
+        padding: 5px 10px;
+        font-size: 0.74rem;
+      }
+    }
 
     /* Empty state */
     .empty-state {
@@ -2330,6 +2658,7 @@
             </defs>
           </svg>
         </span>
+        <span class="brand-text">All AI Tools</span>
       </a>
 
       <div class="nav-links">
@@ -2353,6 +2682,22 @@
     </div>
   </nav>
 
+  <!-- Mobile Quick-Access Tools Strip (Sticky underneath navbar on mobile) -->
+  <div class="mobile-tools-bar">
+    <div class="container mobile-tools-inner">
+      <a href="/tools/ai-image-generator/" class="mobile-tool-pill" title="Free Live AI Image Generator">
+        <span class="mobile-tool-icon">&#10024;</span>
+        <span>AI Generator</span>
+        <span class="mobile-tool-badge">Free</span>
+      </a>
+      <a href="/tools/image-enhancer/" class="mobile-tool-pill" title="Real AI 4K Upscaler">
+        <span class="mobile-tool-icon">&#9889;</span>
+        <span>4K Enhancer</span>
+        <span class="mobile-tool-badge">Free</span>
+      </a>
+    </div>
+  </div>
+
   <!-- Hero Section -->
   <header class="hero">
     <div class="container">
@@ -2361,7 +2706,7 @@
       <!-- Search Box with Query Param Support -->
       <div class="search-box-wrap">
         <span class="search-icon">&#128269;</span>
-        <input type="text" id="searchInput" class="search-box" placeholder="Search by name, category, pricing, or keyword... (Press '/' to focus)" autofocus autocomplete="off" />
+        <input type="text" id="searchInput" class="search-box" placeholder="Search 10,000+ AI tools by name, category, or task..." autofocus autocomplete="off" />
         <button id="clearSearch" class="clear-search" aria-label="Clear Search">&times;</button>
         <span class="search-hint">/</span>
       </div>
@@ -2432,14 +2777,14 @@
                 <h3 class="tool-name"><a href="/chatgpt/" class="tool-card-title-link" title="ChatGPT &amp; Custom GPTs">ChatGPT &amp; Custom GPTs</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark ChatGPT &amp; Custom GPTs" data-tool="ChatGPT &amp; Custom GPTs" aria-label="Bookmark ChatGPT &amp; Custom GPTs" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark ChatGPT &amp; Custom GPTs" data-tool="ChatGPT &amp; Custom GPTs" aria-label="Bookmark ChatGPT &amp; Custom GPTs" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">ChatGPT combines AI chat, web research, file analysis, image generation, voice, projects, tasks, custom GPTs, and connected apps in one workspace.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Chat &amp; Reasoning</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Chat &amp; Reasoning</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/chatgpt/" class="details-link">Details &rarr;</a>
               <a href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -2455,14 +2800,14 @@
                 <h3 class="tool-name"><a href="/claude/" class="tool-card-title-link" title="Claude">Claude</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark Claude" data-tool="Claude" aria-label="Bookmark Claude" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Claude" data-tool="Claude" aria-label="Bookmark Claude" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Anthropic premier hybrid model family (Sonnet, Opus, Haiku) delivering state-of-the-art coding, deep document comprehension, and nuanced reasoning.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Chat &amp; Reasoning</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Chat &amp; Reasoning</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/claude/" class="details-link">Details &rarr;</a>
               <a href="https://claude.ai/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -2478,14 +2823,14 @@
                 <h3 class="tool-name"><a href="/google-gemini/" class="tool-card-title-link" title="Google Gemini">Google Gemini</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark Google Gemini" data-tool="Google Gemini" aria-label="Bookmark Google Gemini" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Google Gemini" data-tool="Google Gemini" aria-label="Bookmark Google Gemini" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Google natively multimodal AI assistant with a 2M+ token context window, deep reasoning, live Workspace synchronization, and audio/video input.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Chat &amp; Reasoning</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Chat &amp; Reasoning</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/google-gemini/" class="details-link">Details &rarr;</a>
               <a href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -2501,14 +2846,14 @@
                 <h3 class="tool-name"><a href="/deepseek/" class="tool-card-title-link" title="DeepSeek">DeepSeek</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-free">Free</span>
-              <button class="bookmark-btn" title="Bookmark DeepSeek" data-tool="DeepSeek" aria-label="Bookmark DeepSeek" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark DeepSeek" data-tool="DeepSeek" aria-label="Bookmark DeepSeek" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Groundbreaking open-weight reasoning model excelling in mathematical proofs, algorithmic code synthesis, and low-cost frontier intelligence.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Chat &amp; Reasoning</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Chat &amp; Reasoning</span>
+              <span class="price-badge price-free">Free</span>
+            </div>
             <div class="card-actions">
               <a href="/deepseek/" class="details-link">Details &rarr;</a>
               <a href="https://www.deepseek.com/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -2524,14 +2869,14 @@
                 <h3 class="tool-name"><a href="/grok/" class="tool-card-title-link" title="Grok">Grok</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark Grok" data-tool="Grok" aria-label="Bookmark Grok" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Grok" data-tool="Grok" aria-label="Bookmark Grok" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">xAI conversational assistant featuring real-time X post ingestion, unfiltered responses, high-speed vision analysis, and Aurora image generation.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Chat &amp; Reasoning</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Chat &amp; Reasoning</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/grok/" class="details-link">Details &rarr;</a>
               <a href="https://grok.com/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -2547,14 +2892,14 @@
                 <h3 class="tool-name"><a href="/mistral-le-chat/" class="tool-card-title-link" title="Mistral Le Chat">Mistral Le Chat</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark Mistral Le Chat" data-tool="Mistral Le Chat" aria-label="Bookmark Mistral Le Chat" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Mistral Le Chat" data-tool="Mistral Le Chat" aria-label="Bookmark Mistral Le Chat" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Mistral AI conversational interface powered by Large 2 and Pixtral, offering web search, canvas document editing, and multilingual mastery.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Chat &amp; Reasoning</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Chat &amp; Reasoning</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/mistral-le-chat/" class="details-link">Details &rarr;</a>
               <a href="https://chat.mistral.ai/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -2570,14 +2915,14 @@
                 <h3 class="tool-name"><a href="/qwen-chat/" class="tool-card-title-link" title="Qwen Chat">Qwen Chat</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-free">Free</span>
-              <button class="bookmark-btn" title="Bookmark Qwen Chat" data-tool="Qwen Chat" aria-label="Bookmark Qwen Chat" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Qwen Chat" data-tool="Qwen Chat" aria-label="Bookmark Qwen Chat" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Alibaba Cloud flagship open-weight LLM suite demonstrating world-class performance in math, programming, and multilingual translation.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Chat &amp; Reasoning</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Chat &amp; Reasoning</span>
+              <span class="price-badge price-free">Free</span>
+            </div>
             <div class="card-actions">
               <a href="/qwen-chat/" class="details-link">Details &rarr;</a>
               <a href="https://chat.qwenlm.ai/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -2593,14 +2938,14 @@
                 <h3 class="tool-name"><a href="/meta-ai-llama/" class="tool-card-title-link" title="Meta AI (Llama)">Meta AI (Llama)</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-free">Free</span>
-              <button class="bookmark-btn" title="Bookmark Meta AI (Llama)" data-tool="Meta AI (Llama)" aria-label="Bookmark Meta AI (Llama)" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Meta AI (Llama)" data-tool="Meta AI (Llama)" aria-label="Bookmark Meta AI (Llama)" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Meta everyday assistant powered by open Llama 3 models, integrated across WhatsApp, Instagram, and web for queries and image generation.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Chat &amp; Reasoning</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Chat &amp; Reasoning</span>
+              <span class="price-badge price-free">Free</span>
+            </div>
             <div class="card-actions">
               <a href="/meta-ai-llama/" class="details-link">Details &rarr;</a>
               <a href="https://www.meta.ai/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -2616,14 +2961,14 @@
                 <h3 class="tool-name"><a href="/notion-ai/" class="tool-card-title-link" title="Notion AI">Notion AI</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark Notion AI" data-tool="Notion AI" aria-label="Bookmark Notion AI" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Notion AI" data-tool="Notion AI" aria-label="Bookmark Notion AI" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Workspace knowledge copilot that drafts docs, summarizes databases, answers queries across company wikis, and automates team workflows.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Chat &amp; Reasoning</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Chat &amp; Reasoning</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/notion-ai/" class="details-link">Details &rarr;</a>
               <a href="https://www.notion.ai/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -2639,14 +2984,14 @@
                 <h3 class="tool-name"><a href="/jasper-ai/" class="tool-card-title-link" title="Jasper AI">Jasper AI</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-paid">Paid</span>
-              <button class="bookmark-btn" title="Bookmark Jasper AI" data-tool="Jasper AI" aria-label="Bookmark Jasper AI" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Jasper AI" data-tool="Jasper AI" aria-label="Bookmark Jasper AI" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Enterprise generative marketing platform enforcing brand-voice governance, campaign brief generation, and omnichannel copy production.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Chat &amp; Reasoning</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Chat &amp; Reasoning</span>
+              <span class="price-badge price-paid">Paid</span>
+            </div>
             <div class="card-actions">
               <a href="/jasper-ai/" class="details-link">Details &rarr;</a>
               <a href="https://www.jasper.ai/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -2662,14 +3007,14 @@
                 <h3 class="tool-name"><a href="/copyai/" class="tool-card-title-link" title="Copy.ai">Copy.ai</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark Copy.ai" data-tool="Copy.ai" aria-label="Bookmark Copy.ai" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Copy.ai" data-tool="Copy.ai" aria-label="Bookmark Copy.ai" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">AI-powered GTM platform designed for marketing, sales teams, and SDR automation to write ad copy, emails, and collateral at scale.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Chat &amp; Reasoning</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Chat &amp; Reasoning</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/copyai/" class="details-link">Details &rarr;</a>
               <a href="https://www.copy.ai/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -2685,14 +3030,14 @@
                 <h3 class="tool-name"><a href="/grammarly/" class="tool-card-title-link" title="Grammarly">Grammarly</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark Grammarly" data-tool="Grammarly" aria-label="Bookmark Grammarly" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Grammarly" data-tool="Grammarly" aria-label="Bookmark Grammarly" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Real-time communication assistant providing deep grammar checks, tone refinement, style consistency, and generative rewriting across all apps.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Chat &amp; Reasoning</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Chat &amp; Reasoning</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/grammarly/" class="details-link">Details &rarr;</a>
               <a href="https://www.grammarly.com/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -2708,14 +3053,14 @@
                 <h3 class="tool-name"><a href="/quillbot/" class="tool-card-title-link" title="QuillBot">QuillBot</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark QuillBot" data-tool="QuillBot" aria-label="Bookmark QuillBot" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark QuillBot" data-tool="QuillBot" aria-label="Bookmark QuillBot" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">AI paraphrase tool, summarizer, grammar corrector, and citation creator engineered to elevate clarity, fluency, and academic writing standards.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Chat &amp; Reasoning</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Chat &amp; Reasoning</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/quillbot/" class="details-link">Details &rarr;</a>
               <a href="https://quillbot.com/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -2731,14 +3076,14 @@
                 <h3 class="tool-name"><a href="/characterai/" class="tool-card-title-link" title="Character.AI">Character.AI</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark Character.AI" data-tool="Character.AI" aria-label="Bookmark Character.AI" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Character.AI" data-tool="Character.AI" aria-label="Bookmark Character.AI" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Interactive conversational AI platform featuring millions of community-created personas, historical figures, tutors, and creative companions.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Chat &amp; Reasoning</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Chat &amp; Reasoning</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/characterai/" class="details-link">Details &rarr;</a>
               <a href="https://character.ai/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -2754,14 +3099,14 @@
                 <h3 class="tool-name"><a href="/poe-by-quora/" class="tool-card-title-link" title="Poe by Quora">Poe by Quora</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark Poe by Quora" data-tool="Poe by Quora" aria-label="Bookmark Poe by Quora" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Poe by Quora" data-tool="Poe by Quora" aria-label="Bookmark Poe by Quora" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Universal AI aggregator providing fast switching between GPT-4o, Claude 3.5, Gemini, Flux, and bespoke creator bots under one subscription.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Chat &amp; Reasoning</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Chat &amp; Reasoning</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/poe-by-quora/" class="details-link">Details &rarr;</a>
               <a href="https://poe.com/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -2777,14 +3122,14 @@
                 <h3 class="tool-name"><a href="/pi-by-inflection/" class="tool-card-title-link" title="Pi by Inflection">Pi by Inflection</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-free">Free</span>
-              <button class="bookmark-btn" title="Bookmark Pi by Inflection" data-tool="Pi by Inflection" aria-label="Bookmark Pi by Inflection" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Pi by Inflection" data-tool="Pi by Inflection" aria-label="Bookmark Pi by Inflection" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Warm, emotionally intelligent personal companion AI built for supportive conversation, active listening, reflection, and daily planning.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Chat &amp; Reasoning</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Chat &amp; Reasoning</span>
+              <span class="price-badge price-free">Free</span>
+            </div>
             <div class="card-actions">
               <a href="/pi-by-inflection/" class="details-link">Details &rarr;</a>
               <a href="https://pi.ai/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -2800,14 +3145,14 @@
                 <h3 class="tool-name"><a href="/huggingchat/" class="tool-card-title-link" title="HuggingChat">HuggingChat</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-free">Free</span>
-              <button class="bookmark-btn" title="Bookmark HuggingChat" data-tool="HuggingChat" aria-label="Bookmark HuggingChat" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark HuggingChat" data-tool="HuggingChat" aria-label="Bookmark HuggingChat" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Hugging Face official open-source alternative to ChatGPT, running Llama 3, Command R+, DeepSeek, and community models with web search.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Chat &amp; Reasoning</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Chat &amp; Reasoning</span>
+              <span class="price-badge price-free">Free</span>
+            </div>
             <div class="card-actions">
               <a href="/huggingchat/" class="details-link">Details &rarr;</a>
               <a href="https://huggingface.co/chat/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -2823,14 +3168,14 @@
                 <h3 class="tool-name"><a href="/writesonic/" class="tool-card-title-link" title="Writesonic">Writesonic</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark Writesonic" data-tool="Writesonic" aria-label="Bookmark Writesonic" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Writesonic" data-tool="Writesonic" aria-label="Bookmark Writesonic" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">AI writing software specializing in factual SEO-optimized long-form blog posts, Google Ads copy, landing pages, and AI search presence.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Chat &amp; Reasoning</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Chat &amp; Reasoning</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/writesonic/" class="details-link">Details &rarr;</a>
               <a href="https://writesonic.com/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -2846,14 +3191,14 @@
                 <h3 class="tool-name"><a href="/wordtune/" class="tool-card-title-link" title="Wordtune">Wordtune</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark Wordtune" data-tool="Wordtune" aria-label="Bookmark Wordtune" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Wordtune" data-tool="Wordtune" aria-label="Bookmark Wordtune" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">AI reading and writing copilot by AI21 Labs that rephrases sentences for professional conciseness, tone shifts, and semantic impact.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Chat &amp; Reasoning</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Chat &amp; Reasoning</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/wordtune/" class="details-link">Details &rarr;</a>
               <a href="https://www.wordtune.com/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -2869,14 +3214,14 @@
                 <h3 class="tool-name"><a href="/rytr/" class="tool-card-title-link" title="Rytr">Rytr</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark Rytr" data-tool="Rytr" aria-label="Bookmark Rytr" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Rytr" data-tool="Rytr" aria-label="Bookmark Rytr" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Cost-effective AI writing tool for entrepreneurs and freelancers offering 40+ use cases, 30+ languages, and 20+ emotional voice tones.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Chat &amp; Reasoning</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Chat &amp; Reasoning</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/rytr/" class="details-link">Details &rarr;</a>
               <a href="https://rytr.me/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -2892,14 +3237,14 @@
                 <h3 class="tool-name"><a href="/sudowrite/" class="tool-card-title-link" title="Sudowrite">Sudowrite</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-paid">Paid</span>
-              <button class="bookmark-btn" title="Bookmark Sudowrite" data-tool="Sudowrite" aria-label="Bookmark Sudowrite" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Sudowrite" data-tool="Sudowrite" aria-label="Bookmark Sudowrite" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Plan novels, develop characters, and revise scenes with Sudowrite. Includes Story Bible, Muse, contextual chat, manuscript tools, and writing plugins.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Chat &amp; Reasoning</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Chat &amp; Reasoning</span>
+              <span class="price-badge price-paid">Paid</span>
+            </div>
             <div class="card-actions">
               <a href="/sudowrite/" class="details-link">Details &rarr;</a>
               <a href="https://www.sudowrite.com/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -2915,14 +3260,14 @@
                 <h3 class="tool-name"><a href="/novelai/" class="tool-card-title-link" title="NovelAI">NovelAI</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-paid">Paid</span>
-              <button class="bookmark-btn" title="Bookmark NovelAI" data-tool="NovelAI" aria-label="Bookmark NovelAI" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark NovelAI" data-tool="NovelAI" aria-label="Bookmark NovelAI" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Subscription sandbox for AI-assisted literature creation and visual anime generation with zero censorship and rich memory modules.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Chat &amp; Reasoning</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Chat &amp; Reasoning</span>
+              <span class="price-badge price-paid">Paid</span>
+            </div>
             <div class="card-actions">
               <a href="/novelai/" class="details-link">Details &rarr;</a>
               <a href="https://novelai.net/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -2938,14 +3283,14 @@
                 <h3 class="tool-name"><a href="/jenni-ai/" class="tool-card-title-link" title="Jenni AI">Jenni AI</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark Jenni AI" data-tool="Jenni AI" aria-label="Bookmark Jenni AI" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Jenni AI" data-tool="Jenni AI" aria-label="Bookmark Jenni AI" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Academic writing copilot that provides in-text APA/MLA citations, autocompletes research literature, and helps write research papers faster.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Chat &amp; Reasoning</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Chat &amp; Reasoning</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/jenni-ai/" class="details-link">Details &rarr;</a>
               <a href="https://jenni.ai/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -2961,14 +3306,14 @@
                 <h3 class="tool-name"><a href="/chatpdf/" class="tool-card-title-link" title="ChatPDF">ChatPDF</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark ChatPDF" data-tool="ChatPDF" aria-label="Bookmark ChatPDF" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark ChatPDF" data-tool="ChatPDF" aria-label="Bookmark ChatPDF" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Document analysis tool that transforms contracts, research papers, and textbooks into interactive conversational knowledge bases.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Chat &amp; Reasoning</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Chat &amp; Reasoning</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/chatpdf/" class="details-link">Details &rarr;</a>
               <a href="https://www.chatpdf.com/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -2984,14 +3329,14 @@
                 <h3 class="tool-name"><a href="/humata-ai/" class="tool-card-title-link" title="Humata AI">Humata AI</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark Humata AI" data-tool="Humata AI" aria-label="Bookmark Humata AI" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Humata AI" data-tool="Humata AI" aria-label="Bookmark Humata AI" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Accelerate scientific and legal paper analysis with fast Q&amp;A, cited page references, and instant synthesis of massive technical reports.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Chat &amp; Reasoning</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Chat &amp; Reasoning</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/humata-ai/" class="details-link">Details &rarr;</a>
               <a href="https://www.humata.ai/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -3007,14 +3352,14 @@
                 <h3 class="tool-name"><a href="/taskade-genesis/" class="tool-card-title-link" title="Taskade Genesis">Taskade Genesis</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark Taskade Genesis" data-tool="Taskade Genesis" aria-label="Bookmark Taskade Genesis" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Taskade Genesis" data-tool="Taskade Genesis" aria-label="Bookmark Taskade Genesis" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Collaborative project management platform with custom autonomous AI agent teams that automate sprint planning, research, and task tracking.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Chat &amp; Reasoning</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Chat &amp; Reasoning</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/taskade-genesis/" class="details-link">Details &rarr;</a>
               <a href="https://www.taskade.com/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -3030,14 +3375,14 @@
                 <h3 class="tool-name"><a href="/youchat/" class="tool-card-title-link" title="YouChat">YouChat</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark YouChat" data-tool="YouChat" aria-label="Bookmark YouChat" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark YouChat" data-tool="YouChat" aria-label="Bookmark YouChat" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Live web-grounded AI conversational assistant providing cited answers, multi-modal chart generation, and programming debugging support.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Chat &amp; Reasoning</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Chat &amp; Reasoning</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/youchat/" class="details-link">Details &rarr;</a>
               <a href="https://you.com/chat" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -3053,14 +3398,14 @@
                 <h3 class="tool-name"><a href="/julius-ai/" class="tool-card-title-link" title="Julius AI">Julius AI</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark Julius AI" data-tool="Julius AI" aria-label="Bookmark Julius AI" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Julius AI" data-tool="Julius AI" aria-label="Bookmark Julius AI" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Intelligent computational agent that analyzes CSVs, Excel files, and database queries to produce statistical models, charts, and forecasts.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Chat &amp; Reasoning</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Chat &amp; Reasoning</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/julius-ai/" class="details-link">Details &rarr;</a>
               <a href="https://julius.ai/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -3076,14 +3421,14 @@
                 <h3 class="tool-name"><a href="/memai/" class="tool-card-title-link" title="Mem.ai">Mem.ai</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark Mem.ai" data-tool="Mem.ai" aria-label="Bookmark Mem.ai" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Mem.ai" data-tool="Mem.ai" aria-label="Bookmark Mem.ai" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Self-organizing digital notebook that automatically connects notes, calendar events, meeting summaries, and projects without manual tags.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Chat &amp; Reasoning</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Chat &amp; Reasoning</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/memai/" class="details-link">Details &rarr;</a>
               <a href="https://mem.ai/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -3099,14 +3444,14 @@
                 <h3 class="tool-name"><a href="/craft-ai-assistant/" class="tool-card-title-link" title="Craft AI Assistant">Craft AI Assistant</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark Craft AI Assistant" data-tool="Craft AI Assistant" aria-label="Bookmark Craft AI Assistant" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Craft AI Assistant" data-tool="Craft AI Assistant" aria-label="Bookmark Craft AI Assistant" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Structured document platform blending aesthetic Markdown formatting with integrated AI drafting, translation, and structured summarization.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Chat &amp; Reasoning</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Chat &amp; Reasoning</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/craft-ai-assistant/" class="details-link">Details &rarr;</a>
               <a href="https://www.craft.do/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -3122,14 +3467,14 @@
                 <h3 class="tool-name"><a href="/scribe-ai/" class="tool-card-title-link" title="Scribe AI">Scribe AI</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark Scribe AI" data-tool="Scribe AI" aria-label="Bookmark Scribe AI" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Scribe AI" data-tool="Scribe AI" aria-label="Bookmark Scribe AI" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Automated workflow capture extension that watches your browser actions to auto-generate illustrated visual SOPs and training guides.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Chat &amp; Reasoning</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Chat &amp; Reasoning</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/scribe-ai/" class="details-link">Details &rarr;</a>
               <a href="https://scribehow.com/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -3145,14 +3490,14 @@
                 <h3 class="tool-name"><a href="/anyword/" class="tool-card-title-link" title="Anyword">Anyword</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-paid">Paid</span>
-              <button class="bookmark-btn" title="Bookmark Anyword" data-tool="Anyword" aria-label="Bookmark Anyword" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Anyword" data-tool="Anyword" aria-label="Bookmark Anyword" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Performance copywriting AI that predicts conversion scores and click-through rates before launching digital marketing campaigns.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Chat &amp; Reasoning</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Chat &amp; Reasoning</span>
+              <span class="price-badge price-paid">Paid</span>
+            </div>
             <div class="card-actions">
               <a href="/anyword/" class="details-link">Details &rarr;</a>
               <a href="https://anyword.com/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -3168,14 +3513,14 @@
                 <h3 class="tool-name"><a href="/content-at-scale/" class="tool-card-title-link" title="Content at Scale">Content at Scale</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-paid">Paid</span>
-              <button class="bookmark-btn" title="Bookmark Content at Scale" data-tool="Content at Scale" aria-label="Bookmark Content at Scale" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Content at Scale" data-tool="Content at Scale" aria-label="Bookmark Content at Scale" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Enterprise SEO engine that crawls top-ranking Google competitors to generate comprehensive, human-like 3,000-word blog articles.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Chat &amp; Reasoning</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Chat &amp; Reasoning</span>
+              <span class="price-badge price-paid">Paid</span>
+            </div>
             <div class="card-actions">
               <a href="/content-at-scale/" class="details-link">Details &rarr;</a>
               <a href="https://contentatscale.ai/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -3191,14 +3536,14 @@
                 <h3 class="tool-name"><a href="/chinchilla-gdm/" class="tool-card-title-link" title="Chinchilla / GDM">Chinchilla / GDM</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-free">Free</span>
-              <button class="bookmark-btn" title="Bookmark Chinchilla / GDM" data-tool="Chinchilla / GDM" aria-label="Bookmark Chinchilla / GDM" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Chinchilla / GDM" data-tool="Chinchilla / GDM" aria-label="Bookmark Chinchilla / GDM" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Google DeepMind foundational compute-optimal research frameworks driving next-generation reasoning architectures and agents.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Chat &amp; Reasoning</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Chat &amp; Reasoning</span>
+              <span class="price-badge price-free">Free</span>
+            </div>
             <div class="card-actions">
               <a href="/chinchilla-gdm/" class="details-link">Details &rarr;</a>
               <a href="https://deepmind.google/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -3214,14 +3559,14 @@
                 <h3 class="tool-name"><a href="/kagi-assistant/" class="tool-card-title-link" title="Kagi Assistant">Kagi Assistant</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-paid">Paid</span>
-              <button class="bookmark-btn" title="Bookmark Kagi Assistant" data-tool="Kagi Assistant" aria-label="Bookmark Kagi Assistant" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Kagi Assistant" data-tool="Kagi Assistant" aria-label="Bookmark Kagi Assistant" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Privacy-first search assistant that provides direct, ad-free web synthesis, multi-model LLM comparisons, and fast webpage summaries.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Chat &amp; Reasoning</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Chat &amp; Reasoning</span>
+              <span class="price-badge price-paid">Paid</span>
+            </div>
             <div class="card-actions">
               <a href="/kagi-assistant/" class="details-link">Details &rarr;</a>
               <a href="https://kagi.com/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -3237,14 +3582,14 @@
                 <h3 class="tool-name"><a href="/cursor-ai-editor/" class="tool-card-title-link" title="Cursor AI Editor">Cursor AI Editor</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark Cursor AI Editor" data-tool="Cursor AI Editor" aria-label="Bookmark Cursor AI Editor" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Cursor AI Editor" data-tool="Cursor AI Editor" aria-label="Bookmark Cursor AI Editor" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">VS Code fork built specifically for AI-native software engineering, multi-file editing, full-repo embeddings, and fast terminal automation.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Coding &amp; Dev</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Coding &amp; Dev</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/cursor-ai-editor/" class="details-link">Details &rarr;</a>
               <a href="https://cursor.com/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -3260,14 +3605,14 @@
                 <h3 class="tool-name"><a href="/windsurf/" class="tool-card-title-link" title="Windsurf">Windsurf</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark Windsurf" data-tool="Windsurf" aria-label="Bookmark Windsurf" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Windsurf" data-tool="Windsurf" aria-label="Bookmark Windsurf" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Codeium agentic IDE featuring Cascade deep-context flows for synchronized multi-file refactoring, terminal execution, and comprehension.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Coding &amp; Dev</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Coding &amp; Dev</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/windsurf/" class="details-link">Details &rarr;</a>
               <a href="https://windsurf.com/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -3283,14 +3628,14 @@
                 <h3 class="tool-name"><a href="/v0-by-vercel/" class="tool-card-title-link" title="v0 by Vercel">v0 by Vercel</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark v0 by Vercel" data-tool="v0 by Vercel" aria-label="Bookmark v0 by Vercel" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark v0 by Vercel" data-tool="v0 by Vercel" aria-label="Bookmark v0 by Vercel" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Generative frontend platform that synthesizes clean React, Tailwind CSS, Shadcn UI components, and full-stack web applications from text.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Coding &amp; Dev</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Coding &amp; Dev</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/v0-by-vercel/" class="details-link">Details &rarr;</a>
               <a href="https://v0.app/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -3306,14 +3651,14 @@
                 <h3 class="tool-name"><a href="/boltnew/" class="tool-card-title-link" title="Bolt.new">Bolt.new</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark Bolt.new" data-tool="Bolt.new" aria-label="Bookmark Bolt.new" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Bolt.new" data-tool="Bolt.new" aria-label="Bookmark Bolt.new" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">WebContainer-powered in-browser AI development agent that builds, tests, runs npm packages, and deploys full-stack apps in seconds.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Coding &amp; Dev</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Coding &amp; Dev</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/boltnew/" class="details-link">Details &rarr;</a>
               <a href="https://bolt.new/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -3329,14 +3674,14 @@
                 <h3 class="tool-name"><a href="/lovable/" class="tool-card-title-link" title="Lovable">Lovable</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark Lovable" data-tool="Lovable" aria-label="Bookmark Lovable" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Lovable" data-tool="Lovable" aria-label="Bookmark Lovable" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Conversational software builder that translates natural language ideas into production-ready web apps with backend Supabase integration.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Coding &amp; Dev</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Coding &amp; Dev</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/lovable/" class="details-link">Details &rarr;</a>
               <a href="https://lovable.dev/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -3352,14 +3697,14 @@
                 <h3 class="tool-name"><a href="/devin-ai/" class="tool-card-title-link" title="Devin AI">Devin AI</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-paid">Paid</span>
-              <button class="bookmark-btn" title="Bookmark Devin AI" data-tool="Devin AI" aria-label="Bookmark Devin AI" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Devin AI" data-tool="Devin AI" aria-label="Bookmark Devin AI" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Cognition autonomous AI software engineer capable of navigating complex codebases, planning tasks, debugging errors, and opening pull requests.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Coding &amp; Dev</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Coding &amp; Dev</span>
+              <span class="price-badge price-paid">Paid</span>
+            </div>
             <div class="card-actions">
               <a href="/devin-ai/" class="details-link">Details &rarr;</a>
               <a href="https://devin.ai/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -3375,14 +3720,14 @@
                 <h3 class="tool-name"><a href="/github-copilot/" class="tool-card-title-link" title="GitHub Copilot">GitHub Copilot</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark GitHub Copilot" data-tool="GitHub Copilot" aria-label="Bookmark GitHub Copilot" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark GitHub Copilot" data-tool="GitHub Copilot" aria-label="Bookmark GitHub Copilot" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">AI pair programmer powering millions of developers across VS Code and JetBrains with code suggestions, PR reviews, and Copilot Chat.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Coding &amp; Dev</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Coding &amp; Dev</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/github-copilot/" class="details-link">Details &rarr;</a>
               <a href="https://github.com/features/copilot" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -3398,14 +3743,14 @@
                 <h3 class="tool-name"><a href="/google-antigravity/" class="tool-card-title-link" title="Google Antigravity">Google Antigravity</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark Google Antigravity" data-tool="Google Antigravity" aria-label="Bookmark Google Antigravity" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Google Antigravity" data-tool="Google Antigravity" aria-label="Bookmark Google Antigravity" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Agent-first AI development environment and CLI by Google for autonomous multi-file engineering, code review, and full-stack scaffolding.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Coding &amp; Dev</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Coding &amp; Dev</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/google-antigravity/" class="details-link">Details &rarr;</a>
               <a href="https://antigravity.google/docs/overview/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -3421,14 +3766,14 @@
                 <h3 class="tool-name"><a href="/replit-agent/" class="tool-card-title-link" title="Replit Agent">Replit Agent</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark Replit Agent" data-tool="Replit Agent" aria-label="Bookmark Replit Agent" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Replit Agent" data-tool="Replit Agent" aria-label="Bookmark Replit Agent" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Cloud development agent that plans, writes, configures PostgreSQL databases, and deploys full-stack web applications from plain text prompts.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Coding &amp; Dev</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Coding &amp; Dev</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/replit-agent/" class="details-link">Details &rarr;</a>
               <a href="https://replit.com/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -3444,14 +3789,14 @@
                 <h3 class="tool-name"><a href="/supermaven/" class="tool-card-title-link" title="Supermaven">Supermaven</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark Supermaven" data-tool="Supermaven" aria-label="Bookmark Supermaven" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Supermaven" data-tool="Supermaven" aria-label="Bookmark Supermaven" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Blazing-fast AI code autocompletion engine with a 1M-token context window that predicts multi-line edits with sub-100ms response times.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Coding &amp; Dev</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Coding &amp; Dev</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/supermaven/" class="details-link">Details &rarr;</a>
               <a href="https://supermaven.com/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -3467,14 +3812,14 @@
                 <h3 class="tool-name"><a href="/claude-code/" class="tool-card-title-link" title="Claude Code">Claude Code</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark Claude Code" data-tool="Claude Code" aria-label="Bookmark Claude Code" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Claude Code" data-tool="Claude Code" aria-label="Bookmark Claude Code" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Anthropic command-line agent that lives in your terminal, understands repo architecture, writes git commits, and executes test suites.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Coding &amp; Dev</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Coding &amp; Dev</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/claude-code/" class="details-link">Details &rarr;</a>
               <a href="https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/overview" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -3490,14 +3835,14 @@
                 <h3 class="tool-name"><a href="/aider/" class="tool-card-title-link" title="Aider">Aider</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-free">Free</span>
-              <button class="bookmark-btn" title="Bookmark Aider" data-tool="Aider" aria-label="Bookmark Aider" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Aider" data-tool="Aider" aria-label="Bookmark Aider" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Command-line pair programmer that edits code in your local git repository, writes commit messages, and connects with frontier LLMs.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Coding &amp; Dev</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Coding &amp; Dev</span>
+              <span class="price-badge price-free">Free</span>
+            </div>
             <div class="card-actions">
               <a href="/aider/" class="details-link">Details &rarr;</a>
               <a href="https://aider.chat/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -3513,14 +3858,14 @@
                 <h3 class="tool-name"><a href="/supabase-ai/" class="tool-card-title-link" title="Supabase AI">Supabase AI</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark Supabase AI" data-tool="Supabase AI" aria-label="Bookmark Supabase AI" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Supabase AI" data-tool="Supabase AI" aria-label="Bookmark Supabase AI" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Developer platform offering automated AI SQL query generation, pgvector semantic search, edge functions, and real-time database management.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Coding &amp; Dev</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Coding &amp; Dev</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/supabase-ai/" class="details-link">Details &rarr;</a>
               <a href="https://supabase.com/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -3536,14 +3881,14 @@
                 <h3 class="tool-name"><a href="/continuedev/" class="tool-card-title-link" title="Continue.dev">Continue.dev</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-free">Free</span>
-              <button class="bookmark-btn" title="Bookmark Continue.dev" data-tool="Continue.dev" aria-label="Bookmark Continue.dev" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Continue.dev" data-tool="Continue.dev" aria-label="Bookmark Continue.dev" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Leading open-source AI code assistant for VS Code and JetBrains allowing local LLMs (Ollama) or custom commercial APIs to pair code securely.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Coding &amp; Dev</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Coding &amp; Dev</span>
+              <span class="price-badge price-free">Free</span>
+            </div>
             <div class="card-actions">
               <a href="/continuedev/" class="details-link">Details &rarr;</a>
               <a href="https://www.continue.dev/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -3559,14 +3904,14 @@
                 <h3 class="tool-name"><a href="/tabnine/" class="tool-card-title-link" title="Tabnine">Tabnine</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark Tabnine" data-tool="Tabnine" aria-label="Bookmark Tabnine" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Tabnine" data-tool="Tabnine" aria-label="Bookmark Tabnine" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Enterprise-grade code assistant that protects IP with zero training on user code, SOC2 compliance, and on-premise deployment options.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Coding &amp; Dev</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Coding &amp; Dev</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/tabnine/" class="details-link">Details &rarr;</a>
               <a href="https://www.tabnine.com/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -3582,14 +3927,14 @@
                 <h3 class="tool-name"><a href="/sourcegraph-cody/" class="tool-card-title-link" title="Sourcegraph Cody">Sourcegraph Cody</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark Sourcegraph Cody" data-tool="Sourcegraph Cody" aria-label="Bookmark Sourcegraph Cody" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Sourcegraph Cody" data-tool="Sourcegraph Cody" aria-label="Bookmark Sourcegraph Cody" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">AI coding assistant powered by Sourcegraph Code Graph, providing precise multi-repo context retrieval, test generation, and explanations.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Coding &amp; Dev</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Coding &amp; Dev</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/sourcegraph-cody/" class="details-link">Details &rarr;</a>
               <a href="https://sourcegraph.com/cody" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -3605,14 +3950,14 @@
                 <h3 class="tool-name"><a href="/amazon-q-developer/" class="tool-card-title-link" title="Amazon Q Developer">Amazon Q Developer</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark Amazon Q Developer" data-tool="Amazon Q Developer" aria-label="Bookmark Amazon Q Developer" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Amazon Q Developer" data-tool="Amazon Q Developer" aria-label="Bookmark Amazon Q Developer" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Generative AI assistant specialized in AWS architectures, automated Java/framework version upgrades, code security scans, and SQL tuning.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Coding &amp; Dev</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Coding &amp; Dev</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/amazon-q-developer/" class="details-link">Details &rarr;</a>
               <a href="https://aws.amazon.com/q/developer/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -3628,14 +3973,14 @@
                 <h3 class="tool-name"><a href="/phind/" class="tool-card-title-link" title="Phind">Phind</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark Phind" data-tool="Phind" aria-label="Bookmark Phind" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Phind" data-tool="Phind" aria-label="Bookmark Phind" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Specialized search engine and reasoning engine for software developers that diagnoses error traces, reads docs, and outputs working code snippets.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Coding &amp; Dev</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Coding &amp; Dev</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/phind/" class="details-link">Details &rarr;</a>
               <a href="https://www.phind.com/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -3651,14 +3996,14 @@
                 <h3 class="tool-name"><a href="/vllm/" class="tool-card-title-link" title="vLLM">vLLM</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-free">Free</span>
-              <button class="bookmark-btn" title="Bookmark vLLM" data-tool="vLLM" aria-label="Bookmark vLLM" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark vLLM" data-tool="vLLM" aria-label="Bookmark vLLM" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">High-throughput and memory-efficient LLM inference and serving engine utilizing PagedAttention to maximize GPU batch throughput.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Coding &amp; Dev</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Coding &amp; Dev</span>
+              <span class="price-badge price-free">Free</span>
+            </div>
             <div class="card-actions">
               <a href="/vllm/" class="details-link">Details &rarr;</a>
               <a href="https://github.com/vllm-project/vllm" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -3674,14 +4019,14 @@
                 <h3 class="tool-name"><a href="/ollama/" class="tool-card-title-link" title="Ollama">Ollama</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-free">Free</span>
-              <button class="bookmark-btn" title="Bookmark Ollama" data-tool="Ollama" aria-label="Bookmark Ollama" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Ollama" data-tool="Ollama" aria-label="Bookmark Ollama" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Lightweight command-line tool and macOS/Linux framework for running Llama 3, DeepSeek, Mistral, and Gemma models locally on personal machines.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Coding &amp; Dev</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Coding &amp; Dev</span>
+              <span class="price-badge price-free">Free</span>
+            </div>
             <div class="card-actions">
               <a href="/ollama/" class="details-link">Details &rarr;</a>
               <a href="https://ollama.com/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -3697,14 +4042,14 @@
                 <h3 class="tool-name"><a href="/lm-studio/" class="tool-card-title-link" title="LM Studio">LM Studio</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-free">Free</span>
-              <button class="bookmark-btn" title="Bookmark LM Studio" data-tool="LM Studio" aria-label="Bookmark LM Studio" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark LM Studio" data-tool="LM Studio" aria-label="Bookmark LM Studio" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Discover, download, and run open-weight GGML/GGUF models locally on Apple Silicon or CUDA GPUs with an OpenAI-compatible local API server.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Coding &amp; Dev</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Coding &amp; Dev</span>
+              <span class="price-badge price-free">Free</span>
+            </div>
             <div class="card-actions">
               <a href="/lm-studio/" class="details-link">Details &rarr;</a>
               <a href="https://lmstudio.ai/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -3720,14 +4065,14 @@
                 <h3 class="tool-name"><a href="/langchain/" class="tool-card-title-link" title="LangChain">LangChain</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark LangChain" data-tool="LangChain" aria-label="Bookmark LangChain" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark LangChain" data-tool="LangChain" aria-label="Bookmark LangChain" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Standard framework for developing context-aware reasoning applications, multi-agent graphs (LangGraph), and production evaluation (LangSmith).</p>
           <div class="card-bottom">
-            <span class="cat-pill">Coding &amp; Dev</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Coding &amp; Dev</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/langchain/" class="details-link">Details &rarr;</a>
               <a href="https://www.langchain.com/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -3743,14 +4088,14 @@
                 <h3 class="tool-name"><a href="/llamaindex/" class="tool-card-title-link" title="LlamaIndex">LlamaIndex</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark LlamaIndex" data-tool="LlamaIndex" aria-label="Bookmark LlamaIndex" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark LlamaIndex" data-tool="LlamaIndex" aria-label="Bookmark LlamaIndex" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Leading data framework for connecting custom data sources, enterprise databases, and unstructured files to LLMs for robust RAG architectures.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Coding &amp; Dev</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Coding &amp; Dev</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/llamaindex/" class="details-link">Details &rarr;</a>
               <a href="https://www.llamaindex.ai/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -3766,14 +4111,14 @@
                 <h3 class="tool-name"><a href="/pinecone/" class="tool-card-title-link" title="Pinecone">Pinecone</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark Pinecone" data-tool="Pinecone" aria-label="Bookmark Pinecone" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Pinecone" data-tool="Pinecone" aria-label="Bookmark Pinecone" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Serverless vector database engineered for ultra-fast semantic similarity search, hybrid keyword matching, and mission-critical GenAI workloads.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Coding &amp; Dev</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Coding &amp; Dev</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/pinecone/" class="details-link">Details &rarr;</a>
               <a href="https://www.pinecone.io/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -3789,14 +4134,14 @@
                 <h3 class="tool-name"><a href="/qdrant/" class="tool-card-title-link" title="Qdrant">Qdrant</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark Qdrant" data-tool="Qdrant" aria-label="Bookmark Qdrant" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Qdrant" data-tool="Qdrant" aria-label="Bookmark Qdrant" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">High-performance vector search engine and database written in Rust, offering payload-based filtering, quantization, and cloud clustering.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Coding &amp; Dev</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Coding &amp; Dev</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/qdrant/" class="details-link">Details &rarr;</a>
               <a href="https://qdrant.tech/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -3812,14 +4157,14 @@
                 <h3 class="tool-name"><a href="/weaviate/" class="tool-card-title-link" title="Weaviate">Weaviate</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark Weaviate" data-tool="Weaviate" aria-label="Bookmark Weaviate" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Weaviate" data-tool="Weaviate" aria-label="Bookmark Weaviate" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Open-source vector database supporting multi-modal data embeddings, modular ML pipelines, and fast graph-based nearest neighbor search.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Coding &amp; Dev</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Coding &amp; Dev</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/weaviate/" class="details-link">Details &rarr;</a>
               <a href="https://weaviate.io/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -3835,14 +4180,14 @@
                 <h3 class="tool-name"><a href="/postman-ai-postbot/" class="tool-card-title-link" title="Postman AI (Postbot)">Postman AI (Postbot)</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark Postman AI (Postbot)" data-tool="Postman AI (Postbot)" aria-label="Bookmark Postman AI (Postbot)" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Postman AI (Postbot)" data-tool="Postman AI (Postbot)" aria-label="Bookmark Postman AI (Postbot)" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">AI companion in Postman that generates test suites, mocks API responses, creates visual documentations, and analyzes API payloads.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Coding &amp; Dev</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Coding &amp; Dev</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/postman-ai-postbot/" class="details-link">Details &rarr;</a>
               <a href="https://www.postman.com/product/postbot/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -3858,14 +4203,14 @@
                 <h3 class="tool-name"><a href="/blackbox-ai/" class="tool-card-title-link" title="Blackbox AI">Blackbox AI</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark Blackbox AI" data-tool="Blackbox AI" aria-label="Bookmark Blackbox AI" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Blackbox AI" data-tool="Blackbox AI" aria-label="Bookmark Blackbox AI" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Code search engine and developer copilot designed to extract code from videos, autocomplete snippets in 20+ languages, and answer queries.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Coding &amp; Dev</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Coding &amp; Dev</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/blackbox-ai/" class="details-link">Details &rarr;</a>
               <a href="https://www.blackbox.ai/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -3881,14 +4226,14 @@
                 <h3 class="tool-name"><a href="/mintlify/" class="tool-card-title-link" title="Mintlify">Mintlify</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark Mintlify" data-tool="Mintlify" aria-label="Bookmark Mintlify" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Mintlify" data-tool="Mintlify" aria-label="Bookmark Mintlify" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Modern developer documentation platform that scans code to generate interactive API references, code snippets, and searchable documentation.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Coding &amp; Dev</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Coding &amp; Dev</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/mintlify/" class="details-link">Details &rarr;</a>
               <a href="https://mintlify.com/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -3904,14 +4249,14 @@
                 <h3 class="tool-name"><a href="/coderabbit/" class="tool-card-title-link" title="CodeRabbit">CodeRabbit</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark CodeRabbit" data-tool="CodeRabbit" aria-label="Bookmark CodeRabbit" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark CodeRabbit" data-tool="CodeRabbit" aria-label="Bookmark CodeRabbit" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">AI-powered pull request reviewer providing line-by-line code suggestions, bug detection, architectural feedback, and automated PR summaries.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Coding &amp; Dev</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Coding &amp; Dev</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/coderabbit/" class="details-link">Details &rarr;</a>
               <a href="https://coderabbit.ai/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -3927,14 +4272,14 @@
                 <h3 class="tool-name"><a href="/sweep-ai/" class="tool-card-title-link" title="Sweep AI">Sweep AI</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark Sweep AI" data-tool="Sweep AI" aria-label="Bookmark Sweep AI" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Sweep AI" data-tool="Sweep AI" aria-label="Bookmark Sweep AI" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Autonomous GitHub junior developer that reads issue descriptions, writes code across files, runs tests, and opens clean pull requests.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Coding &amp; Dev</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Coding &amp; Dev</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/sweep-ai/" class="details-link">Details &rarr;</a>
               <a href="https://sweep.dev/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -3950,14 +4295,14 @@
                 <h3 class="tool-name"><a href="/codiumai-qodo/" class="tool-card-title-link" title="CodiumAI (Qodo)">CodiumAI (Qodo)</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark CodiumAI (Qodo)" data-tool="CodiumAI (Qodo)" aria-label="Bookmark CodiumAI (Qodo)" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark CodiumAI (Qodo)" data-tool="CodiumAI (Qodo)" aria-label="Bookmark CodiumAI (Qodo)" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Quality-first AI coding platform generating meaningful unit tests, discovering edge cases, and verifying code integrity before merge.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Coding &amp; Dev</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Coding &amp; Dev</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/codiumai-qodo/" class="details-link">Details &rarr;</a>
               <a href="https://www.qodo.ai/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -3973,14 +4318,14 @@
                 <h3 class="tool-name"><a href="/gritio/" class="tool-card-title-link" title="Grit.io">Grit.io</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark Grit.io" data-tool="Grit.io" aria-label="Bookmark Grit.io" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Grit.io" data-tool="Grit.io" aria-label="Bookmark Grit.io" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Automated code refactoring tool that rewrites legacy frameworks, upgrades dependencies, and enforces architectural standards across repos.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Coding &amp; Dev</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Coding &amp; Dev</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/gritio/" class="details-link">Details &rarr;</a>
               <a href="https://www.grit.io/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -3996,14 +4341,14 @@
                 <h3 class="tool-name"><a href="/marblism/" class="tool-card-title-link" title="Marblism">Marblism</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark Marblism" data-tool="Marblism" aria-label="Bookmark Marblism" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Marblism" data-tool="Marblism" aria-label="Bookmark Marblism" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Prompt-to-fullstack boilerplate generator producing React, Node, Prisma, and Tailwind codebases with auth, Stripe payments, and emails.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Coding &amp; Dev</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Coding &amp; Dev</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/marblism/" class="details-link">Details &rarr;</a>
               <a href="https://www.marblism.com/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -4019,14 +4364,14 @@
                 <h3 class="tool-name"><a href="/bloop-ai/" class="tool-card-title-link" title="Bloop AI">Bloop AI</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-free">Free</span>
-              <button class="bookmark-btn" title="Bookmark Bloop AI" data-tool="Bloop AI" aria-label="Bookmark Bloop AI" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Bloop AI" data-tool="Bloop AI" aria-label="Bookmark Bloop AI" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Semantic code search engine that maps repo architectures, answers architectural questions, and navigates large legacy codebases in Rust.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Coding &amp; Dev</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Coding &amp; Dev</span>
+              <span class="price-badge price-free">Free</span>
+            </div>
             <div class="card-actions">
               <a href="/bloop-ai/" class="details-link">Details &rarr;</a>
               <a href="https://bloop.ai/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -4042,14 +4387,14 @@
                 <h3 class="tool-name"><a href="/midjourney-v6/" class="tool-card-title-link" title="Midjourney v6">Midjourney v6</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-paid">Paid</span>
-              <button class="bookmark-btn" title="Bookmark Midjourney v6" data-tool="Midjourney v6" aria-label="Bookmark Midjourney v6" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Midjourney v6" data-tool="Midjourney v6" aria-label="Bookmark Midjourney v6" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">World-renowned generative visual engine producing stunning photorealism, character consistency, cinematographic lighting, and fantasy artwork.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Image &amp; Art</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Image &amp; Art</span>
+              <span class="price-badge price-paid">Paid</span>
+            </div>
             <div class="card-actions">
               <a href="/midjourney-v6/" class="details-link">Details &rarr;</a>
               <a href="https://www.midjourney.com/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -4065,14 +4410,14 @@
                 <h3 class="tool-name"><a href="/flux1-by-black-forest-labs/" class="tool-card-title-link" title="FLUX.1 by Black Forest Labs">FLUX.1 by Black Forest Labs</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark FLUX.1 by Black Forest Labs" data-tool="FLUX.1 by Black Forest Labs" aria-label="Bookmark FLUX.1 by Black Forest Labs" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark FLUX.1 by Black Forest Labs" data-tool="FLUX.1 by Black Forest Labs" aria-label="Bookmark FLUX.1 by Black Forest Labs" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">State-of-the-art open text-to-image foundation model excelling in intricate prompt adherence, anatomy rendering, and sharp typography.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Image &amp; Art</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Image &amp; Art</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/flux1-by-black-forest-labs/" class="details-link">Details &rarr;</a>
               <a href="https://blackforestlabs.ai/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -4088,14 +4433,14 @@
                 <h3 class="tool-name"><a href="/ideogram-20/" class="tool-card-title-link" title="Ideogram 2.0">Ideogram 2.0</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark Ideogram 2.0" data-tool="Ideogram 2.0" aria-label="Bookmark Ideogram 2.0" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Ideogram 2.0" data-tool="Ideogram 2.0" aria-label="Bookmark Ideogram 2.0" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Leading AI image generator famed for flawless in-image text typography, poster layouts, merchandise designs, and vector graphic styles.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Image &amp; Art</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Image &amp; Art</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/ideogram-20/" class="details-link">Details &rarr;</a>
               <a href="https://ideogram.ai/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -4111,14 +4456,14 @@
                 <h3 class="tool-name"><a href="/leonardoai/" class="tool-card-title-link" title="Leonardo.Ai">Leonardo.Ai</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark Leonardo.Ai" data-tool="Leonardo.Ai" aria-label="Bookmark Leonardo.Ai" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Leonardo.Ai" data-tool="Leonardo.Ai" aria-label="Bookmark Leonardo.Ai" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Creative generation suite offering custom fine-tuned models, real-time canvas editing, texture generation, and gaming asset pipelines.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Image &amp; Art</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Image &amp; Art</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/leonardoai/" class="details-link">Details &rarr;</a>
               <a href="https://leonardo.ai/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -4134,14 +4479,14 @@
                 <h3 class="tool-name"><a href="/recraft-ai/" class="tool-card-title-link" title="Recraft AI">Recraft AI</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark Recraft AI" data-tool="Recraft AI" aria-label="Bookmark Recraft AI" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Recraft AI" data-tool="Recraft AI" aria-label="Bookmark Recraft AI" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Design-focused AI studio that creates editable SVG vector art, 3D icons, clean brand design systems, and commercial merchandise art.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Image &amp; Art</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Image &amp; Art</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/recraft-ai/" class="details-link">Details &rarr;</a>
               <a href="https://www.recraft.ai/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -4157,14 +4502,14 @@
                 <h3 class="tool-name"><a href="/krea-ai/" class="tool-card-title-link" title="Krea AI">Krea AI</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark Krea AI" data-tool="Krea AI" aria-label="Bookmark Krea AI" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Krea AI" data-tool="Krea AI" aria-label="Bookmark Krea AI" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Real-time generation canvas with instant latency, high-fidelity 4K texture upscaling, optical illusion generation, and video generation.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Image &amp; Art</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Image &amp; Art</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/krea-ai/" class="details-link">Details &rarr;</a>
               <a href="https://www.krea.ai/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -4180,14 +4525,14 @@
                 <h3 class="tool-name"><a href="/magnific-ai/" class="tool-card-title-link" title="Magnific AI">Magnific AI</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-paid">Paid</span>
-              <button class="bookmark-btn" title="Bookmark Magnific AI" data-tool="Magnific AI" aria-label="Bookmark Magnific AI" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Magnific AI" data-tool="Magnific AI" aria-label="Bookmark Magnific AI" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Super-resolution upscaler that hallucinates realistic microscopic details, skin pores, and landscape textures up to extreme 8K resolutions.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Image &amp; Art</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Image &amp; Art</span>
+              <span class="price-badge price-paid">Paid</span>
+            </div>
             <div class="card-actions">
               <a href="/magnific-ai/" class="details-link">Details &rarr;</a>
               <a href="https://magnific.ai/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -4203,14 +4548,14 @@
                 <h3 class="tool-name"><a href="/canva-magic-media/" class="tool-card-title-link" title="Canva Magic Media">Canva Magic Media</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark Canva Magic Media" data-tool="Canva Magic Media" aria-label="Bookmark Canva Magic Media" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Canva Magic Media" data-tool="Canva Magic Media" aria-label="Bookmark Canva Magic Media" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Suite of visual tools inside Canva including AI image synthesis, background isolation, Magic Expand, and smart layout composition.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Image &amp; Art</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Image &amp; Art</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/canva-magic-media/" class="details-link">Details &rarr;</a>
               <a href="https://www.canva.com/ai-image-generator/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -4226,14 +4571,14 @@
                 <h3 class="tool-name"><a href="/adobe-firefly/" class="tool-card-title-link" title="Adobe Firefly">Adobe Firefly</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark Adobe Firefly" data-tool="Adobe Firefly" aria-label="Bookmark Adobe Firefly" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Adobe Firefly" data-tool="Adobe Firefly" aria-label="Bookmark Adobe Firefly" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">Commercially safe generative model family integrated into Photoshop and Illustrator for Generative Fill, vector expansion, and text effects.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Image &amp; Art</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Image &amp; Art</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/adobe-firefly/" class="details-link">Details &rarr;</a>
               <a href="https://www.adobe.com/products/firefly.html" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -4249,14 +4594,14 @@
                 <h3 class="tool-name"><a href="/photoroom/" class="tool-card-title-link" title="Photoroom">Photoroom</a></h3>
               </div>
             </div>
-            <div class="badge-row">
-              <span class="price-badge price-freemium">Freemium</span>
-              <button class="bookmark-btn" title="Bookmark Photoroom" data-tool="Photoroom" aria-label="Bookmark Photoroom" onclick="event.stopPropagation()">&#9734;</button>
-            </div>
+            <button class="bookmark-btn" title="Bookmark Photoroom" data-tool="Photoroom" aria-label="Bookmark Photoroom" onclick="event.stopPropagation()">&#9734;</button>
           </div>
           <p class="tool-desc">AI visual studio for online sellers that removes backgrounds, stages professional studio lighting, and generates catalog photography.</p>
           <div class="card-bottom">
-            <span class="cat-pill">Image &amp; Art</span>
+            <div class="card-bottom-pills">
+              <span class="cat-pill">Image &amp; Art</span>
+              <span class="price-badge price-freemium">Freemium</span>
+            </div>
             <div class="card-actions">
               <a href="/photoroom/" class="details-link">Details &rarr;</a>
               <a href="https://www.photoroom.com/" target="_blank" rel="noopener noreferrer nofollow" class="tool-link" onclick="event.stopPropagation()">Visit &rarr;</a>
@@ -4543,14 +4888,14 @@
                 '<h3 class="tool-name"><a href="' + toolPath + '" class="tool-card-title-link" title="' + escapeHtml(t.n) + '">' + escapeHtml(t.n) + '</a></h3>' +
               '</div>' +
             '</div>' +
-            '<div class="badge-row">' +
-              '<span class="price-badge ' + priceClass + '">' + escapeHtml(t.p) + '</span>' +
-              '<button class="bookmark-btn' + (isSaved ? ' saved' : '') + '" title="Bookmark ' + escapeHtml(t.n) + '" data-tool="' + escapeHtml(t.n) + '" aria-label="Bookmark ' + escapeHtml(t.n) + '">' + (isSaved ? '&#9733;' : '&#9734;') + '</button>' +
-            '</div>' +
+            '<button class="bookmark-btn' + (isSaved ? ' saved' : '') + '" title="Bookmark ' + escapeHtml(t.n) + '" data-tool="' + escapeHtml(t.n) + '" aria-label="Bookmark ' + escapeHtml(t.n) + '">' + (isSaved ? '&#9733;' : '&#9734;') + '</button>' +
           '</div>' +
           '<p class="tool-desc">' + escapeHtml(t.d) + '</p>' +
           '<div class="card-bottom">' +
-            '<span class="cat-pill">' + escapeHtml(t.cp) + '</span>' +
+            '<div class="card-bottom-pills">' +
+              '<span class="cat-pill">' + escapeHtml(t.cp) + '</span>' +
+              '<span class="price-badge ' + priceClass + '">' + escapeHtml(t.p) + '</span>' +
+            '</div>' +
             '<div class="card-actions">' +
               '<a href="' + toolPath + '" class="details-link">Details &rarr;</a>' +
               '<a href="' + escapeHtml(t.u) + '" target="_blank" rel="noopener noreferrer nofollow" class="tool-link">Visit &rarr;</a>' +
