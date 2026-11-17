@@ -45,7 +45,7 @@ PRIORITY_SLUGS = [
     'resemble-ai', 'murf', '10web', 'make', 'apollo', 'winston-ai'
 ]
 
-# Pick top 100 tools: priority first, then tools with rich descriptions
+# Include all tools to ensure EVERY tool has an alternatives page and zero 404s
 target_tools = []
 seen = set()
 for s in PRIORITY_SLUGS:
@@ -53,16 +53,21 @@ for s in PRIORITY_SLUGS:
         target_tools.append(by_slug[s])
         seen.add(s)
 
-# Add more tools to reach 80-100 high-demand alternatives pages
 for t in tools:
     s = t.get('slug')
-    if s not in seen and len(t.get('description', '')) > 100:
+    if s not in seen:
         target_tools.append(t)
         seen.add(s)
-        if len(target_tools) >= 80:
-            break
 
-print(f"Generating alternatives pages for {len(target_tools)} top tools...")
+# Ensure GSC indexed page for xeveai is included
+if 'xeveai-live-ai-girlfriend-video-chat-in-your-browser' not in seen and 'xeveai-xeve-ai' in by_slug:
+    xeve_copy = dict(by_slug['xeveai-xeve-ai'])
+    xeve_copy['slug'] = 'xeveai-live-ai-girlfriend-video-chat-in-your-browser'
+    xeve_copy['name'] = 'Xeve.ai: Live AI Girlfriend Video Chat'
+    target_tools.append(xeve_copy)
+    seen.add('xeveai-live-ai-girlfriend-video-chat-in-your-browser')
+
+print(f"Generating alternatives pages for {len(target_tools)} tools...")
 
 os.makedirs("public/alternatives", exist_ok=True)
 
@@ -512,9 +517,12 @@ sitemap_urls = [
   </url>"""
 ]
 
-# Add all 961 tool pages
-for t in tools:
-    s = t.get('slug')
+# Add all tool pages
+all_tool_slugs = [t.get('slug') for t in tools]
+if 'xeveai-live-ai-girlfriend-video-chat-in-your-browser' not in all_tool_slugs:
+    all_tool_slugs.append('xeveai-live-ai-girlfriend-video-chat-in-your-browser')
+
+for s in all_tool_slugs:
     sitemap_urls.append(f"""  <url>
     <loc>{BASE_URL}/{s}/</loc>
     <lastmod>{TODAY}</lastmod>
@@ -529,7 +537,7 @@ for t in target_tools:
     <loc>{BASE_URL}/alternatives/{s}/</loc>
     <lastmod>{TODAY}</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>""")
 
 sitemap_xml = f"""<?xml version="1.0" encoding="UTF-8"?>
@@ -545,6 +553,9 @@ with open("sitemap.xml", "w", encoding="utf-8") as f:
     f.write(sitemap_xml)
 with open("public/sitemap.xml", "w", encoding="utf-8") as f:
     f.write(sitemap_xml)
+if os.path.exists("dist"):
+    with open("dist/sitemap.xml", "w", encoding="utf-8") as f:
+        f.write(sitemap_xml)
 
 print(f"Updated sitemap.xml with {len(sitemap_urls)} total URLs!")
 

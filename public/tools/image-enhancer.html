@@ -3,17 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Free AI Image Enhancer &amp; Photo Upscaler (2026) — Unblur &amp; Sharpen to 4K | All AI Tools</title>
-  <meta name="description" content="Free online AI image enhancer and photo upscaler. Unblur blurry photos, enhance facial details, fix lighting, and upscale images to 4K resolution instantly with zero quality loss." />
-  <meta name="keywords" content="airbrush photo enhancer free, image enhancer airbrush, ai image upscaler, photo enhancer online, unblur image ai, airbrush image upscaler, free image enhancer, allaitools" />
+  <title>Free AI Image Enhancer &amp; Photo Upscaler (2026) — Unblur, Sharpen &amp; 4K Airbrush Alternative | All AI Tools</title>
+  <meta name="description" content="Free online AI image enhancer, photo upscaler, and Airbrush enhancer alternative. Unblur blurry pictures, restore facial details, fix lighting, and upscale photos to 4K resolution instantly with zero quality loss." />
+  <meta name="keywords" content="airbrush image enhancer, airbrush photo enhancer, image enhancer airbrush, airbrush enhancer, ai image enhancer, photo upscaler 4k, unblur image ai, upscale image airbrush, ai airbrush enhancer, air brush image enhancer, airbrush enhancer image, photo enhancer online, free image enhancer, 4k photo enhancer, unblur photo online, face restoration ai, allaitools" />
   <link rel="canonical" href="https://www.allaitools.online/tools/image-enhancer/" />
 
   <!-- OpenGraph -->
-  <meta property="og:title" content="Free AI Image Enhancer &amp; Photo Upscaler (2026) | All AI Tools" />
-  <meta property="og:description" content="Unblur, sharpen, and upscale photos to 4K resolution online for free. Real-time before/after comparison." />
+  <meta property="og:title" content="Free AI Image Enhancer &amp; Photo Upscaler (2026) — Unblur to 4K | All AI Tools" />
+  <meta property="og:description" content="Unblur, sharpen, and upscale photos to 4K resolution online for free. Top Airbrush photo enhancer alternative with split before/after comparison." />
   <meta property="og:url" content="https://www.allaitools.online/tools/image-enhancer/" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="All AI Tools" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Free AI Image Enhancer &amp; Photo Upscaler (2026) | All AI Tools" />
+  <meta name="twitter:description" content="Unblur blurry pictures, enhance facial features, and upscale photos to 4K resolution for free with instant before/after preview." />
 
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%234F46E5%22/><text y=%2268%22 x=%2250%22 font-family=%22system-ui,sans-serif%22 font-weight=%22800%22 font-size=%2254%22 fill=%22white%22 text-anchor=%22middle%22>AI</text></svg>" />
 
@@ -54,8 +59,25 @@
     .navbar { border-bottom: 1px solid var(--border); background: rgba(11, 15, 25, 0.85); backdrop-filter: blur(12px); position: sticky; top: 0; z-index: 100; }
     .container { max-width: 1040px; margin: 0 auto; padding: 0 20px; }
     .nav-inner { display: flex; justify-content: space-between; align-items: center; height: 68px; }
-    .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.1rem; }
-    .brand-icon { width: 34px; height: 34px; border-radius: 8px; background: linear-gradient(135deg, #6366f1, #8b5cf6); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.95rem; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.15rem; letter-spacing: -0.025em; color: #fff; }
+    .brand-logo-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.25) 0%, rgba(168, 85, 247, 0.25) 50%, rgba(56, 189, 248, 0.2) 100%);
+      border: 1px solid rgba(129, 140, 248, 0.4);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px rgba(99, 102, 241, 0.35);
+      flex-shrink: 0;
+      transition: all 0.25s ease;
+    }
+    .brand:hover .brand-logo-icon {
+      transform: scale(1.05);
+      border-color: rgba(129, 140, 248, 0.7);
+      box-shadow: 0 6px 20px rgba(129, 140, 248, 0.55);
+    }
     .nav-links { display: flex; align-items: center; gap: 16px; }
     .nav-link { color: var(--text-muted); font-size: 0.9rem; transition: color 0.15s; }
     .nav-link:hover { color: #fff; }
@@ -135,6 +157,106 @@
       gap: 8px;
     }
     .btn-enhance-action:hover { opacity: 0.95; transform: translateY(-1px); }
+    .btn-enhance-action:disabled { opacity: 0.6; cursor: not-allowed; transform: none; background: #374151; box-shadow: none; }
+
+    /* Quota Indicator & Rate Limit Banner */
+    .quota-card {
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      border-radius: 10px;
+      padding: 10px 14px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.84rem;
+    }
+    .quota-info { display: flex; align-items: center; gap: 8px; font-weight: 600; color: #cbd5e1; }
+    .quota-badge {
+      background: rgba(16, 185, 129, 0.18);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+    .quota-badge.low {
+      background: rgba(245, 158, 11, 0.15);
+      color: #fbbf24;
+      border-color: rgba(245, 158, 11, 0.3);
+    }
+    .quota-badge.depleted {
+      background: rgba(239, 68, 68, 0.15);
+      color: #f87171;
+      border-color: rgba(239, 68, 68, 0.3);
+    }
+    .quota-reset-text { font-size: 0.78rem; color: #9ca3af; }
+
+    .rate-limit-banner {
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-bottom: 20px;
+      display: none;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.85rem;
+      color: #fca5a5;
+    }
+    .banner-icon { font-size: 1.2rem; flex-shrink: 0; }
+
+    /* Animated Neural Progress Bar & Wait Timer */
+    .progress-box {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .progress-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .progress-pct {
+      color: #34d399;
+      font-family: monospace;
+      font-size: 0.95rem;
+    }
+    .progress-track {
+      width: 100%;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 9999px;
+      overflow: hidden;
+      position: relative;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #10b981, #38bdf8, #818cf8);
+      border-radius: 9999px;
+      transition: width 0.4s ease;
+    }
+    .progress-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      color: #9ca3af;
+      margin-top: 4px;
+    }
+    .progress-status { color: #cbd5e1; font-weight: 500; }
+    .progress-time { color: #34d399; font-weight: 600; }
 
     /* Before / After Comparison Slider Frame */
     .compare-container {
@@ -244,8 +366,21 @@
 
   <header class="navbar">
     <div class="container nav-inner">
-      <a href="/" class="brand">
-        <span class="brand-icon">AI</span>
+      <a href="/" class="brand" title="All AI Tools — Home">
+        <span class="brand-logo-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 1.5C12 1.5 13.5 7.5 15.5 9.5C17.5 11.5 23.5 12 23.5 12C23.5 12 17.5 12.5 15.5 14.5C13.5 16.5 12 22.5 12 22.5C12 22.5 10.5 16.5 8.5 14.5C6.5 12.5 0.5 12 0.5 12C0.5 12 6.5 11.5 8.5 9.5C10.5 7.5 12 1.5 12 1.5Z" fill="url(#aiBrandGradEnh)"/>
+            <circle cx="19.5" cy="4.5" r="2" fill="#38bdf8"/>
+            <circle cx="4.5" cy="19.5" r="1.5" fill="#a855f7"/>
+            <defs>
+              <linearGradient id="aiBrandGradEnh" x1="0.5" y1="1.5" x2="23.5" y2="22.5" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#818cf8"/>
+                <stop offset="0.45" stop-color="#c084fc"/>
+                <stop offset="1" stop-color="#38bdf8"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </span>
         <span>All AI Tools</span>
       </a>
       <div class="nav-links">
@@ -269,6 +404,24 @@
     </div>
 
     <div class="enhancer-box">
+      <!-- Quota Indicator -->
+      <div class="quota-card" id="enhancerQuotaCard">
+        <div class="quota-info">
+          <span>🧠 GPU Neural Quota:</span>
+          <span class="quota-badge" id="enhancerQuotaBadge">3/3 available</span>
+        </div>
+        <span class="quota-reset-text" id="enhancerQuotaResetText">15-min rolling window</span>
+      </div>
+
+      <!-- Lockout / Cooldown Banner -->
+      <div class="rate-limit-banner" id="enhancerRateLimitBanner">
+        <span class="banner-icon">⏳</span>
+        <div>
+          <div style="font-weight:700;" id="enhancerBannerTitle">GPU Cooldown Active</div>
+          <div id="enhancerBannerText" style="font-size:0.8rem; opacity:0.9;">Please wait before submitting another neural upscale.</div>
+        </div>
+      </div>
+
       <!-- Drag & Drop Zone -->
       <div class="dropzone" id="dropzone" onclick="document.getElementById('fileInput').click()">
         <div class="upload-icon">&#128247;</div>
@@ -311,8 +464,25 @@
         </div>
       </div>
 
+      <!-- Neural Live Progress Bar -->
+      <div id="neuralProgressBox" style="display:none; margin-bottom: 24px;">
+        <div class="progress-box">
+          <div class="progress-top">
+            <span id="neuralProgressTitle">Submitting Tensor Pipeline...</span>
+            <span class="progress-pct" id="neuralProgressPct">12%</span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill" id="neuralProgressFill"></div>
+          </div>
+          <div class="progress-footer">
+            <span class="progress-status" id="neuralProgressStatus">Allocating GPU worker in AI cluster...</span>
+            <span class="progress-time" id="neuralProgressTimer">Est. ~15–25s (Elapsed: 0s)</span>
+          </div>
+        </div>
+      </div>
+
       <button class="btn-enhance-action" id="enhanceBtn" onclick="processEnhancement()">
-        <span>&#9889;</span>
+        <span id="enhanceBtnIcon">&#9889;</span>
         <span id="enhanceBtnText">Enhance &amp; Upscale with Neural AI</span>
       </button>
 
@@ -364,6 +534,236 @@
   <script>
     let currentOriginalDataUrl = '';
     let currentEnhancedDataUrl = '';
+
+    // Rate Limiting & GPU Neural Quota State
+    const ENHANCER_QUOTA_LIMIT = 3;
+    const ENHANCER_COOLDOWN_SECS = 20;
+    const ENHANCER_WINDOW_SECS = 15 * 60; // 15 mins = 900s
+    const ENHANCER_STORAGE_KEY = 'allaitools_enhancer_quota_v2';
+
+    let neuralProgressInterval = null;
+    let enhancerCooldownInterval = null;
+    let enhancerLockoutInterval = null;
+    let neuralElapsedSeconds = 0;
+
+    function getEnhancerState() {
+      try {
+        const raw = localStorage.getItem(ENHANCER_STORAGE_KEY);
+        if (raw) return JSON.parse(raw);
+      } catch (e) {}
+      return {
+        count: 0,
+        windowStart: Date.now(),
+        lastRequestTime: 0,
+        lockUntil: 0
+      };
+    }
+
+    function saveEnhancerState(state) {
+      try {
+        localStorage.setItem(ENHANCER_STORAGE_KEY, JSON.stringify(state));
+      } catch (e) {}
+    }
+
+    function formatTime(seconds) {
+      const m = Math.floor(seconds / 60);
+      const s = Math.floor(seconds % 60);
+      return `${m}:${s < 10 ? '0' : ''}${s}`;
+    }
+
+    function initEnhancerQuotaDisplay() {
+      const state = getEnhancerState();
+      const now = Date.now();
+
+      // Reset window if 15 minutes elapsed
+      if (now - state.windowStart > ENHANCER_WINDOW_SECS * 1000) {
+        state.count = 0;
+        state.windowStart = now;
+        state.lockUntil = 0;
+        saveEnhancerState(state);
+      }
+
+      const remaining = Math.max(0, ENHANCER_QUOTA_LIMIT - state.count);
+      const resetInSecs = Math.max(0, Math.ceil((state.windowStart + ENHANCER_WINDOW_SECS * 1000 - now) / 1000));
+
+      const badge = document.getElementById('enhancerQuotaBadge');
+      const resetText = document.getElementById('enhancerQuotaResetText');
+
+      if (badge) {
+        badge.textContent = `${remaining}/${ENHANCER_QUOTA_LIMIT} available`;
+        badge.className = 'quota-badge';
+        if (remaining === 0) {
+          badge.classList.add('depleted');
+        } else if (remaining === 1) {
+          badge.classList.add('low');
+        }
+      }
+
+      if (resetText) {
+        if (remaining < ENHANCER_QUOTA_LIMIT) {
+          resetText.textContent = `Window resets in ${formatTime(resetInSecs)}`;
+        } else {
+          resetText.textContent = '15-min rolling window';
+        }
+      }
+
+      // Check if locked out
+      if (state.lockUntil && state.lockUntil > now) {
+        const remainingLock = Math.ceil((state.lockUntil - now) / 1000);
+        triggerEnhancerLockout(remainingLock, 'GPU neural quota limit reached (3 upscales per 15 min).');
+        return;
+      }
+
+      // Check consecutive cooldown
+      const timeSinceLast = (now - state.lastRequestTime) / 1000;
+      if (state.lastRequestTime > 0 && timeSinceLast < ENHANCER_COOLDOWN_SECS) {
+        const remainingCooldown = Math.ceil(ENHANCER_COOLDOWN_SECS - timeSinceLast);
+        triggerEnhancerCooldown(remainingCooldown);
+      }
+    }
+
+    function triggerEnhancerCooldown(seconds) {
+      const btn = document.getElementById('enhanceBtn');
+      const btnText = document.getElementById('enhanceBtnText');
+      const banner = document.getElementById('enhancerRateLimitBanner');
+      const bannerTitle = document.getElementById('enhancerBannerTitle');
+      const bannerText = document.getElementById('enhancerBannerText');
+
+      if (enhancerCooldownInterval) clearInterval(enhancerCooldownInterval);
+
+      let rem = seconds;
+      btn.disabled = true;
+      banner.style.display = 'flex';
+      bannerTitle.textContent = 'GPU Cluster Cooldown';
+
+      function tick() {
+        if (rem <= 0) {
+          clearInterval(enhancerCooldownInterval);
+          enhancerCooldownInterval = null;
+          btn.disabled = false;
+          btnText.textContent = 'Enhance & Upscale with Neural AI';
+          banner.style.display = 'none';
+          initEnhancerQuotaDisplay();
+          return;
+        }
+        btnText.textContent = `⏳ GPU Cooldown (${rem}s)...`;
+        bannerText.textContent = `Cluster cooldown: Please wait ${rem}s before submitting next neural upscale.`;
+        rem--;
+      }
+
+      tick();
+      enhancerCooldownInterval = setInterval(tick, 1000);
+    }
+
+    function triggerEnhancerLockout(seconds, message) {
+      const btn = document.getElementById('enhanceBtn');
+      const btnText = document.getElementById('enhanceBtnText');
+      const banner = document.getElementById('enhancerRateLimitBanner');
+      const bannerTitle = document.getElementById('enhancerBannerTitle');
+      const bannerText = document.getElementById('enhancerBannerText');
+
+      if (enhancerLockoutInterval) clearInterval(enhancerLockoutInterval);
+      if (enhancerCooldownInterval) clearInterval(enhancerCooldownInterval);
+
+      let rem = seconds;
+      btn.disabled = true;
+      banner.style.display = 'flex';
+      bannerTitle.textContent = 'GPU Quota Limit Reached';
+
+      function tick() {
+        if (rem <= 0) {
+          clearInterval(enhancerLockoutInterval);
+          enhancerLockoutInterval = null;
+          const state = getEnhancerState();
+          state.count = 0;
+          state.windowStart = Date.now();
+          state.lockUntil = 0;
+          saveEnhancerState(state);
+          btn.disabled = false;
+          btnText.textContent = 'Enhance & Upscale with Neural AI';
+          banner.style.display = 'none';
+          initEnhancerQuotaDisplay();
+          return;
+        }
+        btnText.textContent = `⏳ Quota Resets in ${formatTime(rem)}`;
+        bannerText.textContent = `${message || 'GPU quota limit reached.'} Resets in ${formatTime(rem)}.`;
+        rem--;
+      }
+
+      tick();
+      enhancerLockoutInterval = setInterval(tick, 1000);
+    }
+
+    function startNeuralProgress() {
+      const box = document.getElementById('neuralProgressBox');
+      const fill = document.getElementById('neuralProgressFill');
+      const pct = document.getElementById('neuralProgressPct');
+      const title = document.getElementById('neuralProgressTitle');
+      const status = document.getElementById('neuralProgressStatus');
+      const timer = document.getElementById('neuralProgressTimer');
+
+      box.style.display = 'block';
+      neuralElapsedSeconds = 0;
+      fill.style.width = '10%';
+      pct.textContent = '10%';
+      title.textContent = 'Submitting Tensor Pipeline...';
+      status.textContent = 'Connecting to distributed GPU node...';
+      timer.textContent = 'Est. ~15–25s (Elapsed: 0s)';
+
+      if (neuralProgressInterval) clearInterval(neuralProgressInterval);
+
+      neuralProgressInterval = setInterval(() => {
+        neuralElapsedSeconds++;
+        timer.textContent = `Est. ~15–25s (Elapsed: ${neuralElapsedSeconds}s)`;
+
+        if (neuralElapsedSeconds <= 3) {
+          fill.style.width = '22%';
+          pct.textContent = '22%';
+          title.textContent = 'Allocating GPU Memory...';
+          status.textContent = 'Loading Real-ESRGAN / GFPGAN weights...';
+        } else if (neuralElapsedSeconds <= 8) {
+          fill.style.width = '45%';
+          pct.textContent = '45%';
+          title.textContent = 'Facial Landmarks & Noise Analysis...';
+          status.textContent = 'Mapping unblur vectors and texture details...';
+        } else if (neuralElapsedSeconds <= 15) {
+          fill.style.width = '72%';
+          pct.textContent = '72%';
+          title.textContent = 'Neural Super-Resolution Inference...';
+          status.textContent = 'Synthesizing 4K high-frequency pixel matrix...';
+        } else if (neuralElapsedSeconds <= 22) {
+          fill.style.width = '90%';
+          pct.textContent = '90%';
+          title.textContent = 'Reconstructing Sharp Details...';
+          status.textContent = 'Finalizing HDR color and edge fidelity...';
+        } else {
+          fill.style.width = '96%';
+          pct.textContent = '96%';
+          title.textContent = 'Worker Finalizing Output...';
+          status.textContent = 'Downloading high-resolution rendered asset...';
+        }
+      }, 1000);
+    }
+
+    function stopNeuralProgress(success) {
+      if (neuralProgressInterval) {
+        clearInterval(neuralProgressInterval);
+        neuralProgressInterval = null;
+      }
+      if (success) {
+        const fill = document.getElementById('neuralProgressFill');
+        const pct = document.getElementById('neuralProgressPct');
+        if (fill) fill.style.width = '100%';
+        if (pct) pct.textContent = '100%';
+        setTimeout(() => {
+          const box = document.getElementById('neuralProgressBox');
+          if (box) box.style.display = 'none';
+        }, 800);
+      } else {
+        const box = document.getElementById('neuralProgressBox');
+        if (box) box.style.display = 'none';
+      }
+    }
 
     // Drag and drop handlers
     const dropzone = document.getElementById('dropzone');
@@ -434,10 +834,28 @@
         return;
       }
 
+      // Check quota prior to API call
+      const state = getEnhancerState();
+      const now = Date.now();
+      if (state.lockUntil && state.lockUntil > now) {
+        const remainingLock = Math.ceil((state.lockUntil - now) / 1000);
+        triggerEnhancerLockout(remainingLock, 'GPU neural quota limit reached (3 upscales per 15 min).');
+        return;
+      }
+      if (state.count >= ENHANCER_QUOTA_LIMIT && now - state.windowStart < ENHANCER_WINDOW_SECS * 1000) {
+        const resetInSecs = Math.ceil((state.windowStart + ENHANCER_WINDOW_SECS * 1000 - now) / 1000);
+        state.lockUntil = now + resetInSecs * 1000;
+        saveEnhancerState(state);
+        triggerEnhancerLockout(resetInSecs, 'GPU neural quota limit reached.');
+        return;
+      }
+
       const btn = document.getElementById('enhanceBtn');
       const btnText = document.getElementById('enhanceBtnText');
       btn.disabled = true;
-      btnText.textContent = '🧠 Processing with Neural AI Cluster (~15–30s)...';
+      btnText.textContent = '🧠 Processing with Neural AI Cluster (~15–25s)...';
+
+      startNeuralProgress();
 
       const factor = parseInt(document.getElementById('upscaleFactor').value, 10) || 4;
       const mode = document.getElementById('enhancementMode').value;
@@ -454,9 +872,37 @@
           })
         });
 
+        // Handle Rate Limit 429
+        if (response.status === 429) {
+          stopNeuralProgress(false);
+          const errData = await response.json();
+          const retrySec = errData.retryAfterSeconds || 60;
+          state.lockUntil = Date.now() + retrySec * 1000;
+          state.count = ENHANCER_QUOTA_LIMIT;
+          saveEnhancerState(state);
+          initEnhancerQuotaDisplay();
+          triggerEnhancerLockout(retrySec, errData.error || 'GPU neural rate limit reached.');
+          alert(errData.error || 'GPU Rate limit reached. Please wait before submitting another image.');
+          return;
+        }
+
         const data = await response.json();
 
         if (data && data.image) {
+          stopNeuralProgress(true);
+
+          // Update local state tracking
+          state.count = (state.count || 0) + 1;
+          state.lastRequestTime = Date.now();
+          if (data.quota) {
+            state.count = Math.max(state.count, ENHANCER_QUOTA_LIMIT - (data.quota.remaining ?? (ENHANCER_QUOTA_LIMIT - state.count)));
+            if (data.quota.resetInSeconds) {
+              state.windowStart = Date.now() - ((ENHANCER_WINDOW_SECS - data.quota.resetInSeconds) * 1000);
+            }
+          }
+          saveEnhancerState(state);
+          initEnhancerQuotaDisplay();
+
           currentEnhancedDataUrl = data.image;
           const afterImg = document.getElementById('afterImg');
           afterImg.onload = () => {
@@ -472,15 +918,18 @@
 
             initSplitSlider();
             compareBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+            // Start 20-second cooldown
+            triggerEnhancerCooldown(ENHANCER_COOLDOWN_SECS);
           };
           afterImg.src = currentEnhancedDataUrl;
         } else {
           throw new Error(data.error || 'Neural upscaling failed on worker cluster.');
         }
       } catch (err) {
+        stopNeuralProgress(false);
         console.error(err);
         alert('Neural AI Upscale Notice: ' + err.message);
-      } finally {
         btn.disabled = false;
         btnText.textContent = 'Enhance & Upscale with Neural AI';
       }
@@ -528,6 +977,11 @@
       a.download = `allaitools_enhanced_${Date.now()}.png`;
       a.click();
     }
+
+    // Run on startup
+    window.addEventListener('DOMContentLoaded', () => {
+      initEnhancerQuotaDisplay();
+    });
   </script>
 </body>
 </html>
