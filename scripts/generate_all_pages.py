@@ -2742,12 +2742,39 @@ def render_tool_page(tool, all_tools, tools_by_cat=None):
     }}
 
     * {{ box-sizing: border-box; margin: 0; padding: 0; }}
-    html {{ scroll-behavior: smooth; font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text-main); line-height: 1.6; }}
-    body {{ min-height: 100vh; overflow-x: hidden; }}
+    html {{
+      scroll-behavior: smooth;
+      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text-main);
+      line-height: 1.6;
+      overflow-x: hidden;
+      max-width: 100vw;
+      width: 100%;
+    }}
+    body {{
+      min-height: 100vh;
+      overflow-x: hidden;
+      max-width: 100vw;
+      width: 100%;
+      position: relative;
+    }}
     a {{ text-decoration: none; color: inherit; }}
 
     /* Ambient Glow */
     .ambient-glow {{
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 800px;
+      height: 480px;
+      background: radial-gradient(circle 450px at 50% 120px, rgba(99, 102, 241, 0.15), rgba(139, 92, 246, 0.08), transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }}
       position: absolute;
       top: 0;
       left: 50%;
